@@ -1,6 +1,6 @@
-import NextAuth from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
-import { authConfig } from './auth.config';
+
+
+
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import type { User } from '@/app/lib/definitions';
@@ -16,12 +16,21 @@ import { getUser } from './app/lib/data';
 //     throw new Error('Failed to fetch user.');
 //   }
 // }
- 
+import NextAuth from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
+import { authConfig } from './auth.config';
+
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
+      credentials: {
+        // Aqui você define a estrutura esperada para as credenciais
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" }
+      },
       async authorize(credentials) {
+        // Aqui você implementa a lógica de autenticação com as credenciais fornecidas
         console.log("🚀 ~ authorize ~ credentials:", credentials)
         const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
