@@ -20,3 +20,17 @@ export async function fetchPost() {
     throw new Error('Failed to fetch revenue data.');
   }
 }
+
+export async function getUser(email: string): Promise<User | null> {
+  try {
+    const user: User | null = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    return user;
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    throw new Error('Failed to fetch user.');
+  }
+}
+
