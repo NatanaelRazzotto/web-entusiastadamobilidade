@@ -1,9 +1,18 @@
+'use client'
 import { Card } from '@/app/ui/dashboard/cards';
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { lusitana } from '@/app/ui/fonts';
+import { useRouter } from 'next/router';
  
-export default async function Page() {
+export default async function Page() { 
+  
+
+  // Exemplo de uso:
+  const handleClick = () => {
+    console.log("clicor")
+  };
+  
   return (
     <main>
        <div className="container mx-auto px-4"> 
@@ -18,9 +27,10 @@ export default async function Page() {
         </div>    
         <h2 className="text-2xl font-bold mt-8 mb-4">Destaques</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"  onClick={handleClick}>
         <div className="col-span-2">
         {/* News card 1 */}
+        
         <div className="bg-white rounded-md shadow-md relative">
           <img
             src="https://picsum.photos/600/300"
