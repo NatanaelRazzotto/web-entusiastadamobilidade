@@ -11,24 +11,30 @@ datasource db {
 }
 
 model Post {
-  id        String  @id @default(cuid())
-  namePost String
+  id        String    @id @default(cuid())
+  namePost  String
   title     String
   content   String?
-  coverURL   String?
-  published Boolean @default(false)
-  author    User?@relation(fields:[authorId], references:[id])
+  coverURL  String?
+  published Boolean   @default(false)
+  author    User?     @relation(fields: [authorId], references: [id])
   authorId  String?
+
+  // Relação muitos para muitos com Image
+  images    Image[]   @relation("PostImages")
 }
 
 model Image {
-  id        String  @id @default(cuid())
-  title     String
+  id          String    @id @default(cuid())
+  title       String
   description String?
-  pathURL   String?
-  published Boolean @default(false)
-  author    User?@relation(fields:[authorId], references:[id])
-  authorId  String?
+  pathURL     String?
+  published   Boolean   @default(false)
+  author      User?     @relation(fields: [authorId], references: [id])
+  authorId    String?
+
+  // Relação muitos para muitos com Post
+  posts       Post[]    @relation("PostImages") 
 }
 
 model Account {

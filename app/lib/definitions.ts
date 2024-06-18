@@ -1,5 +1,4 @@
-import prisma from 'prisma';
-
+import { PrismaClient, Post as PrismaPost, User as PrismaUser, Image as PrismaImage } from '@prisma/client';
 // This file contains type definitions for your data.
 // It describes the shape of the data, and what data type each property should accept.
 // For simplicity of teaching, we're manually defining these types.
@@ -91,5 +90,28 @@ export type InvoiceForm = {
 
 ///
 
-export type User = prisma.User;
-export type Post = prisma.Post;
+export type User = PrismaUser;
+
+export type Post = {
+  id: string;
+  namePost: string;
+  title: string;
+  content?: string;
+  coverURL?: string;
+  published: boolean;
+  authorId: string;
+  images?: Image[];
+};
+
+export type Image = {
+  id: string;
+  title: string;
+  description?: string;
+  pathURL?: string;
+  published: boolean;
+  authorId: string;
+  posts?: Post[];
+  
+};
+
+

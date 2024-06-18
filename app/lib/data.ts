@@ -1,5 +1,6 @@
 import prisma from '../lib/prisma';
 import { 
+  Post,
   User
 } from './definitions';
 import { formatCurrency } from './utils';
@@ -15,6 +16,24 @@ export async function fetchPost() {
       },
     });
     return feed;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function fetchPostName(namePost : string){
+  try {
+    const post: Post | null = await prisma.post.findFirst({
+      where: {
+        namePost: namePost,
+      },
+      include: {
+        images : true
+      },
+ 
+    });
+    return post;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch revenue data.');

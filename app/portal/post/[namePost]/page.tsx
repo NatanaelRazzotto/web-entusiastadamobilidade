@@ -1,41 +1,105 @@
-"use client";
 
 import { useEffect, useState } from 'react';
+import { Image, Post } from '../../../lib/definitions';
 
-export default function Page({ params }: { params: { namePost: string } }) {
-  const [data, setData] = useState<{ title: string; content: string } | null>(null);
-  const [loading, setLoading] = useState(true);
+import { fetchPostName } from '@/app/lib/data';
+import { GetServerSideProps } from 'next';
 
-  // Função a ser executada quando namePost é recebido
-  const fetchData = async (namePost: string) => {
-    try {
-      // Simulação de uma chamada API
-      console.log(`Fetching data for post: ${namePost}`);
-      // const response = await fetch(`/api/posts/${namePost}`);
-      // const data = await response.json();
-      // setData(data);
+interface PageProps {
+  data: any;
+  error?: string;
+}
 
-      // Para demonstração, usaremos um setTimeout para simular uma chamada API
-      setTimeout(() => {
-        setData({ title: `Post: ${namePost}`, content: 'This is the post content.' });
-        setLoading(false);
-      }, 1000);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setLoading(false);
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const { namePost } = context.params as { namePost: string };
+//   console.log("🚀 ~ GetServerSideProps= ~ namePost:", namePost)
+
+//   try {
+//     // Substitua pela URL da sua API ou pela lógica de processamento necessária
+//     const response = await fetch(`https://api.exemplo.com/posts/${namePost}`);
+//     if (!response.ok) {
+//       throw new Error('Erro na busca de dados');
+//     }
+
+//     const data = await response.json();
+
+//     return {
+//       props: {
+//         data,
+//       },
+//     };
+//   } catch (error) {
+//     return {
+//       props: {
+//         data: null,
+//         error: error.message,
+//       },
+//     };
+//   }
+// };
+
+export default async function Page({ params }: { params: { namePost: string } }) {
+
+    // const [data, setData] = useState< Post | null>(null);
+  const { namePost } = params;
+  console.log('Parâmetro namePost:', namePost);
+
+  let dataPost : Post | null = null;
+  let error = null;
+
+  try {
+    const response : Post= await fetchPostName(namePost)
+    if (response == null) {
+      throw new Error('Erro na busca de dados');
     }
-  };
 
-  // useEffect para chamar fetchData quando namePost muda
-  useEffect(() => {
-    if (params.namePost) {
-      fetchData(params.namePost);
-    }
-  }, [params.namePost]);
-
-  if (loading) {
-    return <div>Loading...</div>;
+    dataPost = response
+    console.log("🚀 ~ data:", dataPost)
+  } catch (err) {
+    error = err.message;
   }
+
+  if (error) {
+    return <div>Erro: {error}</div>;
+  }
+
+  if (!dataPost) {
+    //notFound();
+  
+    console.log("🚀 ~ notFound();:")}
+   
+  //({ data, error }: PageProps) {//({ params }: { params: { namePost: string } }) {
+  // const [data, setData] = useState< Post | null>(null);
+  // const [loading, setLoading] = useState(true);
+
+  
+  //const prisma = new PrismaClient();
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     'use server';
+  //     try {
+  //       if (typeof params.namePost === 'string') {
+  //         const post = await fetchPostName(params.namePost);
+  //         setData(post);
+  //       } else {
+  //         throw new Error('Invalid post name');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   if (params.namePost) {
+  //     fetchData();
+  //   }
+  // }, [params.namePost]);
+
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   // return (
   //   <div>
@@ -49,7 +113,7 @@ export default function Page({ params }: { params: { namePost: string } }) {
       <div className="container mx-auto px-4">
         <div className="relative bottom-0 left-0 p-4 text-white bg-black bg-opacity-75">
           <h2 className="text-xl font-bold">
-            Matéria: Título da Matéria
+            {dataPost.title}
           </h2>
           <p className="text-sm">
             Subtítulo da Matéria
@@ -59,7 +123,7 @@ export default function Page({ params }: { params: { namePost: string } }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           <div className="col-span-2">
             <img
-              src="https://picsum.photos/800/400"
+              src={dataPost.coverURL}
               alt="Imagem da Matéria"
               className="rounded-t-md w-full object-cover"
             />
@@ -81,32 +145,25 @@ export default function Page({ params }: { params: { namePost: string } }) {
             Conteúdo da Matéria
           </h3>
           <p className="text-gray-600 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+            {dataPost.content}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-          <div className="col-span-1">
-            <img
-              src="https://picsum.photos/400/200"
-              alt="Foto 1"
-              className="rounded-md w-full object-cover"
-            />
-          </div>
-          <div className="col-span-1">
-            <img
-              src="https://picsum.photos/400/200"
-              alt="Foto 2"
-              className="rounded-md w-full object-cover"
-            />
-          </div>
-          <div className="col-span-1">
-            <img
-              src="https://picsum.photos/400/200"
-              alt="Foto 3"
-              className="rounded-md w-full object-cover"
-            />
-          </div>
+          {
+            dataPost.images.length === 0 ?  <p>No posts found</p> :
+
+            (dataPost.images as Image[]).map((image: Image) => (
+              <div className="col-span-1">
+              <img
+                src={image.pathURL}
+                alt={image.title}
+                className="rounded-md w-full object-cover"
+              />
+            </div>
+            ))
+          }         
+      
           {/* Adicione mais fotos aqui */}
         </div>
 

@@ -1,17 +1,26 @@
-'use client'
+
 import { Card } from '@/app/ui/dashboard/cards';
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { lusitana } from '@/app/ui/fonts';
 import { useRouter } from 'next/router';
+import CardPost from '../ui/portal/card';
+import { PrismaClient } from '@prisma/client';
+import { Post } from '../lib/definitions';
  
 export default async function Page() { 
+
+  const prisma = new PrismaClient();
+
+  const posts : Post[] = await prisma.post.findMany();
+  console.log("🚀 ~ Page ~ post:", posts[0])
+
   
 
-  // Exemplo de uso:
-  const handleClick = () => {
-    console.log("clicor")
-  };
+  // // Exemplo de uso:
+  // const handleClick = () => {
+  //   console.log("clicor")
+  // };
   
   return (
     <main>
@@ -27,63 +36,34 @@ export default async function Page() {
         </div>    
         <h2 className="text-2xl font-bold mt-8 mb-4">Destaques</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"  onClick={handleClick}>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" >
         <div className="col-span-2">
         {/* News card 1 */}
+
+        {posts.length === 0 ? (
+        <p>No posts found</p>
+      ) : (
+        <CardPost postCard={posts[0]} />
+      )}
         
-        <div className="bg-white rounded-md shadow-md relative">
-          <img
-            src="https://picsum.photos/600/300"
-            alt="News Image"
-            className="rounded-t-md w-full object-cover"
-          />
-          <div className="absolute bottom-0 left-0 p-4 text-white bg-black bg-opacity-75">
-            <h2 className="text-xl font-bold">
-              Greca entrega finalmente a LINHA VERDE!
-            </h2>
-            <p className="text-sm">
-              Após reunião com Lira, deputados decidem votar urgência sobre aborto e
-              delações.
-            </p>
-          </div>
-        </div>
+    
+       
         </div>
         <div className="col-span-1">
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
             {/* News card 2 */}
-            <div className="bg-white rounded-md shadow-md relative">
-              <img
-                src="https://picsum.photos/600/300"
-                alt="News Image"
-                className="rounded-t-md w-full object-cover"
-              />
-              <div className="absolute bottom-0 left-0 p-4 text-white bg-black bg-opacity-75">
-                <h2 className="text-xl font-bold">
-                  Com placar de 47 a 17, CCJ CCJ da Câmara aprova PEC das Drogas
-                </h2>
-                <p className="text-sm">
-                  Após reunião com Lira, deputados decidem votar urgência sobre aborto e
-                  delações.
-                </p>
+            {
+              posts.length === 0 ? (
+                <p>No posts found</p>
+              ) : (
+              <div>
+                {posts.slice(0, 2).map((post) => (
+                  <CardPost postCard={post} />
+                ))}
               </div>
-            </div>
+            )}
             {/* News card 3 */}
-            <div className="bg-white rounded-md shadow-md relative">
-              <img
-                src="https://picsum.photos/600/300"
-                alt="News Image"
-                className="rounded-t-md w-full object-cover"
-              />
-              <div className="absolute bottom-0 left-0 p-4 text-white bg-black bg-opacity-75">
-                <h2 className="text-xl font-bold">
-                  Com placar de 47 a 17, CCJ CCJ da Câmara aprova PEC das Drogas
-                </h2>
-                <p className="text-sm">
-                  Após reunião com Lira, deputados decidem votar urgência sobre aborto e
-                  delações.
-                </p>
-              </div>
-            </div>
+           
           </div>
         </div>
       </div>
