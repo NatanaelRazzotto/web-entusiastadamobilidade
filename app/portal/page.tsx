@@ -75,7 +75,7 @@ export default async function Page() {
           <Link href={"https://www.facebook.com/webtvbusologa"}>
           <div className="flex items-center">
             <img
-              src="https://picsum.photos/50/50"
+              src="/public/icon/facebook.png"
               alt="Author Image"
               className="rounded-full w-12 h-12 mr-4"
             />
