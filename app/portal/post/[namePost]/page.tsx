@@ -116,7 +116,7 @@ export default async function Page({ params }: { params: { namePost: string } })
             {dataPost.title}
           </h2>
           <p className="text-sm">
-            Subtítulo da Matéria
+            {dataPost.category == 1? "Onibus Elétrico" : "Automoveis"}
           </p>
         </div>
 
@@ -134,7 +134,31 @@ export default async function Page({ params }: { params: { namePost: string } })
                 Resumo da Matéria
               </h3>
               <p className="text-gray-600 text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex.
+                {dataPost.resume ? dataPost.resume : "Sem informações de resumo."}
+              </p>
+            </div>
+            <div className="bg-white rounded-md shadow-md p-4">
+              <h3 className="text-lg font-bold">
+                Veículos Contidos na Matéria
+              </h3>
+              <p className="text-gray-600 text-sm">
+                {dataPost.numberVeicule ? dataPost.numberVeicule : "Sem informações dos Veículos."}
+              </p>
+            </div>
+            <div className="bg-white rounded-md shadow-md p-4">
+              <h3 className="text-lg font-bold">
+                TAGS 
+              </h3>
+              <p className="text-gray-600 text-sm">
+                {dataPost.resume ? dataPost.resume : "Sem informações de resumo."}
+              </p>
+            </div>
+            <div className="bg-white rounded-md shadow-md p-4">
+              <h3 className="text-lg font-bold">
+                Dia de Publicação
+              </h3>
+              <p className="text-gray-600 text-sm">
+                {dataPost.resume ? dataPost.resume : "Sem informações de resumo."}
               </p>
             </div>
           </div>

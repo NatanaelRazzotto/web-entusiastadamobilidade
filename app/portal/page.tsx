@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import CardPost from '../ui/portal/card';
 import { PrismaClient } from '@prisma/client';
 import { Post } from '../lib/definitions';
+import Link from 'next/link';
  
 export default async function Page() { 
 
@@ -71,6 +72,7 @@ export default async function Page() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Blog 1 */}
         <div className="bg-white rounded-md shadow-md p-4">
+          <Link href={"https://www.facebook.com/webtvbusologa"}>
           <div className="flex items-center">
             <img
               src="https://picsum.photos/50/50"
@@ -80,11 +82,12 @@ export default async function Page() {
             <div>
               <h3 className="text-lg font-bold">Jornal Busólogo - FACEBOOK</h3>
               <p className="text-gray-600 text-sm">
-                Empresa alvo da CPI da Pandemia vence licitação milionária da
-                Saúde
+                Nóticias e Fotografia, de forma rápida e objetiva você encontra
+                tudo sobre o mundo do Transporte Urbano e Rodoviário
               </p>
             </div>
           </div>
+          </Link>
         </div>
         {/* Blog 2 */}
         <div className="bg-white rounded-md shadow-md p-4">

@@ -14,11 +14,16 @@ model Post {
   id        String    @id @default(cuid())
   namePost  String
   title     String
+  category  Float
   content   String?
+  resume    String?
+  tagPost   String?
+  numberVeicule  String?
   coverURL  String?
   published Boolean   @default(false)
   author    User?     @relation(fields: [authorId], references: [id])
   authorId  String?
+  dateCreate DateTime
 
   // Relação muitos para muitos com Image
   images    Image[]   @relation("PostImages")

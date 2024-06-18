@@ -99,8 +99,13 @@ export type Post = {
   content?: string;
   coverURL?: string;
   published: boolean;
+  numberVeicule?:  String;
   authorId: string;
   images?: Image[];
+  category : number;
+  resume? :   String;
+  tagPost? :  String;
+  dateCreate : Date;
 };
 
 export type Image = {
