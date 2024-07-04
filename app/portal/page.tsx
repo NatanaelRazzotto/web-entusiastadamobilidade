@@ -25,17 +25,26 @@ export default async function Page() {
   
   return (
     <main>
-       <div className="container mx-auto px-4"> 
+      <div className="container mx-auto px-4"> 
 
-        <div className="relative bottom-0 left-0 p-4 text-white bg-black bg-opacity-75">
-          <h2 className="text-xl font-bold">
-            Assistente Entusiasta (CURITIBA - PR)
-          </h2>
-          <p className="text-sm">
-            Confira em tempo real onde está o carro de testes XY049
-          </p>
-        </div>    
-        <h2 className="text-2xl font-bold mt-8 mb-4">Destaques</h2>
+      <div className="relative rounded-t-lg bottom-0 left-0 p-4 text-white bg-black">
+        <input style={{width : "84%", backgroundColor:"black", borderRadius: "10px"}} placeholder='Procurar por uma NOTÍCIA.'></input>
+        <button className='hover:bg-slate-950' style={{ width : "15%",marginLeft : "10px", borderRadius: "10px", border: "1px solid white", padding: "6px"}} > Pesquisar</button>
+      </div>    
+
+      <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white bg-orange-700 ">
+        <p className="text-sm">
+          Assistente Entusiasta (CURITIBA - PR) |  Confira em tempo real onde está o carro de testes XY049
+        </p>
+     
+      </div>  
+
+        <div className="py-4">
+        <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+          <h2 className="text-2xl font-bold mt-2 mb-1">Destaques</h2>
+        </div>
+      </div>
+      
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" >
         <div className="col-span-2">
@@ -72,76 +81,91 @@ export default async function Page() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Blog 1 */}
         <div className="bg-white rounded-md shadow-md p-4">
-          <Link href={"https://www.facebook.com/webtvbusologa"}>
+          <Link href={"https://www.facebook.com/webtvbusologa"} legacyBehavior>
+          <a target="_blank" rel="noopener noreferrer">
           <div className="flex items-center">
             <img
-              src="/public/icon/facebook.png"
+              src="/icon/facebook.png"
               alt="Author Image"
               className="rounded-full w-12 h-12 mr-4"
             />
             <div>
-              <h3 className="text-lg font-bold">Jornal Busólogo - FACEBOOK</h3>
+              <h3 className="text-lg font-bold">WTBus- Entusiasta Da Mobilidade (Facebook)</h3>
               <p className="text-gray-600 text-sm">
-                Nóticias e Fotografia, de forma rápida e objetiva você encontra
-                tudo sobre o mundo do Transporte Urbano e Rodoviário
+                  Notícias e fotografia sobre o mundo dos transportes. De forma rápida e objetiva, encontre tudo sobre mobilidade e inovações.
               </p>
             </div>
           </div>
+          </a>
           </Link>
         </div>
         {/* Blog 2 */}
         <div className="bg-white rounded-md shadow-md p-4">
+        <Link target='_blank' href={"https://www.instagram.com/entusiastadamobilidade/"} legacyBehavior>
+          <a target="_blank" rel="noopener noreferrer">
           <div className="flex items-center">
             <img
-              src="https://picsum.photos/50/50"
+              src="/icon/instagram.png"
               alt="Author Image"
               className="rounded-full w-12 h-12 mr-4"
             />
             <div>
-              <h3 className="text-lg font-bold">NRFv - INSTAGRAM</h3>
+              <h3 className="text-lg font-bold">Entusiasta Da Mobilidade (Instagram)</h3>
               <p className="text-gray-600 text-sm">
-                Juscelino Filho: Aliados acham que Lula ganhará tempo e
-                evitará antecipar reforma
+              Notícias e fotografia sobre o mundo dos transportes. De forma rápida e objetiva, encontre tudo sobre mobilidade e inovações.
               </p>
             </div>
           </div>
+          </a>
+          </Link>
         </div>
         {/* Blog 3 */}
         <div className="bg-white rounded-md shadow-md p-4">
+          <Link href={"https://www.youtube.com/channel/UCAzsEfkJ4e6G-wFQv8srFXA"} legacyBehavior>
+          <a target="_blank" rel="noopener noreferrer">
           <div className="flex items-center">
             <img
-              src="https://picsum.photos/50/50"
+                src="/icon/youtube.png"
               alt="Author Image"
               className="rounded-full w-12 h-12 mr-4"
             />
             <div>
-              <h3 className="text-lg font-bold">NRFv - YOUTUBE</h3>
+              <h3 className="text-lg font-bold">NRFv - Entusiasta Da Mobilidade</h3>
               <p className="text-gray-600 text-sm">
-                Ala do PP se rebela contra vice de Nunes escolhido por
-                Bolsonaro
+              Notícias e fotografia sobre o mundo dos transportes. De forma rápida e objetiva, encontre tudo sobre mobilidade e inovações.
               </p>
             </div>
           </div>
+          </a>
+          </Link>
         </div>
         {/* Blog 4 */}
         <div className="bg-white rounded-md shadow-md p-4">
+          <Link href={"https://www.youtube.com/channel/UC2m3YJu7rARj1wQhFMHmNrg"}legacyBehavior>
+          <a target="_blank" rel="noopener noreferrer">
           <div className="flex items-center">
             <img
-              src="https://picsum.photos/50/50"
+               src="/icon/youtube.png"
               alt="Author Image"
               className="rounded-full w-12 h-12 mr-4"
             />
             <div>
-              <h3 className="text-lg font-bold">WTBUS - YOUTUBE</h3>
+              <h3 className="text-lg font-bold">WTBUS - Web Tv Busóloga</h3>
               <p className="text-gray-600 text-sm">
-                STF visa subir rendimento do FGTS e governo age para
-                reduzir danos a habitação
+              Notícias e fotografia sobre o mundo dos transportes. De forma rápida e objetiva, encontre tudo sobre mobilidade e inovações.
               </p>
             </div>
           </div>
+          </a>
+          </Link>
         </div>
       </div>
-      <h2 className="text-2xl font-bold mt-8 mb-4">Máterias</h2>
+      <div className="py-4">
+        <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+          <h2 className="text-2xl font-bold mt-2 mb-1">Materias</h2>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* News card 1 */}
         <div className="bg-white rounded-md shadow-md">
@@ -199,7 +223,7 @@ export default async function Page() {
         </div>
       </div>
       <div className="flex justify-end mt-8">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
           Ver mais
         </button>
       </div>

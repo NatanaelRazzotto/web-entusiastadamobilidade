@@ -5,10 +5,9 @@ export default function AcmeLogo() {
   return (
     <div
       className={`${lusitana.className} flex flex-row items-center leading-none text-white`}
-    >
-    
+    >   
       <img
-              src="/WETBUS.png"
+              src="/logo.svg"
               alt="Author Image"            
       />
     </div>

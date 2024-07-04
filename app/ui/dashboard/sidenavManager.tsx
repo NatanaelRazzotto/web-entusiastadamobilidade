@@ -12,10 +12,10 @@ export default function SideNav() {
         href="/"
       >
           <div style={{ height: "100%", width: "5%", backgroundColor: "brown", left: "0px" }}></div>
-        <div style={{ height: "100%", width: "5%", backgroundColor: "chocolate", right: "0px", left: "auto" }}></div>
-        <div className="w-32 p-4 text-white md:w-40">
-          <AcmeLogo />
-        </div>
+          <div style={{ height: "100%", width: "5%", backgroundColor: "chocolate", right: "0px", left: "auto" }}></div>
+          <div style={{ width: "80%", paddingBottom: "15px", paddingLeft: "15px"}}>
+            <AcmeLogo />
+          </div>
       </Link>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />
