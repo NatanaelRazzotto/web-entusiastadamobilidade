@@ -8,21 +8,25 @@ export default function CardPost({postCard}) {
     <Link
     key={'aaaaa'}
     href={'portal/post/' + postCard.namePost}>
-    <div className="bg-white rounded-md shadow-md relative">
+  <div className="bg-white rounded-md shadow-md relative">
+  <div className="relative">
     <img
       src={postCard.coverURL}
       alt="News Image"
       className="rounded-t-md w-full object-cover"
     />
-    <div className="absolute bottom-0 left-0 p-4 text-white bg-black bg-opacity-75">
-      <h2 className="text-xl font-bold">
-        {postCard.title}
-      </h2>
-      <p className="text-sm">
-        {postCard.content}     
-      </p>
-    </div>
-    </div> 
+    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-75 rounded-t-md"></div>
+  </div>
+  <div className="absolute bottom-0 left-0 p-4 text-white">
+    <h2 className="text-xl font-bold">
+      {postCard.title}
+    </h2>
+    <p className="text-sm">
+      {postCard.content}     
+    </p>
+  </div>
+</div>
+
     </Link>
     
     )
