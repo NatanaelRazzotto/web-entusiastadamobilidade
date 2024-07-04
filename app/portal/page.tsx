@@ -8,6 +8,7 @@ import CardPost from '../ui/portal/card';
 import { PrismaClient } from '@prisma/client';
 import { Post } from '../lib/definitions';
 import Link from 'next/link';
+import CardNotice from '../ui/portal/cardNotice';
  
 export default async function Page() { 
 
@@ -74,7 +75,8 @@ export default async function Page() {
                 <CardPost postCard={postDefault} />
               ) : (
               <div>
-                {posts.slice(0, 2).map((post) => (
+                {
+                posts.slice(0, 2).map((post) => (
                   <CardPost postCard={post} />
                 ))}
               </div>
@@ -182,23 +184,19 @@ export default async function Page() {
             </div>
           </div>
           {/* News card 1 */}
-          <div className="bg-white rounded-md shadow-md">
-            <img
-              src="https://picsum.photos/600/300"
-              alt="News Image"
-              className="rounded-t-md"
-            />
-            <div className="p-4">
-              <h2 className="text-xl font-bold">
-                Mercado vê devolução de MP como sinal de que plano da
-                Fazenda de ajuste fiscal alcançou limite
-              </h2>
-              <ul className="list-disc list-inside text-gray-600 text-sm">
-                <li>TCU faz alerta sobre "legitimidade" de renúncias fiscais</li>
-                <li>TCU critica "privilégios" de aposentadoria militar</li>
-              </ul>
-            </div>
-          </div>
+
+          {
+              posts.length === 0 ? (
+                <CardNotice postCard={postDefault} />
+              ) : (
+              <div>
+                {
+                posts.slice(3, 6).map((post) => (
+                  <CardNotice postCard={post} />
+                ))}
+              </div>
+            )
+          }        
           
           <div className="flex justify-end mt-8">
             <button className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
@@ -217,23 +215,20 @@ export default async function Page() {
             </div>
           </div>
           {/* News card 1 */}
-          <div className="bg-white rounded-md shadow-md">
-            <img
-              src="https://picsum.photos/600/300"
-              alt="News Image"
-              className="rounded-t-md"
-            />
-            <div className="p-4">
-              <h2 className="text-xl font-bold">
-                Mercado vê devolução de MP como sinal de que plano da
-                Fazenda de ajuste fiscal alcançou limite
-              </h2>
-              <ul className="list-disc list-inside text-gray-600 text-sm">
-                <li>TCU faz alerta sobre "legitimidade" de renúncias fiscais</li>
-                <li>TCU critica "privilégios" de aposentadoria militar</li>
-              </ul>
-            </div>
-          </div>
+         
+          {
+              posts.length === 0 ? (
+                <CardNotice postCard={postDefault} />
+              ) : (
+              <div>
+                {
+                posts.slice(3, 6).map((post) => (
+                  <CardNotice postCard={post} />
+                ))}
+              </div>
+            )
+          }   
+
           <div className="flex justify-end mt-8">
             <button className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
               Ver mais
@@ -251,23 +246,18 @@ export default async function Page() {
             </div>
           </div>
           {/* News card 1 */}
-          <div className="bg-white rounded-md shadow-md">
-            <img
-              src="https://picsum.photos/600/300"
-              alt="News Image"
-              className="rounded-t-md"
-            />
-            <div className="p-4">
-              <h2 className="text-xl font-bold">
-                Mercado vê devolução de MP como sinal de que plano da
-                Fazenda de ajuste fiscal alcançou limite
-              </h2>
-              <ul className="list-disc list-inside text-gray-600 text-sm">
-                <li>TCU faz alerta sobre "legitimidade" de renúncias fiscais</li>
-                <li>TCU critica "privilégios" de aposentadoria militar</li>
-              </ul>
-            </div>
-          </div>
+          {
+              posts.length === 0 ? (
+                <CardNotice postCard={postDefault} />
+              ) : (
+              <div>
+                {
+                posts.slice(3, 6).map((post) => (
+                  <CardNotice postCard={post} />
+                ))}
+              </div>
+            )
+          }   
           <div className="flex justify-end mt-8">
             <button className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
               Ver mais
@@ -287,23 +277,18 @@ export default async function Page() {
             </div>
           </div>
           {/* News card 1 */}
-          <div className="bg-white rounded-md shadow-md">
-            <img
-              src="https://picsum.photos/600/300"
-              alt="News Image"
-              className="rounded-t-md"
-            />
-            <div className="p-4">
-              <h2 className="text-xl font-bold">
-                Mercado vê devolução de MP como sinal de que plano da
-                Fazenda de ajuste fiscal alcançou limite
-              </h2>
-              <ul className="list-disc list-inside text-gray-600 text-sm">
-                <li>TCU faz alerta sobre "legitimidade" de renúncias fiscais</li>
-                <li>TCU critica "privilégios" de aposentadoria militar</li>
-              </ul>
-            </div>
-          </div>
+          {
+              posts.length === 0 ? (
+                <CardNotice postCard={postDefault} />
+              ) : (
+              <div>
+                {
+                posts.slice(3, 6).map((post) => (
+                  <CardNotice postCard={post} />
+                ))}
+              </div>
+            )
+          }   
           <div className="flex justify-end mt-8">
             <button className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
               Ver mais
