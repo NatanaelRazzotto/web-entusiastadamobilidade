@@ -49,6 +49,7 @@ export default async function Page({ params }: { params: { namePost: string } })
 
   try {
     const response : Post= await fetchPostName(namePost)
+    
     if (response == null) {
       throw new Error('Erro na busca de dados');
     }
@@ -111,14 +112,12 @@ export default async function Page({ params }: { params: { namePost: string } })
   return (
     <main>
       <div className="container mx-auto px-4">
-        <div className="relative bottom-0 left-0 p-4 text-white bg-black bg-opacity-75">
-          <h2 className="text-xl font-bold">
+
+      <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white  bg-black ">
+        <h2 className="text-xl font-bold">
             {dataPost.title}
-          </h2>
-          <p className="text-sm">
-            {dataPost.category == 1? "Onibus Elétrico" : "Automoveis"}
-          </p>
-        </div>
+        </h2>     
+      </div>  
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           <div className="col-span-2">
@@ -130,45 +129,63 @@ export default async function Page({ params }: { params: { namePost: string } })
           </div>
           <div className="col-span-1">
             <div className="bg-white rounded-md shadow-md p-4">
-              <h3 className="text-lg font-bold">
-                Resumo da Matéria
-              </h3>
-              <p className="text-gray-600 text-sm">
+            
+              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+                <h2 className="font-bold mt-2 mb-1">  Resumo da Matéria</h2>
+              </div>      
+  
+              <p className="py-4 text-black text-sm">
                 {dataPost.resume ? dataPost.resume : "Sem informações de resumo."}
               </p>
+
             </div>
             <div className="bg-white rounded-md shadow-md p-4">
-              <h3 className="text-lg font-bold">
-                Veículos Contidos na Matéria
-              </h3>
-              <p className="text-gray-600 text-sm">
+
+              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+                  <h2 className="font-bold mt-2 mb-1">   
+                      Veículos Contidos na Matéria
+                  </h2>
+                </div>     
+    
+              <p className="py-4 text-black text-sm">
                 {dataPost.numberVeicule ? dataPost.numberVeicule : "Sem informações dos Veículos."}
               </p>
             </div>
             <div className="bg-white rounded-md shadow-md p-4">
-              <h3 className="text-lg font-bold">
-                TAGS 
-              </h3>
-              <p className="text-gray-600 text-sm">
-                {dataPost.resume ? dataPost.resume : "Sem informações de resumo."}
+        
+              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+                <h2 className="font-bold mt-2 mb-1">   
+                  Categoria 
+                  </h2>
+                </div>     
+    
+              <p className="py-4 text-black text-sm">
+                {dataPost.category == 1? "Onibus Elétrico" : "Automoveis"}
               </p>
             </div>
             <div className="bg-white rounded-md shadow-md p-4">
-              <h3 className="text-lg font-bold">
+         
+              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+              <h2 className="font-bold mt-2 mb-1">   
                 Dia de Publicação
-              </h3>
-              <p className="text-gray-600 text-sm">
-                {dataPost.resume ? dataPost.resume : "Sem informações de resumo."}
+                  </h2>
+                </div>     
+    
+              <p className="py-4 text-black text-sm">
+                {dataPost.dateCreate ? dataPost.dateCreate.toString() : "Sem informações de resumo."}
               </p>
             </div>
           </div>
         </div>
 
         <div className="bg-white rounded-md shadow-md p-4 mt-8">
-          <h3 className="text-lg font-bold">
-            Conteúdo da Matéria
-          </h3>
-          <p className="text-gray-600 text-sm">
+          <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+              <h2 className="font-bold mt-2 mb-1">   
+                MÁTERIA INTEGRA
+              </h2>
+          </div>     
+    
+          <p className="py-4 text-black ">
             {dataPost.content}
           </p>
         </div>
@@ -192,7 +209,7 @@ export default async function Page({ params }: { params: { namePost: string } })
         </div>
 
         <div className="flex justify-end mt-8">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button className=" bg-orange-700  hover:bg-orange-900  text-white font-bold py-2 px-4 rounded">
             Voltar para a página principal
           </button>
         </div>
