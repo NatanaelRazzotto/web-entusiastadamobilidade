@@ -41,10 +41,17 @@ export default async function Page() {
     <main>
       <div className="container mx-auto px-4"> 
 
-      <div className="relative rounded-t-lg bottom-0 left-0 p-4 text-white bg-black">
-        <input style={{width : "84%", backgroundColor:"black", borderRadius: "10px"}} placeholder='Procurar por uma NOTÍCIA.'></input>
-        <button className='hover:bg-slate-950' style={{ width : "15%",marginLeft : "10px", borderRadius: "10px", border: "1px solid white", padding: "6px"}} > Pesquisar</button>
-      </div>    
+      <div className="relative rounded-t-lg bottom-0 left-0 p-4 text-white bg-black flex items-center">
+        <input
+          className="w-10/12 bg-black rounded-md p-2"
+          placeholder="Procurar por uma NOTÍCIA."
+        />
+        <button className="w-2/12 ml-2 rounded-md border border-white p-2 hover:bg-slate-950">
+          <span className="block md:hidden">P</span>
+          <span className="hidden md:block">Pesquisar</span>
+        </button>
+      </div>
+   
 
       <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white bg-orange-700 ">
         <p className="text-sm">

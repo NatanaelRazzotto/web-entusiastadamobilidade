@@ -3,12 +3,12 @@ import { lusitana } from '@/app/ui/fonts';
 
 export default function AcmeLogo() {
   return (
-    <div
-      className={`${lusitana.className} flex flex-row items-center leading-none text-white`}
-    >   
+    <div className='w-[80%] md:w-[100%]'>   
       <img
               src="/logo.svg"
-              alt="Author Image"            
+              alt="Author Image"  
+            
+             
       />
     </div>
   );
