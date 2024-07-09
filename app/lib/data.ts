@@ -45,6 +45,24 @@ export async function fetchPostName(namePost : string){
   }
 }
 
+export async function fetchIdImage(idImage : number){
+  try {
+    const image: Image | null = await prisma.image.findFirst({
+      where: {
+        id: idImage,
+      },
+      include: {
+        vehicle: true,
+      },
+    });
+
+    return image;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
 export async function getUser(email: string): Promise<User | null> {
   try {
     const user: User | null = await prisma.user.findUnique({
