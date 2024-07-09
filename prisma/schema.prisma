@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Post {
-  id        String    @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   namePost  String
   title     String
   category  Float
@@ -21,7 +21,9 @@ model Post {
   coverURL  String?
   published Boolean   @default(false)
   author    User?     @relation(fields: [authorId], references: [id])
-  authorId  String?
+  authorId  Int?
+  newspaperColumn    NewspaperColumn?     @relation(fields: [newspaperColumnID], references: [id])
+  newspaperColumnID  Int?
   dateCreate DateTime
 
   // Relação muitos para muitos com Image
@@ -29,62 +31,76 @@ model Post {
 }
 
 model Image {
-  id          String    @id @default(cuid())
-  title       String
+  id        Int      @id @default(autoincrement())
+  title     String
   description String?
-  pathURL     String?
-  published   Boolean   @default(false)
-  author      User?     @relation(fields: [authorId], references: [id])
-  authorId    String?
+  pathURL   String?
+  published Boolean @default(false)
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
 
   // Relação muitos para muitos com Post
-  posts       Post[]    @relation("PostImages") 
-  vehicle      Vehicle[]   @relation("VehicleImages")
+  posts     Post[]   @relation("PostImages") 
+  vehicle   Vehicle[] @relation("VehicleImages")
 }
 
 model Vehicle {
-  id          String    @id @default(cuid())
-  plate       String?
-  serialNumber String?
-  model Float
-  powertrain Float
-  operator Float
-  images      Image[]   @relation("VehicleImages")
+  id                Int       @id @default(autoincrement())
+  plate             String?
+  serialNumber      String?
+  operatingCategory Float
+  images            Image[]   @relation("VehicleImages")
+  bodywork          Bodywork? @relation(fields: [bodyworkID], references: [id])
+  bodyworkID        Int?
+  powertrain        Powertrain? @relation(fields: [powertrainID], references: [id])
+  powertrainID      Int?
+  operator          Operator? @relation(fields: [operatorID], references: [id])
+  operatorID        Int?
 }
-
 model Bodywork {
-  id          String    @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   nameModel       String
   description      String?
   serialNumber String?
   year Float
-  manufacturer Float
+  vehicles Vehicle[]
+  manufacturer    Manufacturer?     @relation(fields: [manufacturerID], references: [id])
+  manufacturerID  Int?
 }
 
 model Powertrain {
-  id          String    @id @default(cuid())
+   id        Int      @id @default(autoincrement())
   nameModel       String
   description      String?
   serialNumber String?
   year Float
-  manufacturer Float
+  fuel Float
+  vehicles Vehicle[]
+  manufacturer    Manufacturer?     @relation(fields: [manufacturerID], references: [id])
+  manufacturerID  Int?
 }
 
 model Manufacturer {
-  id        String    @id @default(cuid())
+   id        Int      @id @default(autoincrement())
   name      String
   cnpj      String?
+  nationality String
+  bodyworks Bodywork[]
+  powertrain Powertrain []
 }
 
 model Operator {
-  id        String    @id @default(cuid())
+    id        Int      @id @default(autoincrement())
   name      String
   cnpj      String?
+  nationality String
+  vehicle  Vehicle []
 }
 
+
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
+    id        Int      @id @default(autoincrement())
+  userId             Int  @map("user_id")
   type               String
   provider           String
   providerAccountId  String  @map("provider_account_id")
@@ -104,15 +120,15 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+    id        Int      @id @default(autoincrement())
   sessionToken String   @unique@map("session_token")
-  userId       String   @map("user_id")
+  userId       Int   @map("user_id")
   expires      DateTime
   user         User     @relation(fields:[userId], references:[id], onDelete: Cascade)
 }
 
 model User {
-  id            String    @id @default(cuid())
+    id        Int      @id @default(autoincrement())
   name          String?
   password      String?
   email         String?@unique
@@ -123,6 +139,12 @@ model User {
   sessions      Session[]
   imagens Image[]
 
+}
+
+model NewspaperColumn {
+  id        Int      @id @default(autoincrement())
+  identifier String
+  posts         Post[]
 }
 
 model VerificationToken {

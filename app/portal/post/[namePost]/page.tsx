@@ -1,9 +1,11 @@
 
 import { useEffect, useState } from 'react';
-import { Image, Post } from '../../../lib/definitions';
+import { Image, Post, Vehicle } from '../../../lib/definitions';
 
 import { fetchPostName } from '@/app/lib/data';
 import { GetServerSideProps } from 'next';
+import { list } from 'postcss';
+import Link from 'next/link';
 
 interface PageProps {
   data: any;
@@ -45,6 +47,7 @@ export default async function Page({ params }: { params: { namePost: string } })
   console.log('Parâmetro namePost:', namePost);
 
   let dataPost : Post | null = null;
+  let dataVehicle : Vehicle [] = [];
   let error = null;
 
   try {
@@ -55,7 +58,20 @@ export default async function Page({ params }: { params: { namePost: string } })
     }
 
     dataPost = response
-    console.log("🚀 ~ data:", dataPost)
+    if (dataPost){
+      if (dataPost.images[0]){
+        console.log("🚀 ~ llllll:", dataPost.images[0].vehicle)
+        dataPost.images.forEach(element => {
+          if (element.vehicle[0]){
+            dataVehicle.push(element.vehicle[0])
+            console.log("🚀 ~ dataVehicle:", dataVehicle)
+          }         
+
+        });
+      }
+    }
+ 
+  
   } catch (err) {
     error = err.message;
   }
@@ -109,15 +125,45 @@ export default async function Page({ params }: { params: { namePost: string } })
   //   </div>
     
   // );
+
+  function formatDate(dateString : string):string {
+    const date = new Date(dateString);
+    const day = (`0${date.getDate()}`).slice(-2);
+    const month = (`0${date.getMonth() + 1}`).slice(-2);
+    const year = date.getFullYear();
+    const hours = (`0${date.getHours()}`).slice(-2);
+    const minutes = (`0${date.getMinutes()}`).slice(-2);
+    const seconds = (`0${date.getSeconds()}`).slice(-2);
+  
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+  }
+
   return (
     <main>
       <div className="container mx-auto px-4">
 
-      <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white  bg-black ">
+      <div className="relative flex  justify-between rounded-b-lg rounded-b-lg  text-white bg-black">
+      <div className='relative flex  justify-between'  style={{ width: "5%" }}>
+        <div className='rounded-l' style={{ height: "100%", width: "50%", backgroundColor: "brown" }}></div>
+        <div style={{ height: "100%", width: "50%", backgroundColor: "chocolate" }}></div>
+      </div>
+      <div style={{ width: "80%", padding: "10px"}}>
         <h2 className="text-xl font-bold">
-            {dataPost.title}
-        </h2>     
-      </div>  
+          {dataPost.title}
+        </h2>
+      </div>
+      <div style={{ width: "10%",padding: "10px" }}>
+      <div className='w-[80%] md:w-[100%]'>   
+        <img
+                src="/logo.svg"
+                alt="Author Image"  
+              
+              
+        />
+      </div>
+      </div>
+    </div>
+
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           <div className="col-span-2">
@@ -145,11 +191,25 @@ export default async function Page({ params }: { params: { namePost: string } })
                   <h2 className="font-bold mt-2 mb-1">   
                       Veículos Contidos na Matéria
                   </h2>
-                </div>     
+              </div>   
+
+              {        
+                
+                dataVehicle.length === 0 ?    
+                 <p className="py-4 text-black text-sm">
+                  Sem informações dos Veículos.
+                </p> :
+                (dataVehicle as Vehicle[]).map((vehicle: Vehicle) => (
+                  <Link href={"https://www.facebook.com/webtvbusologa"}>
+                    <p className="py-4 text-black text-sm">
+                      {vehicle.serialNumber.toString()}
+                    </p>
+                  </Link>
+                 
+                ))
+              }   
     
-              <p className="py-4 text-black text-sm">
-                {dataPost.numberVeicule ? dataPost.numberVeicule : "Sem informações dos Veículos."}
-              </p>
+           
             </div>
             <div className="bg-white rounded-md shadow-md p-4">
         
@@ -172,7 +232,7 @@ export default async function Page({ params }: { params: { namePost: string } })
                 </div>     
     
               <p className="py-4 text-black text-sm">
-                {dataPost.dateCreate ? dataPost.dateCreate.toString() : "Sem informações de resumo."}
+                {dataPost.dateCreate ? formatDate(dataPost.dateCreate.toString()) : "Sem informações de resumo."}
               </p>
             </div>
           </div>

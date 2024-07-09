@@ -1,4 +1,5 @@
 import { PrismaClient, Post as PrismaPost, User as PrismaUser, Image as PrismaImage } from '@prisma/client';
+import { number } from 'zod';
 // This file contains type definitions for your data.
 // It describes the shape of the data, and what data type each property should accept.
 // For simplicity of teaching, we're manually defining these types.
@@ -93,14 +94,15 @@ export type InvoiceForm = {
 export type User = PrismaUser;
 
 export type Post = {
-  id: string;
+  id: number;
   namePost: string;
   title: string;
   content?: string;
   coverURL?: string;
   published: boolean;
+  newspaperColumnID?:  number;
   numberVeicule?:  String;
-  authorId: string;
+  authorId: number;
   images?: Image[];
   category : number;
   resume? :   String;
@@ -109,14 +111,25 @@ export type Post = {
 };
 
 export type Image = {
-  id: string;
+  id: number;
   title: string;
   description?: string;
   pathURL?: string;
   published: boolean;
-  authorId: string;
-  posts?: Post[];
-  
+  authorId: number;
+  vehicle?: Vehicle[]; // Deve ser um array de Vehicle
 };
+export type Vehicle = {
+  id: number;
+  plate?: string;
+  serialNumber?: string;
+  operatingCategory: number;
+  images?: Image[]; // Tornar images opcional
+  bodyworkID: number;
+  powertrainID: number;
+  operatorID: number;
+};
+
+
 
 

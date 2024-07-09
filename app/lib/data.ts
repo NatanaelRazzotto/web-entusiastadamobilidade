@@ -1,7 +1,8 @@
 import prisma from '../lib/prisma';
 import { 
   Post,
-  User
+  User,
+  Image
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -29,10 +30,14 @@ export async function fetchPostName(namePost : string){
         namePost: namePost,
       },
       include: {
-        images : true
+        images: {
+          include: {
+            vehicle: true,
+          },
+        },
       },
- 
     });
+
     return post;
   } catch (error) {
     console.error('Database Error:', error);
