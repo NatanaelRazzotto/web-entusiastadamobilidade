@@ -3,7 +3,7 @@
 import { Post } from "@/app/lib/definitions"
 import Link from "next/link"
 
-export default function CardNotice({postCard}) {
+export default function CardNotice({postCard }) {
   return (
     <Link
     key={'aaaaa'}

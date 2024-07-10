@@ -142,8 +142,9 @@ model User {
 }
 
 model NewspaperColumn {
-  id        String     @id @default(uuid())
-  identifier String
+  id            String     @id @default(uuid())
+  identifier    String
+  urlPerfil     String     @default("default_url")
   posts         Post[]
 }
 

@@ -76,16 +76,16 @@ export default async function Page() {
     
        
       </div>
-        <div className="col-span-1">
+        <div className="col-span-2 md:col-span-1 ">
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
             {/* News card 2 */}
             {
-              posts.length === 0 ? (
+              posts.slice(1, 2).length === 0 ? (
                 <CardPost postCard={postDefault} />
               ) : (
               <div>
                 {
-                posts.slice(0, 2).map((post) => (
+                posts.slice(1, 2).map((post) => (
                   <CardPost postCard={post} />
                 ))}
               </div>
@@ -162,6 +162,7 @@ export default async function Page() {
           </Link>
         </div>
         {/* Blog 4 */}
+        {/* <p className="text-gray-600 text-sm hidden md:block" > */}
         <div className="bg-white rounded-md shadow-md p-4">
           <Link href={"https://www.youtube.com/channel/UC2m3YJu7rARj1wQhFMHmNrg"}legacyBehavior>
           <a target="_blank" rel="noopener noreferrer">
@@ -189,20 +190,22 @@ export default async function Page() {
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-">
           <div className="py-4">
             <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">Mobilidade</h2>
+              <h2 className="font-bold mt-2 mb-1">Transporte Público</h2>
             </div>
           </div>
           {/* News card 1 */}
 
           {
-              posts.length === 0 ? (
+              posts.slice(3, 6) .length === 0 ? (
                 <CardNotice postCard={postDefault} />
               ) : (
               <div>
                 {
-                posts.slice(3, 6).map((post) => (
-                  <CardNotice postCard={post} />
-                ))}
+                  posts
+                  .filter((post) => post.newspaperColumnID == "030e0d2f-5aad-4018-934a-420b23448fd9") 
+                  .slice(0, 3) 
+                  .map((post) => <CardNotice postCard={post} />)
+                }
               </div>
             )
           }        
@@ -220,23 +223,32 @@ export default async function Page() {
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
           <div className="py-4">
             <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">Mobilidade</h2>
+              <h2 className="font-bold mt-2 mb-1">Aviação</h2>
             </div>
           </div>
           {/* News card 1 */}
-         
+            {/* 
+              TransportePublico: 1,
+              Aviacao: 2,
+              Ferrovia: 3,
+              Automoveis: 4,
+
+            
+            1 */}
           {
-              posts.length === 0 ? (
+              posts.slice(3, 6) .length === 0 ? (
                 <CardNotice postCard={postDefault} />
               ) : (
               <div>
                 {
-                posts.slice(3, 6).map((post) => (
-                  <CardNotice postCard={post} />
-                ))}
+                  posts
+                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 2) 
+                  .slice(0, 3) 
+                  .map((post) => <CardNotice postCard={post} />)
+                }
               </div>
             )
-          }   
+          }    
 
           <div className="flex justify-end mt-8">
             <button className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
@@ -251,22 +263,24 @@ export default async function Page() {
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
           <div className="py-4">
             <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">Mobilidade</h2>
+              <h2 className="font-bold mt-2 mb-1">Ferrovia</h2>
             </div>
           </div>
           {/* News card 1 */}
           {
-              posts.length === 0 ? (
+              posts.slice(3, 6) .length === 0 ? (
                 <CardNotice postCard={postDefault} />
               ) : (
               <div>
                 {
-                posts.slice(3, 6).map((post) => (
-                  <CardNotice postCard={post} />
-                ))}
+                  posts
+                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 3) 
+                  .slice(0, 3) 
+                  .map((post) => <CardNotice postCard={post} />)
+                }
               </div>
             )
-          }   
+          }  
           <div className="flex justify-end mt-8">
             <button className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
               Ver mais
@@ -282,19 +296,21 @@ export default async function Page() {
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
           <div className="py-4">
             <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">Mobilidade</h2>
+              <h2 className="font-bold mt-2 mb-1">Automóveis</h2>
             </div>
           </div>
           {/* News card 1 */}
           {
-              posts.length === 0 ? (
+              posts.slice(3, 6) .length === 0 ? (
                 <CardNotice postCard={postDefault} />
               ) : (
               <div>
                 {
-                posts.slice(3, 6).map((post) => (
-                  <CardNotice postCard={post} />
-                ))}
+                  posts
+                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 4) 
+                  .slice(0, 3) 
+                  .map((post) => <CardNotice postCard={post} />)
+                }
               </div>
             )
           }   
