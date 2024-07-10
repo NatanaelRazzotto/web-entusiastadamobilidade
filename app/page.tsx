@@ -15,10 +15,12 @@ import CardPost from './ui/portal/card';
 import { Post } from './lib/definitions';
 
 import CardNotice from './ui/portal/cardNotice';
- 
+import SearchBar from './ui/portal/searchBar';
+
  
 
 export default async function Page() { 
+  
   const prisma = new PrismaClient();
 
   const postDefault : Post = {
@@ -48,16 +50,9 @@ export default async function Page() {
     <main>
       <div className="container mx-auto px-4"> 
 
-      <div className="relative rounded-t-lg bottom-0 left-0 p-4 text-white bg-black flex items-center">
-        <input
-          className="w-10/12 bg-black rounded-md p-2"
-          placeholder="Procurar por uma NOTÍCIA."
-        />
-        <button className="w-2/12 ml-2 rounded-md border border-white p-2 hover:bg-slate-950">
-          <span className="block md:hidden">P</span>
-          <span className="hidden md:block">Pesquisar</span>
-        </button>
-      </div>
+      <SearchBar />
+
+
    
 
       <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white bg-orange-700 ">

@@ -22,7 +22,7 @@ export default function CardPost({postCard}) {
       {postCard.title}
     </h2>
     <p className="text-sm">
-      {postCard.content}     
+      {postCard.resume}     
     </p>
   </div>
 </div>

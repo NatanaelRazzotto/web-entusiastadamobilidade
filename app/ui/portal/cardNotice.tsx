@@ -19,7 +19,7 @@ export default function CardNotice({postCard}) {
                 {postCard.title}
               </h2>
               <ul className="list-disc list-inside text-gray-600 text-sm">
-                <li>{postCard.content}</li>
+                <li>{postCard.resume}</li>
               </ul>
             </div>
           </div>
