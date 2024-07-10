@@ -51,7 +51,7 @@ export default async function Page({ params }: { params: { idImage: string } }) 
   let error = null;
 
   try {
-    const response : Image= await fetchIdImage(parseFloat(idImage))
+    const response : Image= await fetchIdImage(idImage)
     
     if (response == null) {
       throw new Error('Erro na busca de dados');

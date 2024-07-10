@@ -22,8 +22,8 @@ export default async function Page() {
   const prisma = new PrismaClient();
 
   const postDefault : Post = {
-    id : 1,
-    authorId : 1,
+    id : "1",
+    authorId : "1",
     published : true,
     dateCreate : new Date(),
     category : 1,

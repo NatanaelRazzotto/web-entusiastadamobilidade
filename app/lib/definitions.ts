@@ -94,15 +94,15 @@ export type InvoiceForm = {
 export type User = PrismaUser;
 
 export type Post = {
-  id: number;
+  id: String;
   namePost: string;
   title: string;
   content?: string;
   coverURL?: string;
   published: boolean;
-  newspaperColumnID?:  number;
+  newspaperColumnID?:  String;
   numberVeicule?:  String;
-  authorId: number;
+  authorId: String;
   images?: Image[];
   category : number;
   resume? :   String;
@@ -111,23 +111,23 @@ export type Post = {
 };
 
 export type Image = {
-  id: number;
+  id: String;
   title: string;
   description?: string;
   pathURL?: string;
   published: boolean;
-  authorId: number;
+  authorId: String;
   vehicle?: Vehicle[]; // Deve ser um array de Vehicle
 };
 export type Vehicle = {
-  id: number;
+  id: String;
   plate?: string;
   serialNumber?: string;
   operatingCategory: number;
   images?: Image[]; // Tornar images opcional
-  bodyworkID: number;
-  powertrainID: number;
-  operatorID: number;
+  bodyworkID: String;
+  powertrainID: String;
+  operatorID: String;
 };
 
 

@@ -45,7 +45,7 @@ export async function fetchPostName(namePost : string){
   }
 }
 
-export async function fetchIdImage(idImage : number){
+export async function fetchIdImage(idImage : string){
   try {
     const image: Image | null = await prisma.image.findFirst({
       where: {
