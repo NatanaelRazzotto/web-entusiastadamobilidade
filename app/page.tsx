@@ -30,7 +30,7 @@ export default async function Page() {
     namePost : "Há um post no forno!",
     title : "Há um post no forno!",
     content : "Há um post no forno!",
-    coverURL : "https://scontent.fbfh21-1.fna.fbcdn.net/v/t39.30808-6/449788802_970883095044934_821926565128646951_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFDDmiqafbxpVD6jUaFPYiY32MZ8mXSF5nfYxnyZdIXmZYTNJYSSOQdl7c0E4W-j-dMObejVT4CP3pj3YzE6RAN&_nc_ohc=sfIWoLs3fTwQ7kNvgE6GkXw&_nc_ht=scontent.fbfh21-1.fna&cb_e2o_trans=t&gid=AbxQ4N_BBK6XAJJqPmizI_x&oh=00_AYBD4udwzWuSB8thqAl9SzQtO2oJgzjmjO8abxvB-cAvsA&oe=668CDD12",
+    coverURL : "JB.png",
 
   }
 
