@@ -186,7 +186,7 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </div>      
   
               <p className="py-4 text-black text-sm">
-                {dataPost.vehicle ? dataPost.vehicle[0].serialNumber : "Sem Prefixo"}
+                {dataPost.vehicle.length > 0 ? dataPost.vehicle[0].serialNumber : "Sem Prefixo"}
               </p>
 
             </div>
@@ -197,7 +197,7 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </div>      
 
               <p className="py-4 text-black text-sm">
-               {dataPost.vehicle ? dataPost.vehicle[0].plate : "SEM PLACA"}
+               {dataPost.vehicle.length > 0 ? dataPost.vehicle[0].plate : "SEM PLACA"}
               </p>
 
             </div>
@@ -210,7 +210,7 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </div>      
   
               <p className="py-4 text-black text-sm">
-                {dataPost.vehicle ? 
+                {dataPost.vehicle.length > 0 ? 
                   dataPost.vehicle[0].bodywork ?
                    dataPost.vehicle[0].bodywork.manufacturer ?
                     dataPost.vehicle[0].bodywork.manufacturer.name : "Sem Info" :  "Sem Info":  "Sem Info"}
@@ -224,7 +224,7 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </div>      
 
               <p className="py-4 text-black text-sm">
-              {dataPost.vehicle ? 
+              {dataPost.vehicle.length > 0 ? 
                   dataPost.vehicle[0].bodywork ?
                    dataPost.vehicle[0].bodywork.nameModel : "Sem Info" :  "Sem Info"}
               </p>
@@ -240,7 +240,7 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </div>      
   
               <p className="py-4 text-black text-sm">
-              {dataPost.vehicle ? 
+              {dataPost.vehicle.length > 0? 
                   dataPost.vehicle[0].powertrain ?
                    dataPost.vehicle[0].powertrain.manufacturer ?
                     dataPost.vehicle[0].powertrain.manufacturer.name : "Sem Info" :  "Sem Info":  "Sem Info"}
@@ -254,7 +254,7 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </div>      
 
               <p className="py-4 text-black text-sm">
-              {dataPost.vehicle ? 
+              {dataPost.vehicle.length > 0 ? 
                   dataPost.vehicle[0].powertrain ?
                    dataPost.vehicle[0].powertrain.nameModel : "Sem Info":  "Sem Info"}
               </p>
@@ -270,7 +270,7 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </div>      
   
               <p className="py-4 text-black text-sm">
-                {dataPost.vehicle ? dataPost.vehicle[0].operator ? dataPost.vehicle[0].operator.name : "Sem Operador": "Sem Operador"}
+                {dataPost.vehicle.length > 0 ? dataPost.vehicle[0].operator ? dataPost.vehicle[0].operator.name : "Sem Operador": "Sem Operador"}
               </p>
 
             </div>

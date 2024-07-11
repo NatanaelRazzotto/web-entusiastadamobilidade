@@ -92,7 +92,7 @@ export default async function Page() {
               ) : (
               <div>
                 {
-                posts.slice(1, 3).map((post) => (
+                posts.slice(1, 3).filter((post)=>post.published).map((post) => (
                   <CardPost postCard={post} />
                 ))}
               </div>
@@ -209,7 +209,7 @@ export default async function Page() {
               <div>
                 {
                   posts
-                  .filter((post) => post.newspaperColumnID == "030e0d2f-5aad-4018-934a-420b23448fd9") 
+                  .filter((post) => post.newspaperColumnID == "030e0d2f-5aad-4018-934a-420b23448fd9" && post.published) 
                   .slice(0, 3) 
                   .map((post) => <CardNotice postCard={post} />)
                 }
@@ -218,7 +218,7 @@ export default async function Page() {
           }        
           
           <div className="flex justify-end mt-8">
-            <button className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
+            <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
               Ver mais
             </button>
           </div>
@@ -249,7 +249,7 @@ export default async function Page() {
               <div>
                 {
                   posts
-                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 2) 
+                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 2&& post.published) 
                   .slice(0, 4) 
                   .map((post) => <CardNotice postCard={post} />)
                 }
@@ -258,7 +258,7 @@ export default async function Page() {
           }    
 
           <div className="flex justify-end mt-8">
-            <button className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
+            <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
               Ver mais
             </button>
           </div>
@@ -281,7 +281,7 @@ export default async function Page() {
               <div>
                 {
                   posts
-                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 3) 
+                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 3&& post.published) 
                   .slice(0, 4) 
                   .map((post) => <CardNotice postCard={post} />)
                 }
@@ -289,7 +289,7 @@ export default async function Page() {
             )
           }  
           <div className="flex justify-end mt-8">
-            <button className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
+            <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
               Ver mais
             </button>
           </div>
@@ -314,7 +314,7 @@ export default async function Page() {
               <div>
                 {
                   posts
-                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 4) 
+                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 4 && post.published) 
                   .slice(0, 4) 
                   .map((post) => <CardNotice postCard={post} />)
                 }
@@ -322,7 +322,7 @@ export default async function Page() {
             )
           }   
           <div className="flex justify-end mt-8">
-            <button className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
+            <button style={{height:"50px"}} className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
               Ver mais
             </button>
           </div>
