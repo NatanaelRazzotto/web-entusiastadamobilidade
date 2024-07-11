@@ -38,6 +38,7 @@ model Image {
   published Boolean @default(false)
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?
+  dateCreate  DateTime   @default(now()) 
 
   // Relação muitos para muitos com Post
   posts     Post[]   @relation("PostImages") 
@@ -144,7 +145,7 @@ model User {
 model NewspaperColumn {
   id            String     @id @default(uuid())
   identifier    String
-  urlPerfil     String     @default("default_url")
+  urlPerfil     String     @default("WETBUS.png")
   posts         Post[]
 }
 

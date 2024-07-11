@@ -45,6 +45,7 @@ export default function SearchBar() {
     
 
       return (
+        
         <div className="relative p-4 text-white bg-black flex items-center">
           <input
             className="w-10/12 bg-black rounded-md p-2"

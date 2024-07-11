@@ -94,42 +94,95 @@ export type InvoiceForm = {
 export type User = PrismaUser;
 
 export type Post = {
-  id: String;
+  id: string;
   namePost: string;
   title: string;
-  content?: string;
-  coverURL?: string;
+  content?: string | null; // Deve coincidir com a definição no Prisma
+  coverURL?: string | null; // Deve coincidir com a definição no Prisma
   published: boolean;
-  newspaperColumnID?:  String;
-  numberVeicule?:  String;
-  authorId: String;
-  images?: Image[];
-  category : number;
-  resume? :   String;
-  tagPost? :  String;
-  dateCreate : Date;
+  newspaperColumnID?: string | null;
+  authorId: string;
+  images?: Image[]; // Deve ser uma lista de Image, conforme definido
+  category: number;
+  resume?: string | null;
+  tagPost?: string | null;
+  dateCreate: Date;
 };
+
 
 export type Image = {
-  id: String;
+  id: string;
   title: string;
-  description?: string;
-  pathURL?: string;
+  description?: string | null; // Deve coincidir com a definição no Prisma
+  pathURL?: string | null; // Deve coincidir com a definição no Prisma
   published: boolean;
-  authorId: String;
-  vehicle?: Vehicle[]; // Deve ser um array de Vehicle
-};
-export type Vehicle = {
-  id: String;
-  plate?: string;
-  serialNumber?: string;
-  operatingCategory: number;
-  images?: Image[]; // Tornar images opcional
-  bodyworkID: String;
-  powertrainID: String;
-  operatorID: String;
+
+  authorId: string;
+  dateCreate?: Date; // Deve coincidir com a definição no Prisma
+  posts?: Post[]; // Deve ser uma lista de Post, conforme definido
+  vehicle?: Vehicle[]; // Relacionamento com Vehicle, conforme definido
 };
 
+
+
+export type Vehicle = {
+  id: string;
+  plate?: string | null; // Deve coincidir com a definição no Prisma
+  serialNumber?: string | null; // Deve coincidir com a definição no Prisma
+  operatingCategory: number;
+  images?: Image[]; // Tornar images opcional, se for o caso
+  bodywork?: Bodywork | null; // Deve coincidir com a definição no Prisma
+  bodyworkID: string;
+  powertrain?: Powertrain | null; // Deve coincidir com a definição no Prisma
+  powertrainID: string;
+  operator?: Operator; // Deve coincidir com a definição no Prisma
+  operatorID: string;
+};
+
+
+// Bodywork.js
+export type Bodywork = {
+  id: string;
+  nameModel: string;
+  description?: string | null;
+  serialNumber?: string | null;
+  year: number;
+  vehicles?: Vehicle[];
+  manufacturer?: Manufacturer | null;
+  manufacturerID?: string | null;
+};
+
+
+// Powertrain.js
+export type Powertrain = {
+  id: string;
+  nameModel: string;
+  description?: string | null;
+  serialNumber?: string | null;
+  year: number;
+  fuel: number;
+  vehicles?: Vehicle[];
+  manufacturer?: Manufacturer | null;
+  manufacturerID?: string | null;
+};
+
+// Manufacturer.js
+export type Manufacturer = {
+  id: string;
+  name: string;
+  cnpj?: string | null;
+  nationality: string;
+  bodyworks?: Bodywork[];
+  powertrains?: Powertrain[];
+};
+
+export type Operator = {
+  id: string;
+  name: string;
+  cnpj?: string | null;
+  nationality?: string;
+  vehicles?: Vehicle[];
+};
 
 
 

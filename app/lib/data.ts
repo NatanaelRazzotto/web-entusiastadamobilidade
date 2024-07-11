@@ -76,8 +76,14 @@ export async function fetchIdImage(idImage : string){
       where: {
         id: idImage,
       },
-      include: {
-        vehicle: true,
+      include: {       
+        vehicle: {
+          include: {
+            bodywork: {include: {manufacturer: true}},
+            powertrain: {include: {manufacturer: true}},
+            operator : true
+          },
+        },
       },
     });
 

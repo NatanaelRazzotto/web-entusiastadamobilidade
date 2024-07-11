@@ -52,12 +52,14 @@ export default async function Page({ params }: { params: { idImage: string } }) 
 
   try {
     const response : Image= await fetchIdImage(idImage)
+    console.log("🚀 ~ response:", response)
     
     if (response == null) {
       throw new Error('Erro na busca de dados');
     }
 
     dataPost = response
+  
     // if (dataPost){
     //   if (dataPost.images[0]){
     //     console.log("🚀 ~ llllll:", dataPost.images[0].vehicle)
@@ -167,11 +169,13 @@ export default async function Page({ params }: { params: { idImage: string } }) 
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           <div className="col-span-2">
-            <img
-              src={dataPost.pathURL}
-              alt="Imagem da Matéria"
-              className="rounded-t-md w-full object-cover"
-            />
+          <iframe
+            src={`https://drive.google.com/file/d/${dataPost.pathURL}/preview`}
+            title={dataPost.title}
+            className="rounded-md w-full object-cover"     
+            height="100%"     
+            style={{ border: 'none' }}
+          ></iframe>
           </div>
           <div className="col-span-1">
             <div className="flex">
@@ -206,7 +210,10 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </div>      
   
               <p className="py-4 text-black text-sm">
-                {dataPost.vehicle ? dataPost.vehicle[0].serialNumber : "Sem Prefixo"}
+                {dataPost.vehicle ? 
+                  dataPost.vehicle[0].bodywork ?
+                   dataPost.vehicle[0].bodywork.manufacturer ?
+                    dataPost.vehicle[0].bodywork.manufacturer.name : "Sem Info" :  "Sem Info":  "Sem Info"}
               </p>
 
             </div>
@@ -217,7 +224,9 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </div>      
 
               <p className="py-4 text-black text-sm">
-               {dataPost.vehicle ? dataPost.vehicle[0].plate : "SEM PLACA"}
+              {dataPost.vehicle ? 
+                  dataPost.vehicle[0].bodywork ?
+                   dataPost.vehicle[0].bodywork.nameModel : "Sem Info" :  "Sem Info"}
               </p>
 
             </div>
@@ -231,7 +240,10 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </div>      
   
               <p className="py-4 text-black text-sm">
-                {dataPost.vehicle ? dataPost.vehicle[0].serialNumber : "Sem Prefixo"}
+              {dataPost.vehicle ? 
+                  dataPost.vehicle[0].powertrain ?
+                   dataPost.vehicle[0].powertrain.manufacturer ?
+                    dataPost.vehicle[0].powertrain.manufacturer.name : "Sem Info" :  "Sem Info":  "Sem Info"}
               </p>
 
             </div>
@@ -242,7 +254,9 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </div>      
 
               <p className="py-4 text-black text-sm">
-               {dataPost.vehicle ? dataPost.vehicle[0].plate : "SEM PLACA"}
+              {dataPost.vehicle ? 
+                  dataPost.vehicle[0].powertrain ?
+                   dataPost.vehicle[0].powertrain.nameModel : "Sem Info":  "Sem Info"}
               </p>
 
             </div>
@@ -252,11 +266,11 @@ export default async function Page({ params }: { params: { idImage: string } }) 
             <div className="bg-white rounded-md shadow-md p-4">
             
               <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-                <h2 className="font-bold mt-2 mb-1"> Fabricante da Carroceria</h2>
+                <h2 className="font-bold mt-2 mb-1"> Operador do Veículo</h2>
               </div>      
   
               <p className="py-4 text-black text-sm">
-                {dataPost.vehicle ? dataPost.vehicle[0].serialNumber : "Sem Prefixo"}
+                {dataPost.vehicle ? dataPost.vehicle[0].operator ? dataPost.vehicle[0].operator.name : "Sem Operador": "Sem Operador"}
               </p>
 
             </div>
@@ -269,7 +283,7 @@ export default async function Page({ params }: { params: { idImage: string } }) 
                 </div>     
     
               <p className="py-4 text-black text-sm">
-                {dataPost.id ? formatDate(dataPost.id.toString()) : "Sem informações de resumo."}
+                {dataPost.dateCreate ? formatDate(dataPost.dateCreate.toString()) : "Sem informações de resumo."}
               </p>
 
               </div>
