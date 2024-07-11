@@ -45,14 +45,45 @@ export async function fetchPostName(namePost : string){
   }
 }
 
+export async function fetchPostTitle(titlePost : string){
+  try {
+    const post: Post[] = await prisma.post.findMany({
+      where: {
+        title: {
+          contains : titlePost,
+        }
+      },
+      take : 5,
+      include: {
+        images: {
+          include: {
+            vehicle: true,
+          },
+        },
+      },
+    });
+
+    return post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
 export async function fetchIdImage(idImage : string){
   try {
     const image: Image | null = await prisma.image.findFirst({
       where: {
         id: idImage,
       },
-      include: {
-        vehicle: true,
+      include: {       
+        vehicle: {
+          include: {
+            bodywork: {include: {manufacturer: true}},
+            powertrain: {include: {manufacturer: true}},
+            operator : true
+          },
+        },
       },
     });
 

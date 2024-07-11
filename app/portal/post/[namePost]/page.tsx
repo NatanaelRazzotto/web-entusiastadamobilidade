@@ -217,10 +217,10 @@ export default async function Page({ params }: { params: { namePost: string } })
                 <h2 className="font-bold mt-2 mb-1">   
                   Categoria 
                   </h2>
-                </div>     
+                </div>  
     
               <p className="py-4 text-black text-sm">
-                {dataPost.category == 1? "Onibus Elétrico" : "Automoveis"}
+                {dataPost.category == 1? "Transporte Público" : dataPost.category == 2? "Aviacao":dataPost.category == 3?"Ferrovia":dataPost.category == 4?"Automoveis":"Geral"}
               </p>
             </div>
             <div className="bg-white rounded-md shadow-md p-4">
@@ -232,7 +232,7 @@ export default async function Page({ params }: { params: { namePost: string } })
                 </div>     
     
               <p className="py-4 text-black text-sm">
-                {dataPost.dateCreate ? formatDate(dataPost.dateCreate.toString()) : "Sem informações de resumo."}
+                {dataPost.dateCreate ? formatDate(dataPost.dateCreate.toString()) : "Sem informações de data."}
               </p>
             </div>
           </div>
@@ -252,14 +252,16 @@ export default async function Page({ params }: { params: { namePost: string } })
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           {
-            dataPost.images.length === 0 ?  <p>No posts found</p> :
+
+            
+            dataPost.images.length === 0 ?  <p>Sem Imagens</p> :
 
             (dataPost.images as Image[]).map((image: Image) => (
               <Link href={'../pictures/'+ image.id}>
                 <div className="col-span-1">
                 
                     <img
-                      src={image.pathURL}
+                      src={`https://drive.google.com/thumbnail?id=${image.pathURL}&sz=w1000`}
                       alt={image.title}
                       className="rounded-md w-full object-cover"
                     />
