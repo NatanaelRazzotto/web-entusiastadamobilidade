@@ -104,6 +104,7 @@ export type Post = {
   authorId: string;
   images?: Image[]; // Deve ser uma lista de Image, conforme definido
   category: number;
+  topNews: number;
   resume?: string | null;
   tagPost?: string | null;
   dateCreate: Date;

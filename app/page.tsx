@@ -29,6 +29,7 @@ export default async function Page() {
     published : true,
     dateCreate : new Date(),
     category : 1,
+    topNews : 0,
     namePost : "Há um post no forno!",
     title : "Há um post no forno!",
     content : "Há um post no forno!",
@@ -38,6 +39,9 @@ export default async function Page() {
 
   const posts : Post[] = await prisma.post.findMany();
   console.log("🚀 ~ Page ~ post:", posts)
+  const postTop : Post = posts.find((post) => post.topNews == 1)
+  const secondPostTop : Post = posts.find((post) => post.topNews == 2)
+  const thirdPostTop : Post = posts.find((post) => post.topNews == 3)
 
   
 
@@ -74,11 +78,8 @@ export default async function Page() {
         <div className="col-span-2">
         {/* News card 1 */}
 
-        {posts.length === 0 ? (
-        <CardPost postCard={postDefault} />
-      ) : (
-        <CardPost postCard={posts[0]} />
-      )}
+        {posts.length === 0 && !postTop? ( <CardPost postCard={postDefault} />) : postTop != undefined? (<CardPost postCard={postTop} />) : (   <CardPost postCard={postDefault} />)
+    }
         
     
        
@@ -86,18 +87,12 @@ export default async function Page() {
         <div className="col-span-2 md:col-span-1 ">
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
             {/* News card 2 */}
-            {
-              posts.slice(1, 3).length === 0 ? (
-                <CardPost postCard={postDefault} />
-              ) : (
-              <div>
-                {
-                posts.slice(1, 3).filter((post)=>post.published).map((post) => (
-                  <CardPost postCard={post} />
-                ))}
-              </div>
-            )}
-            {/* News card 3 */}
+            <div>
+            {posts.length === 0 && !secondPostTop? ( <CardPost postCard={postDefault} />) : secondPostTop != undefined? (<CardPost postCard={secondPostTop} />) : (   <CardPost postCard={postDefault} />)}
+
+            {posts.length === 0 && !thirdPostTop? ( <CardPost postCard={postDefault} />) : thirdPostTop != undefined? (<CardPost postCard={thirdPostTop} />) : (   <CardPost postCard={postDefault} />)}
+            </div>
+            
            
           </div>
         </div>
