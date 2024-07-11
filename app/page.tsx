@@ -53,14 +53,21 @@ export default async function Page() {
       <SearchBar />
 
 
-   
+      <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white bg-orange-700 ">
+        <p className="text-sm">
+          É NOSSO ANIVERSÁRIO!!!!! 12 ANOS DE WEB TV BUSÓLOGA BR!!! ANOS DE ENTUSIASTA!!!!!
+        </p>
+     
+      </div>  
 
+   
+{/* 
       <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white bg-orange-700 ">
         <p className="text-sm">
           Assistente Entusiasta (CURITIBA - PR) |  Confira em tempo real onde está o carro de testes XY049
         </p>
      
-      </div>  
+      </div>   */}
 
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" >
