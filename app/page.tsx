@@ -32,12 +32,12 @@ export default async function Page() {
     namePost : "Há um post no forno!",
     title : "Há um post no forno!",
     content : "Há um post no forno!",
-    coverURL : "JB.png",
+    coverURL : "1qbDWMQiF_MIGmiPXz3WD3t8ptlhAE90r",
 
   }
 
   const posts : Post[] = await prisma.post.findMany();
-  console.log("🚀 ~ Page ~ post:", posts[0])
+  console.log("🚀 ~ Page ~ post:", posts)
 
   
 

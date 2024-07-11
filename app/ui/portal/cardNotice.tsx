@@ -10,10 +10,10 @@ export default function CardNotice({postCard }) {
     href={'portal/post/' + postCard.namePost}>
          <div className="bg-white rounded-md shadow-md">
             <img
-              src={postCard.coverURL}
-              alt="News Image"
-              className="rounded-t-md"
-            />
+                src={`https://drive.google.com/thumbnail?id=${postCard.coverURL}&sz=w1000`}
+                  alt="Imagem da Matéria"
+                  className="rounded-t-md w-full object-cover"
+              />
             <div className="p-4">
               <h2 className="text-xl font-bold">
                 {postCard.title}
