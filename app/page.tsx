@@ -87,12 +87,12 @@ export default async function Page() {
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
             {/* News card 2 */}
             {
-              posts.slice(1, 2).length === 0 ? (
+              posts.slice(1, 3).length === 0 ? (
                 <CardPost postCard={postDefault} />
               ) : (
               <div>
                 {
-                posts.slice(1, 2).map((post) => (
+                posts.slice(1, 3).map((post) => (
                   <CardPost postCard={post} />
                 ))}
               </div>
@@ -250,7 +250,7 @@ export default async function Page() {
                 {
                   posts
                   .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 2) 
-                  .slice(0, 3) 
+                  .slice(0, 4) 
                   .map((post) => <CardNotice postCard={post} />)
                 }
               </div>
@@ -282,7 +282,7 @@ export default async function Page() {
                 {
                   posts
                   .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 3) 
-                  .slice(0, 3) 
+                  .slice(0, 4) 
                   .map((post) => <CardNotice postCard={post} />)
                 }
               </div>
@@ -315,7 +315,7 @@ export default async function Page() {
                 {
                   posts
                   .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 4) 
-                  .slice(0, 3) 
+                  .slice(0, 4) 
                   .map((post) => <CardNotice postCard={post} />)
                 }
               </div>
