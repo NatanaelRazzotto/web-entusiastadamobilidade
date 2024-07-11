@@ -167,11 +167,11 @@ export default async function Page({ params }: { params: { namePost: string } })
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           <div className="col-span-2">
-            <img
-              src={dataPost.coverURL}
-              alt="Imagem da Matéria"
-              className="rounded-t-md w-full object-cover"
-            />
+              <img
+                src={`https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`}
+                  alt="Imagem da Matéria"
+                  className="rounded-t-md w-full object-cover"
+              />
           </div>
           <div className="col-span-1">
             <div className="bg-white rounded-md shadow-md p-4">

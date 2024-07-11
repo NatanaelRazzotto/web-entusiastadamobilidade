@@ -11,9 +11,9 @@ export default function CardPost({postCard}) {
   <div className="bg-white rounded-md shadow-md relative">
   <div className="relative">
     <img
-      src={postCard.coverURL}
-      alt="News Image"
-      className="rounded-t-md w-full object-cover"
+      src={`https://drive.google.com/thumbnail?id=${postCard.coverURL}&sz=w1000`}
+        alt="Imagem da Matéria"
+        className="rounded-t-md w-full object-cover"
     />
     <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-75 rounded-t-md"></div>
   </div>
