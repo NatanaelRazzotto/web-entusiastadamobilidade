@@ -2,6 +2,9 @@ import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 import SideNav from './ui/dashboard/sidenavManager';
 import Head from './Head';
+import { Analytics } from '@vercel/analytics/react';
+
+
 
  
 export default function RootLayout({
@@ -13,12 +16,13 @@ export default function RootLayout({
     <html lang="en">
       <Head />
       <body className={`${inter.className} antialiased`}>
-      <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-        <div className="w-full flex-none md:w-64">
-          <SideNav />
-        </div>
-      <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
-      </div>      
+        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+          <div className="w-full flex-none md:w-64">
+            <SideNav />
+          </div>
+        <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
+        </div>      
+        <Analytics />
       </body>
     </html>
   );
