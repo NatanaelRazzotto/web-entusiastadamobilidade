@@ -1,6 +1,7 @@
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 import SideNav from './ui/dashboard/sidenavManager';
+import Head from './Head';
 
  
 export default function RootLayout({
@@ -10,6 +11,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <Head />
       <body className={`${inter.className} antialiased`}>
       <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
         <div className="w-full flex-none md:w-64">
