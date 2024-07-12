@@ -27,6 +27,7 @@ export default function SideNav() {
           >
           <ArrowRightIcon className="w-5 md:w-6" />  <span>Log in Manager</span>
         </Link> */}
+        <p className='p-4 hidden md:block'>v1.0.0 | Em Desenvolvimento</p>
         <form 
             action={async () => {
             'use server';

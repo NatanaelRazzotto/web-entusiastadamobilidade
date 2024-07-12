@@ -59,7 +59,7 @@ export default async function Page() {
 
       <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white bg-orange-700 ">
         <p className="text-sm">
-          É NOSSO ANIVERSÁRIO!!!!! 12 ANOS DE WEB TV BUSÓLOGA BR!!! ANOS DE ENTUSIASTA!!!!!
+          É NOSSO ANIVERSÁRIO!!!!! 12 ANOS DE WEB TV BUSÓLOGA BR!!! ANOS DE ENTUSIASTA!!!!! ---SITE EM CONSTRUÇÃO---
         </p>
      
       </div>  
@@ -116,7 +116,7 @@ export default async function Page() {
             <div>
               <h3 className="text-lg font-bold">WTBus- Entusiasta Da Mobilidade (Facebook)</h3>
               <p className="text-gray-600 text-sm">
-                  Notícias e fotografia sobre o mundo dos transportes. De forma rápida e objetiva, encontre tudo sobre mobilidade e inovações.
+                  Notícias e fotografia sobre o mundo dos transportes. Encontre tudo sobre mobilidade e inovações.
               </p>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default async function Page() {
             <div>
               <h3 className="text-lg font-bold">Entusiasta Da Mobilidade (Instagram)</h3>
               <p className="text-gray-600 text-sm">
-              Notícias e fotografia sobre o mundo dos transportes. De forma rápida e objetiva, encontre tudo sobre mobilidade e inovações.
+              Fotografia e Notícias voltadas ao mundo dos modais. De forma rápida e objetiva.
               </p>
             </div>
           </div>
@@ -156,7 +156,7 @@ export default async function Page() {
             <div>
               <h3 className="text-lg font-bold">NRFv - Entusiasta Da Mobilidade</h3>
               <p className="text-gray-600 text-sm">
-              Notícias e fotografia sobre o mundo dos transportes. De forma rápida e objetiva, encontre tudo sobre mobilidade e inovações.
+              Vídeografia de Eventos, Automoveis e Paisagens. Tudo sobre a Mobilidade e Modais.
               </p>
             </div>
           </div>
@@ -177,7 +177,7 @@ export default async function Page() {
             <div>
               <h3 className="text-lg font-bold">WTBUS - Web Tv Busóloga</h3>
               <p className="text-gray-600 text-sm">
-              Notícias e fotografia sobre o mundo dos transportes. De forma rápida e objetiva, encontre tudo sobre mobilidade e inovações.
+              Vídeografia de Eventos e Veículos voltados ao Transporte Público (Ônibus). Tudo sobre a Mobilidade Urbana.
               </p>
             </div>
           </div>
