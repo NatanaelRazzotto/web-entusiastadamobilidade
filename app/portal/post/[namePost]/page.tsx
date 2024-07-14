@@ -140,12 +140,8 @@ export default async function Page({ params }: { params: { namePost: string } })
   }
 
   return (
-    <>
-      <HeadMeta 
-        title={dataPost.title} 
-        description={dataPost.resume ? dataPost.resume : "Sem informações de resumo."} 
-        image={`https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`} 
-      />
+
+ 
       <main>
         <div className="container mx-auto px-4">
           <div className="relative flex justify-between rounded-b-lg text-white bg-black">
@@ -255,7 +251,7 @@ export default async function Page({ params }: { params: { namePost: string } })
           </div>
         </div>
       </main>
-    </>
+
   );
 
 }
