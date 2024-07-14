@@ -55,7 +55,7 @@ export default async function Page() {
     <>
     <HeadMeta 
       title={"Portal Entusiasta da Mobilidade"} 
-      description="O Portal de Noticias e Fotografias que é Entusiasta dos Modais de Transporte" 
+      description={"O Portal de Noticias e Fotografias que é Entusiasta dos Modais de Transporte"} 
       image={`https://drive.google.com/thumbnail?id=1qbDWMQiF_MIGmiPXz3WD3t8ptlhAE90r&sz=w1000`} 
     />
     <main>
