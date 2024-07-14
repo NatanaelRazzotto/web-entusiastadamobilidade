@@ -6,6 +6,7 @@ import { fetchPostName } from '@/app/lib/data';
 import { GetServerSideProps } from 'next';
 import { list } from 'postcss';
 import Link from 'next/link';
+import HeadMeta from '../../../ui/components/HeadMeta'
 
 interface PageProps {
   data: any;
@@ -139,151 +140,124 @@ export default async function Page({ params }: { params: { namePost: string } })
   }
 
   return (
-    <main>
-      <div className="container mx-auto px-4">
+    <>
+      <HeadMeta 
+        title={dataPost.title} 
+        description={dataPost.resume ? dataPost.resume : "Sem informações de resumo."} 
+        image={`https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`} 
+      />
+      <main>
+        <div className="container mx-auto px-4">
+          <div className="relative flex justify-between rounded-b-lg text-white bg-black">
+            <div className='relative flex justify-between' style={{ width: "5%" }}>
+              <div className='rounded-l' style={{ height: "100%", width: "50%", backgroundColor: "brown" }}></div>
+              <div style={{ height: "100%", width: "50%", backgroundColor: "chocolate" }}></div>
+            </div>
+            <div style={{ width: "80%", padding: "10px" }}>
+              <h2 className="text-xl font-bold">
+                {dataPost.title}
+              </h2>
+            </div>
+            <div style={{ width: "10%", padding: "10px" }}>
+              <div className='w-[80%] md:w-[100%]'>
+                <img
+                  src="/logo.svg"
+                  alt="Author Image"
+                />
+              </div>
+            </div>
+          </div>
 
-      <div className="relative flex  justify-between rounded-b-lg rounded-b-lg  text-white bg-black">
-      <div className='relative flex  justify-between'  style={{ width: "5%" }}>
-        <div className='rounded-l' style={{ height: "100%", width: "50%", backgroundColor: "brown" }}></div>
-        <div style={{ height: "100%", width: "50%", backgroundColor: "chocolate" }}></div>
-      </div>
-      <div style={{ width: "80%", padding: "10px"}}>
-        <h2 className="text-xl font-bold">
-          {dataPost.title}
-        </h2>
-      </div>
-      <div style={{ width: "10%",padding: "10px" }}>
-      <div className='w-[80%] md:w-[100%]'>   
-        <img
-                src="/logo.svg"
-                alt="Author Image"  
-              
-              
-        />
-      </div>
-      </div>
-    </div>
-
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-          <div className="col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+            <div className="col-span-2">
               <img
                 src={`https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`}
-                  alt="Imagem da Matéria"
-                  className="rounded-t-md w-full object-cover"
+                alt="Imagem da Matéria"
+                className="rounded-t-md w-full object-cover"
               />
-          </div>
-          <div className="col-span-1">
-            <div className="bg-white rounded-md shadow-md p-4">
-            
-              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-                <h2 className="font-bold mt-2 mb-1">  Resumo da Matéria</h2>
-              </div>      
-  
-              <p className="py-4 text-black text-sm">
-                {dataPost.resume ? dataPost.resume : "Sem informações de resumo."}
-              </p>
-
             </div>
-            <div className="bg-white rounded-md shadow-md p-4">
-
-              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-                  <h2 className="font-bold mt-2 mb-1">   
-                      Veículos Contidos na Matéria
-                  </h2>
-              </div>   
-
-              {        
-                
-                dataVehicle.length === 0 ?    
-                 <p className="py-4 text-black text-sm">
-                  Sem informações dos Veículos.
-                </p> :
-                (dataVehicle as Vehicle[]).map((vehicle: Vehicle) => (
-                  <Link href={'portal/pictures/'}>
-                    <p className="py-4 text-black text-sm">
-                      {vehicle.serialNumber.toString()}
-                    </p>
-                  </Link>
-                 
-                ))
-              }   
-    
-           
-            </div>
-            <div className="bg-white rounded-md shadow-md p-4">
-        
-              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-                <h2 className="font-bold mt-2 mb-1">   
-                  Categoria 
-                  </h2>
-                </div>  
-    
-              <p className="py-4 text-black text-sm">
-                {dataPost.category == 1? "Transporte Público" : dataPost.category == 2? "Aviacao":dataPost.category == 3?"Ferrovia":dataPost.category == 4?"Automoveis":"Geral"}
-              </p>
-            </div>
-            <div className="bg-white rounded-md shadow-md p-4">
-         
-              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">   
-                Dia de Publicação
-                  </h2>
-                </div>     
-    
-              <p className="py-4 text-black text-sm">
-                {dataPost.dateCreate ? formatDate(dataPost.dateCreate.toString()) : "Sem informações de data."}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-md shadow-md p-4 mt-8">
-          <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">   
-                MÁTERIA INTEGRA
-              </h2>
-          </div>     
-    
-          <p className="py-4 text-black ">
-            {dataPost.content}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-          {
-
-            
-            dataPost.images.length === 0 ?  <p>Sem Imagens</p> :
-
-            (dataPost.images as Image[]).map((image: Image) => (
-              <Link href={'../pictures/'+ image.id}>
-                <div className="col-span-1">
-                
-                    <img
-                      src={`https://drive.google.com/thumbnail?id=${image.pathURL}&sz=w1000`}
-                      alt={image.title}
-                      className="rounded-md w-full object-cover"
-                    />
-                  
+            <div className="col-span-1">
+              <div className="bg-white rounded-md shadow-md p-4">
+                <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+                  <h2 className="font-bold mt-2 mb-1">Resumo da Matéria</h2>
                 </div>
-            </Link>
-            ))
-          }         
-      
-          {/* Adicione mais fotos aqui */}
-        </div>
+                <p className="py-4 text-black text-sm">
+                  {dataPost.resume ? dataPost.resume : "Sem informações de resumo."}
+                </p>
+              </div>
+              <div className="bg-white rounded-md shadow-md p-4">
+                <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+                  <h2 className="font-bold mt-2 mb-1">Veículos Contidos na Matéria</h2>
+                </div>
+                {
+                  dataVehicle.length === 0 ?    
+                    <p className="py-4 text-black text-sm">Sem informações dos Veículos.</p> :
+                    (dataVehicle as Vehicle[]).map((vehicle: Vehicle) => (
+                      <Link href={'portal/pictures/'}>
+                        <p className="py-4 text-black text-sm">
+                          {vehicle.serialNumber.toString()}
+                        </p>
+                      </Link>
+                    ))
+                }
+              </div>
+              <div className="bg-white rounded-md shadow-md p-4">
+                <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+                  <h2 className="font-bold mt-2 mb-1">Categoria</h2>
+                </div>
+                <p className="py-4 text-black text-sm">
+                  {dataPost.category == 1 ? "Transporte Público" : dataPost.category == 2 ? "Aviação" : dataPost.category == 3 ? "Ferrovia" : dataPost.category == 4 ? "Automóveis" : "Geral"}
+                </p>
+              </div>
+              <div className="bg-white rounded-md shadow-md p-4">
+                <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+                  <h2 className="font-bold mt-2 mb-1">Dia de Publicação</h2>
+                </div>
+                <p className="py-4 text-black text-sm">
+                  {dataPost.dateCreate ? formatDate(dataPost.dateCreate.toString()) : "Sem informações de data."}
+                </p>
+              </div>
+            </div>
+          </div>
 
-        <div className="flex justify-end mt-8">
-          <Link href={"/"}>
-          <button className=" bg-orange-700  hover:bg-orange-900  text-white font-bold py-2 px-4 rounded">
-            Voltar para a página principal
-          </button>
-          </Link>
+          <div className="bg-white rounded-md shadow-md p-4 mt-8">
+            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+              <h2 className="font-bold mt-2 mb-1">MÁTERIA INTEGRA</h2>
+            </div>
+            <p className="py-4 text-black">
+              {dataPost.content}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+            {
+              dataPost.images.length === 0 ? <p>Sem Imagens</p> :
+                (dataPost.images as Image[]).map((image: Image) => (
+                  <Link href={'../pictures/' + image.id}>
+                    <div className="col-span-1">
+                      <img
+                        src={`https://drive.google.com/thumbnail?id=${image.pathURL}&sz=w1000`}
+                        alt={image.title}
+                        className="rounded-md w-full object-cover"
+                      />
+                    </div>
+                  </Link>
+                ))
+            }
+          </div>
+
+          <div className="flex justify-end mt-8">
+            <Link href={"/"}>
+              <button className="bg-orange-700 hover:bg-orange-900 text-white font-bold py-2 px-4 rounded">
+                Voltar para a página principal
+              </button>
+            </Link>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
+
 }
 
   
