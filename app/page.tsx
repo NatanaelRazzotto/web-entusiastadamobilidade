@@ -16,6 +16,7 @@ import { Post } from './lib/definitions';
 
 import CardNotice from './ui/portal/cardNotice';
 import SearchBar from './ui/portal/searchBar';
+import HeadMeta from './ui/components/HeadMeta';
 
  
 
@@ -51,6 +52,12 @@ export default async function Page() {
   // };
   
   return (
+    <>
+    <HeadMeta 
+      title={"Portal Entusiasta da Mobilidade"} 
+      description="O Portal de Noticias e Fotografias que é Entusiasta dos Modais de Transporte" 
+      image={`https://drive.google.com/thumbnail?id=1qbDWMQiF_MIGmiPXz3WD3t8ptlhAE90r&sz=w1000`} 
+    />
     <main>
       <div className="container mx-auto px-4"> 
 
@@ -336,5 +343,6 @@ export default async function Page() {
      
     </div>
     </main>
+    </>
   );
 }
