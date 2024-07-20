@@ -3,15 +3,13 @@ import { useEffect, useState } from 'react';
 import { Image, Post, Vehicle } from '../../../lib/definitions';
 
 import { fetchPostName } from '@/app/lib/data';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, Metadata } from 'next';
 import { list } from 'postcss';
 import Link from 'next/link';
 import HeadMeta from '../../../ui/components/HeadMeta'
+import { PageProps } from '.next/types/app/page';
 
-interface PageProps {
-  data: any;
-  error?: string;
-}
+
 
 // export const getServerSideProps: GetServerSideProps = async (context) => {
 //   const { namePost } = context.params as { namePost: string };
@@ -40,6 +38,7 @@ interface PageProps {
 //     };
 //   }
 // };
+
 
 export default async function Page({ params }: { params: { namePost: string } }) {
 
