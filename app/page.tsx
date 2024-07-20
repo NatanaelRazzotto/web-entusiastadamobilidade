@@ -32,7 +32,7 @@ export async function generateMetadata( {params: {lang}}: PageProps ):Promise<Me
       url: 'https://entusiastadamobilidade.vercel.app/',     
       images: [
         {
-          url: 'https://drive.google.com/thumbnail?id=1qbDWMQiF_MIGmiPXz3WD3t8ptlhAE90r&sz=w1000',
+          url: 'https://entusiastadamobilidade.vercel.app/CARTAO.png',
           width: 800,
           height: 600,
           alt: 'Imagem de capa',
