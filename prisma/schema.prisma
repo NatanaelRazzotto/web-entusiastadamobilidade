@@ -44,6 +44,23 @@ model Image {
   // Relação muitos para muitos com Post
   posts     Post[]   @relation("PostImages") 
   vehicle   Vehicle[] @relation("VehicleImages")
+  BookOrders    BookOrder[]   @relation("OrderImages")
+}
+
+model BookOrder {
+  id        String     @id @default(uuid())
+  title     String
+  description   String?   
+  request Boolean   @default(false)
+  processing Boolean   @default(false)
+  concluded Boolean   @default(false)
+  bookURL   String?
+  requestingUser    User?     @relation(fields: [requestingUserId], references: [id])
+  requestingUserId  String?
+  dateCreate DateTime
+  dateUpdate DateTime
+  // Relação muitos para muitos com Image
+  images    Image[]   @relation("OrderImages")
 }
 
 model Vehicle {
@@ -140,6 +157,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   imagens Image[]
+  bookOrders BookOrder[]
+
 
 }
 
