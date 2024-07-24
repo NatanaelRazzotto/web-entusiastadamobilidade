@@ -138,6 +138,34 @@ export async function fetchBookId(idPost : string){
   }
 }
 
+export async function fetchBookUserId(idUser : string){
+  try {
+    const post: BookOrder[] | null = await prisma.bookOrder.findMany({
+      where: {
+        requestingUserId: idUser,
+      },
+      include: {
+        requestingUser : true, 
+        orderImages : {
+          include : {
+            image: {
+              include: {
+                vehicle: true,
+              },
+            },
+          }
+        }
+        
+      },
+    });
+
+    return post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
 export async function alterOrderImageId(orderImages : OrderImage[]){
  
   try {

@@ -18,7 +18,8 @@ import CardNotice from './ui/portal/cardNotice';
 import SearchBar from './ui/portal/searchBar';
 import HeadMeta from './ui/components/HeadMeta';
 import { Metadata } from 'next';
-import { PageProps } from '.next/types/app/page';
+import { PageProps } from '.next/types/app/layout';
+
 
 
 export async function generateMetadata( {params: {lang}}: PageProps ):Promise<Metadata> {
