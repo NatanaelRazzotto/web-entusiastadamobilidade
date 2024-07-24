@@ -1,28 +1,28 @@
 
 import { useEffect, useState } from 'react';
-import { Image, Post, Vehicle } from '../../../lib/definitions';
+import { BookOrder, Image, Post, Vehicle } from '../../../lib/definitions';
 
-import { fetchPostName } from '@/app/lib/data';
+import { fetchBookId, fetchPostName } from '@/app/lib/data';
 import { GetServerSideProps, Metadata } from 'next';
 import { list } from 'postcss';
 import Link from 'next/link';
 import HeadMeta from '../../../ui/components/HeadMeta'
-import { PageProps } from '.next/types/app/page';
+
 import { ImagemViewer } from '@/app/ui/imageViewer/imagemViewer';
 import { ListImagemViewer } from '@/app/ui/imageViewer/listImagemViewer';
 
-export default async function Page({ params }: { params: { namePost: string } }) {
+export default async function Page({ params }: { params: { idBook: string } }) {
 
     // const [data, setData] = useState< Post | null>(null);
-  const { namePost } = params;
-  console.log('Parâmetro namePost:', namePost);
+  const { idBook: idBook } = params;
+  console.log('Parâmetro namePost:', idBook);
 
-  let dataPost : Post | null = null;
+  let dataPost : BookOrder | null = null;
   let dataVehicle : Vehicle [] = [];
   let error = null;
 
   try {
-    const response : Post= await fetchPostName(namePost)
+    var response : BookOrder= await fetchBookId(idBook)
     
     if (response == null) {
       throw new Error('Erro na busca de dados');
@@ -30,11 +30,11 @@ export default async function Page({ params }: { params: { namePost: string } })
 
     dataPost = response
     if (dataPost){
-      if (dataPost.images[0]){
-        console.log("🚀 ~ llllll:", dataPost.images[0].vehicle)
-        dataPost.images.forEach(element => {
-          if (element.vehicle[0]){
-            dataVehicle.push(element.vehicle[0])
+      if (dataPost.orderImages[0]){
+        console.log("🚀 ~ llllll:", dataPost.orderImages[0].image.vehicle)
+        dataPost.orderImages.forEach(element => {
+          if (element.image.vehicle[0]){
+            dataVehicle.push(element.image.vehicle[0])
             console.log("🚀 ~ dataVehicle:", dataVehicle)
           }         
 
@@ -132,62 +132,14 @@ export default async function Page({ params }: { params: { namePost: string } })
                 />
               </div>
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-            <div className="col-span-2">            
-              <ImagemViewer dataPost={dataPost}></ImagemViewer>
-            </div>
-            <div className="col-span-1">
-              <div className="bg-white rounded-md shadow-md p-4">
-                <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-                  <h2 className="font-bold mt-2 mb-1">Resumo da Matéria</h2>
-                </div>
-                <p className="py-4 text-black text-sm">
-                  {dataPost.resume ? dataPost.resume : "Sem informações de resumo."}
-                </p>
-              </div>
-              <div className="bg-white rounded-md shadow-md p-4">
-                <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-                  <h2 className="font-bold mt-2 mb-1">Veículos Contidos na Matéria</h2>
-                </div>
-                {
-                  dataVehicle.length === 0 ?    
-                    <p className="py-4 text-black text-sm">Sem informações dos Veículos.</p> :
-                    (dataVehicle as Vehicle[]).map((vehicle: Vehicle) => (
-                      <Link href={'portal/pictures/'}>
-                        <p className="py-4 text-black text-sm">
-                          {vehicle.serialNumber.toString()}
-                        </p>
-                      </Link>
-                    ))
-                }
-              </div>
-              <div className="bg-white rounded-md shadow-md p-4">
-                <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-                  <h2 className="font-bold mt-2 mb-1">Categoria</h2>
-                </div>
-                <p className="py-4 text-black text-sm">
-                  {dataPost.category == 1 ? "Transporte Público" : dataPost.category == 2 ? "Aviação" : dataPost.category == 3 ? "Ferrovia" : dataPost.category == 4 ? "Automóveis" : "Geral"}
-                </p>
-              </div>
-              <div className="bg-white rounded-md shadow-md p-4">
-                <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-                  <h2 className="font-bold mt-2 mb-1">Dia de Publicação</h2>
-                </div>
-                <p className="py-4 text-black text-sm">
-                  {dataPost.dateCreate ? formatDate(dataPost.dateCreate.toString()) : "Sem informações de data."}
-                </p>
-              </div>
-            </div>
-          </div>
+          </div>          
 
           <div className="bg-white rounded-md shadow-md p-4 mt-8">
             <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">MÁTERIA INTEGRA</h2>
+              <h2 className="font-bold mt-2 mb-1">PONTOS IMPORTANTES!</h2>
             </div>
             <p className="py-4 text-black">
-              {dataPost.content}
+              {""}
             </p>
           </div>
 

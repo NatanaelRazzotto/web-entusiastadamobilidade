@@ -122,6 +122,8 @@ export type Image = {
   dateCreate?: Date; // Deve coincidir com a definição no Prisma
   posts?: Post[]; // Deve ser uma lista de Post, conforme definido
   vehicle?: Vehicle[]; // Relacionamento com Vehicle, conforme definido
+  orderImages  ?:  OrderImage[]   
+  
 };
 
 
@@ -139,6 +141,40 @@ export type Vehicle = {
   operator?: Operator; // Deve coincidir com a definição no Prisma
   operatorID: string;
 };
+
+export type BookOrder = {
+  id: string;
+  title?: string;
+  description:  string;   
+  request: boolean;
+  processing : boolean;
+  costValue : number;
+  concluded : boolean;
+  bookURL?: string;
+  requestingUser ?:User;
+  requestingUserId: string;
+  dateCreate: Date;
+  dateUpdate : Date;
+  // Relação muitos para muitos com Image
+  orderImages ?:   OrderImage[]   
+}
+
+export type OrderImage = {
+  id  : string;
+  bookOrderId :string;
+  imageId     : string;
+  requestImage: boolean;
+
+  // Campos adicionais para a tabela de junção
+  addedAt  : Date
+  requestDate    : Date
+  description ?:  string;
+  comment?:  string;
+
+  bookOrder ?:  BookOrder | null;
+  image ?:      Image | null;
+
+}
 
 
 // Bodywork.js

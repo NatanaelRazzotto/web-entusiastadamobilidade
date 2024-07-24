@@ -1,8 +1,11 @@
+"use server"
 import prisma from '../lib/prisma';
 import { 
   Post,
   User,
-  Image
+  Image,
+  BookOrder,
+  OrderImage
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -104,6 +107,56 @@ export async function getUser(email: string): Promise<User | null> {
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
+  }
+}
+
+export async function fetchBookId(idPost : string){
+  try {
+    const post: BookOrder | null = await prisma.bookOrder.findFirst({
+      where: {
+        id: idPost,
+      },
+      include: {
+        requestingUser : true, 
+        orderImages : {
+          include : {
+            image: {
+              include: {
+                vehicle: true,
+              },
+            },
+          }
+        }
+        
+      },
+    });
+
+    return post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function alterOrderImageId(orderImages : OrderImage[]){
+ 
+  try {
+    
+    console.log("🚀 ~ alterOrderImageId ~ orderImage:", orderImages[0])
+    const updatedOrderImage = await prisma.orderImage.update({
+      where: {
+        id : orderImages[0].id
+      },
+      data: {
+        requestImage: orderImages[0].requestImage, // O novo valor para o campo description
+      },
+    });
+    console.log("🚀 ~ alterOrderImageId ~ post:", updatedOrderImage)
+    
+    return "post";
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
   }
 }
 

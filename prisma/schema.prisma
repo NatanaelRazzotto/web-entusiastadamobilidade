@@ -44,23 +44,42 @@ model Image {
   // Relação muitos para muitos com Post
   posts     Post[]   @relation("PostImages") 
   vehicle   Vehicle[] @relation("VehicleImages")
-  BookOrders    BookOrder[]   @relation("OrderImages")
+  orderImages    OrderImage[]  
 }
 
 model BookOrder {
   id        String     @id @default(uuid())
-  title     String
+  title     String?
   description   String?   
   request Boolean   @default(false)
   processing Boolean   @default(false)
+  costValue Float
   concluded Boolean   @default(false)
   bookURL   String?
   requestingUser    User?     @relation(fields: [requestingUserId], references: [id])
   requestingUserId  String?
-  dateCreate DateTime
-  dateUpdate DateTime
+  dateCreate DateTime @default(now())
+  dateUpdate DateTime @default(now())
   // Relação muitos para muitos com Image
-  images    Image[]   @relation("OrderImages")
+  orderImages    OrderImage[]   
+}
+
+model OrderImage {
+  id          String     @id @default(uuid())
+  bookOrderId String
+  imageId     String
+  requestImage Boolean   @default(false)
+
+  // Campos adicionais para a tabela de junção
+  addedAt     DateTime   @default(now())
+  requestDate     DateTime   @default(now())
+  description String?
+  comment String?
+
+  bookOrder   BookOrder  @relation(fields: [bookOrderId], references: [id])
+  image       Image      @relation(fields: [imageId], references: [id])
+
+  @@unique([bookOrderId, imageId])
 }
 
 model Vehicle {
@@ -149,7 +168,9 @@ model Session {
 model User {
   id        String     @id @default(uuid())
   name          String?
+  verificationCode String?
   password      String?
+  phone         String?@unique
   email         String?@unique
   emailVerified DateTime?
   image         String?
