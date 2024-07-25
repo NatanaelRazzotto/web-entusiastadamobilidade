@@ -149,6 +149,8 @@ export type BookOrder = {
   request: boolean;
   processing : boolean;
   costValue : number;
+  unit : number;
+  paymentAccept : boolean;
   concluded : boolean;
   bookURL?: string;
   requestingUser ?:User;

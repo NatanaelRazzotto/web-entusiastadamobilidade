@@ -83,19 +83,27 @@ export default async function Page({ params }: { params: { idUser: string } }) {
                 (dataPost as BookOrder[]).map((orderImage: BookOrder) => (
                   <Link
                   key={orderImage.id}
-                  href={'book/' + orderImage.id}>
+                  href={!orderImage.processing ? '../book/' + orderImage.id : ""}>
                        <div className="bg-white rounded-md shadow-md">
                             <div className="p-4">
+                            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4" >
+                            <div className="col-span-1">
                             <h2 className="text-xl font-bold">
                               {orderImage.title}
                             </h2>
+                           </div>
+                           <div className="col-span-1">
                             <h2 className="text-xl font-bold">
-                              VALOR DO PEDIDO: {orderImage.costValue}
+                              TOTAL: R$ {orderImage.request ? orderImage.costValue : "00,00"}
                             </h2>
+                            </div>
+                            </div>
+                            <p>FOTOS SELECIONADAS: {orderImage.request ? orderImage.unit : "Sem informação"}</p>
                             <ul className="list-disc list-inside text-gray-600 text-sm">
                               <li>Fotos Selecionadas : {!orderImage.request ? "PENDENTE! Click Para Escolher." : "Pedido Realizado"}</li>
                               <li>Status do Pedido: {!orderImage.request ? "Aguardando etapa anterior.": !orderImage.processing ? "Solicitação em ANALISE" : "SEU QRCODE PIX ESTÁ SENDO GERADO!"}</li>
-                              <li>Fotos Selecionadas : {!orderImage.request && !orderImage.processing ? "Aguardando etapa anterior.":  !orderImage.concluded ? "Acesse para escolher" : "FOTOS DISPONIVEIS"}</li>
+                              <li>Status Pagamento : {!orderImage.processing ? "Aguardando etapa anterior.":  !orderImage.paymentAccept ? "Aguardando PAGAMENTO" : "PAGAMENTO APROVADO"}</li>
+                              <li>Fotos Selecionadas : {!orderImage.paymentAccept || !orderImage.processing ? "Aguardando etapa anterior.":  !orderImage.concluded ? "Em Breve suas FOTOS DISPONIVEIS" : "FOTOS DISPONIVEIS"}</li>
 
                             </ul>
                           </div>

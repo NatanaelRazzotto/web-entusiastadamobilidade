@@ -143,6 +143,17 @@ export default async function Page({ params }: { params: { idBook: string } }) {
             </p>
           </div>
 
+          <div className="bg-white rounded-md shadow-md p-4 mt-8">
+            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+              <h2 className="font-bold mt-2 mb-1">DESCRICÃO DO PEDIDO!</h2>
+            </div>
+            <p className="py-4 text-black">
+              {dataPost.description}
+            </p>
+          </div>
+
+          
+
          <ListImagemViewer dataPost={dataPost}></ListImagemViewer>
 
           <div className="flex justify-end mt-8">

@@ -54,7 +54,9 @@ model BookOrder {
   request Boolean   @default(false)
   processing Boolean   @default(false)
   costValue Float
+  unit Float
   concluded Boolean   @default(false)
+  paymentAccept Boolean   @default(false)
   bookURL   String?
   requestingUser    User?     @relation(fields: [requestingUserId], references: [id])
   requestingUserId  String?

@@ -101,12 +101,27 @@ export function ListImagemViewer({ dataPost }) {
           ))
         )}
       </div>
-      <button
-        onClick={handleSaveSelection}
-        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded"
-      >
-        Salvar Seleção
-      </button>
+
+      <div className="bg-white rounded-md shadow-md p-4 mt-8">
+            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+              <h2 className="font-bold mt-2 mb-1">DESCRICÃO DO PEDIDO!</h2>
+            </div>
+        <p className="py-4 text-black">
+  
+        </p>
+      </div>
+      {
+       !dataPost.processing ?       <div className="flex justify-end mt-8">
+        <button
+          onClick={handleSaveSelection}
+          className="bg-orange-700 hover:bg-orange-900 text-white font-bold py-2 px-4 rounded"
+        >
+          Salvar Seleção
+        </button>
+            </div> : ""
+      }
+
+     
       {serverResponse && (
         <PopupOrder
           message="Seleção salva com sucesso!" // Mensagem que será exibida no popup

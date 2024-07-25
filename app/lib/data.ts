@@ -193,6 +193,34 @@ export async function alterOrderImageId(orderImages : OrderImage[]){
       },
     });
     console.log("🚀 ~ alterOrderImageId ~ post:", updatedOrderImage)
+
+    const OrderBook = await prisma.bookOrder.findFirst({
+      where: {
+        id : orderImages[0].bookOrderId
+      },
+      include : {orderImages : true},
+    });
+
+    let selectValue = 0
+    let costValue = 0
+    let unitaryValue = 10.00
+
+    OrderBook.orderImages.forEach(element => {
+      if (element.requestImage === true) selectValue = selectValue + 1; 
+    });
+
+    costValue = unitaryValue * selectValue
+
+    const updatedBookOrder = await prisma.bookOrder.update({
+      where: {
+        id : OrderBook.id
+      },
+      data: {
+        request: true, // O novo valor para o campo description
+        costValue : costValue,
+        unit : selectValue
+      },
+    });
     
     return "post";
   } catch (error) {
