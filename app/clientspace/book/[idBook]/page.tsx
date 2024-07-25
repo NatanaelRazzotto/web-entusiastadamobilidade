@@ -1,4 +1,4 @@
-
+"use server"
 import { useEffect, useState } from 'react';
 import { BookOrder, Image, Post, Vehicle } from '../../../lib/definitions';
 
@@ -10,6 +10,7 @@ import HeadMeta from '../../../ui/components/HeadMeta'
 
 import { ImagemViewer } from '@/app/ui/imageViewer/imagemViewer';
 import { ListImagemViewer } from '@/app/ui/imageViewer/listImagemViewer';
+import { useRouter } from 'next/router';
 
 export default async function Page({ params }: { params: { idBook: string } }) {
 
@@ -17,13 +18,23 @@ export default async function Page({ params }: { params: { idBook: string } }) {
   const { idBook: idBook } = params;
   console.log('Parâmetro namePost:', idBook);
 
+
   let dataPost : BookOrder | null = null;
   let dataVehicle : Vehicle [] = [];
   let error = null;
 
   try {
+    if (!idBook){
+      throw new Error('Este book nao existe');
+    }
+
     var response : BookOrder= await fetchBookId(idBook)
     
+    
+    if (!response) {
+      throw new Error('Não há dados');
+    }
+
     if (response == null) {
       throw new Error('Erro na busca de dados');
     }
@@ -138,31 +149,51 @@ export default async function Page({ params }: { params: { idBook: string } }) {
             <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
               <h2 className="font-bold mt-2 mb-1">PONTOS IMPORTANTES!</h2>
             </div>
-            <p className="py-4 text-black">
-              {""}
-            </p>
+            <ul className="list-disc list-inside text-gray-600 text-sm space-y-2">
+              <li className={`text-${!dataPost.request ? 'red' : 'green'}-600`}>
+                A partir do seu cadastro no evento, você tem acesso a está página. 
+              </li>
+              <li className={`text-${!dataPost.request ? 'gray' : !dataPost.processing ? 'orange' : 'blue'}-600`}>
+                A um prazo de uma semana para o processamento e disponibilização das fotos para a SELEÇÃO.
+              </li>
+              <li className={`text-${!dataPost.processing ? 'gray' : !dataPost.paymentAccept ? 'orange' : 'blue'}-600`}>
+                Aqui você pode verificar todas as suas FOTOS DISPONIVEIS para COMPRA.
+              </li>
+              <li className={`text-${!dataPost.paymentAccept || !dataPost.processing ? 'gray' : !dataPost.concluded ? 'orange' : 'green'}-600`}>
+                O envio da sua escolha, só será realizado no click em "SALVAR SELEÇÃO"
+              </li>
+            </ul>
           </div>
 
-          <div className="bg-white rounded-md shadow-md p-4 mt-8">
-            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">DESCRICÃO DO PEDIDO!</h2>
-            </div>
-            <p className="py-4 text-black">
-              {dataPost.description}
-            </p>
-          </div>
+                  <div className="bg-white rounded-md shadow-md p-4 mt-8">
+                    <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+                      <h2 className="font-bold mt-2 mb-1">DETALHES DO PEDIDO!</h2>
+                    </div>
+                    <p className="text-lg font-medium text-gray-700 mb-4">
+            TOTAL DE FOTOS JÁ REQUISITADAS: {dataPost.request ? dataPost.unit : "Sem informação"}
+          </p>
+          <ul className="list-disc list-inside text-gray-600 text-sm space-y-2">
+            <li className={`text-${!dataPost.request ? 'red' : 'green'}-600`}>
+              Fotos Selecionadas: {!dataPost.request ? "PENDENTE! Click Para Escolher." : "Pedido Realizado"}
+            </li>
+            <li className={`text-${!dataPost.request ? 'gray' : !dataPost.processing ? 'orange' : 'blue'}-600`}>
+              Status do Pedido: {!dataPost.request ? "Aguardando etapa anterior." : !dataPost.processing ? "Solicitação em ANÁLISE" : "SEU QRCODE PIX ESTÁ SENDO GERADO!"}
+            </li>
+            <li className={`text-${!dataPost.processing ? 'gray' : !dataPost.paymentAccept ? 'orange' : 'blue'}-600`}>
+              Status Pagamento: {!dataPost.processing ? "Aguardando etapa anterior." : !dataPost.paymentAccept ? "Aguardando PAGAMENTO" : "PAGAMENTO APROVADO"}
+            </li>
+            <li className={`text-${!dataPost.paymentAccept || !dataPost.processing ? 'gray' : !dataPost.concluded ? 'orange' : 'green'}-600`}>
+              Fotos Selecionadas: {!dataPost.paymentAccept || !dataPost.processing ? "Aguardando etapa anterior." : !dataPost.concluded ? "Em Breve suas FOTOS DISPONÍVEIS" : "FOTOS DISPONÍVEIS"}
+            </li>
+          </ul>
+                  </div>
 
           
 
          <ListImagemViewer dataPost={dataPost}></ListImagemViewer>
 
-          <div className="flex justify-end mt-8">
-            <Link href={"/"}>
-              <button className="bg-orange-700 hover:bg-orange-900 text-white font-bold py-2 px-4 rounded">
-                Voltar para a página principal
-              </button>
-            </Link>
-          </div>
+      
+      
         </div>
       </main>
 

@@ -6,6 +6,11 @@ import Link from "next/link";
 import { saveSelection } from './serverActions';
 import { alterOrderImageId } from "@/app/lib/data";
 import { PopupOrder } from "./popupOrder";
+import sharp from 'sharp';
+import { NextResponse } from "next/server";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
 
 export function selectedImagesAtualize(selectedImages : OrderImage[],order: OrderImage) {
   const existingIndex = selectedImages.findIndex((selected) => selected.imageId === order.imageId);
@@ -32,11 +37,17 @@ export function selectedImagesAtualize(selectedImages : OrderImage[],order: Orde
   }
 }
 
-export function ListImagemViewer({ dataPost }) {
+const getWatermarkedImageUrl = (imageUrl) => {
+  return `/api/watermark?imageUrl=${encodeURIComponent(imageUrl)}`;
+};
+
+
+export function ListImagemViewer({ dataPost}) {
   const [selectedImages, setSelectedImages] = useState<OrderImage[]>([]);
   const [serverResponse, setServerResponse] = useState(null); // Estado para armazenar a resposta do servidor
 
-
+  const router = useRouter();
+  const { data: session, status } = useSession();
  // let selectedImages : OrderImage[] = []
 
   // Função para lidar com a seleção de imagem
@@ -61,6 +72,7 @@ export function ListImagemViewer({ dataPost }) {
     // Função para fechar o popup
     const closePopup = () => {
       setServerResponse(null);
+      router.push('/clientspace/order/'+session.user.id);
     };
   
 
@@ -86,32 +98,26 @@ export function ListImagemViewer({ dataPost }) {
         ) : (
           (dataPost.orderImages as OrderImage[]).map((orderImage: OrderImage) => (
             <div
-              key={orderImage.id}
-              className={`col-span-1 ${
-                validateList(orderImage) ? "border-4 border-blue-500" : ""
-              }`} // Estilo para imagem selecionada
-              onClick={() => toggleImageSelection(orderImage)}
-            >
-              <img
-                src={`https://drive.google.com/thumbnail?id=${orderImage.image.pathURL}&sz=w1000`}
-                alt={orderImage.image.title}
-                className="rounded-md w-full object-cover cursor-pointer"
-              />
-            </div>
+            key={orderImage.id}
+            className={`col-span-1 ${validateList(orderImage) ? "border-4 border-blue-500" : ""}`} // Estilo para imagem selecionada
+            onClick={() => toggleImageSelection(orderImage)}
+            style={{ position: 'relative' }} // Torna o contêiner da imagem um contexto de posicionamento
+          >
+            <img
+              src={getWatermarkedImageUrl(orderImage.image.pathURL)}
+              alt={orderImage.image.title}
+              className="rounded-md w-full object-cover cursor-pointer"
+            />
+            
+          </div>
+          
           ))
         )}
       </div>
 
-      <div className="bg-white rounded-md shadow-md p-4 mt-8">
-            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">DESCRICÃO DO PEDIDO!</h2>
-            </div>
-        <p className="py-4 text-black">
-  
-        </p>
-      </div>
       {
-       !dataPost.processing ?       <div className="flex justify-end mt-8">
+       !dataPost.processing && selectedImages.length > 0 ?       
+       <div className="flex justify-end mt-8">
         <button
           onClick={handleSaveSelection}
           className="bg-orange-700 hover:bg-orange-900 text-white font-bold py-2 px-4 rounded"
@@ -124,7 +130,10 @@ export function ListImagemViewer({ dataPost }) {
      
       {serverResponse && (
         <PopupOrder
-          message="Seleção salva com sucesso!" // Mensagem que será exibida no popup
+          titulo="Agradecemos pela Escolha!"
+          message="Seleção Enviadada com Sucesso! " // Mensagem que será exibida no popup
+          message2="Você pode acompanhar o Andamento:" 
+          message3="Pelo SITE ou nosso WHATSAPP." 
           onClose={closePopup} // Função para fechar o popup
         />
       )}

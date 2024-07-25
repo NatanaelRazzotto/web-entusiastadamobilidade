@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react';
 import { signOut } from 'auth';
 import { clsx } from 'clsx';
 import { usePathname } from 'next/navigation';
+import { serverSignOut } from '../imageViewer/serverActions';
 
 // import { signOut } from '@/app/api/auth/[...nextauth]';
 
@@ -58,8 +59,8 @@ export default function SideNav() {
         </Link> : ""}
         {session ?  <form 
             action={async () => {
-          
-            signOut();
+        
+              await serverSignOut();
           }}>
           <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
             <PowerIcon className="w-6" />

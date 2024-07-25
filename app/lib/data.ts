@@ -216,7 +216,7 @@ export async function alterOrderImageId(orderImages : OrderImage[]){
         id : OrderBook.id
       },
       data: {
-        request: true, // O novo valor para o campo description
+        request: costValue > 0 ? true : false, // O novo valor para o campo description
         costValue : costValue,
         unit : selectValue
       },
