@@ -110,6 +110,19 @@ export async function getUser(email: string): Promise<User | null> {
   }
 }
 
+export async function getUserPhone(phone: string): Promise<User | null> {
+  try {
+    const user: User | null = await prisma.user.findUnique({
+      where: { phone : phone},
+    });
+
+    return user;
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    throw new Error('Failed to fetch user.');
+  }
+}
+
 export async function fetchBookId(idPost : string){
   try {
     const post: BookOrder | null = await prisma.bookOrder.findFirst({

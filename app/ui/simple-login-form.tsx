@@ -3,6 +3,7 @@
 import { lusitana } from '@/app/ui/fonts';
 import {
   UserPlusIcon,
+  PhoneIcon,
   AtSymbolIcon,
   KeyIcon,
   ExclamationCircleIcon,
@@ -13,9 +14,11 @@ import { Button } from './button';
 import { useFormState, useFormStatus } from 'react-dom';
 import { authenticate } from '@/app/lib/actions';
 import { useRouter } from 'next/navigation';
+import InputMask from "react-input-mask";
 
 
-export default function LoginForm() {
+
+export default function SimpleLoginForm() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   const router = useRouter();
  
@@ -23,26 +26,29 @@ export default function LoginForm() {
     <form action={dispatch} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-          Please log in to continue.
+          Login Com Seu Telefone
         </h1>
+        <p>Esta forma só é valida apenas para usuários, JÁ CADASTRADOS!</p>
         <div className="w-full">
           <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="email"
             >
-              Email
+              Celular
             </label>
             <div className="relative">
-              <input
+            <InputMask
+                mask="(99)99999-9999"
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
+                id="phone"
+                type="tel"
+                name="phone"
+                placeholder="Entre com seu Celular"
                 required
               />
-              <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+
+              <PhoneIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
           </div>
           <div className="mt-4">
@@ -50,7 +56,7 @@ export default function LoginForm() {
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="password"
             >
-              Password
+              Chave de Acesso
             </label>
             <div className="relative">
               <input
@@ -58,9 +64,10 @@ export default function LoginForm() {
                 id="password"
                 type="password"
                 name="password"
-                placeholder="Enter password"
+                placeholder="Numero informado na inscricao"
                 required
-                minLength={6}
+                minLength={4}
+                maxLength={6}
               />
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
