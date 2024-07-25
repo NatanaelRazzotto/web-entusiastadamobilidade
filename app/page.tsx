@@ -19,6 +19,7 @@ import SearchBar from './ui/portal/searchBar';
 import HeadMeta from './ui/components/HeadMeta';
 import { Metadata } from 'next';
 
+
 import SideNav from './ui/dashboard/sidenavManager';
 
 
@@ -42,6 +43,7 @@ export async function generateMetadata( {params: {lang}} ):Promise<Metadata> {
       ],
     }
   };
+
 
 }
 

@@ -4,7 +4,9 @@ import SideNav from './ui/dashboard/sidenavManager';
 
 import { Analytics } from '@vercel/analytics/react';
 import Head from 'next/head';
+
 import { SessionProvider } from 'next-auth/react';
+
 
 
 
@@ -17,8 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+
       <body className={`${inter.className} antialiased`}>
+
       <SessionProvider>{children}</SessionProvider>
+
         <Analytics />
       </body>
     </html>
