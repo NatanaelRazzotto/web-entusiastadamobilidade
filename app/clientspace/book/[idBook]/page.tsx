@@ -154,7 +154,7 @@ export default async function Page({ params }: { params: { idBook: string } }) {
                 A partir do seu cadastro no evento, você tem acesso a está página. 
               </li>
               <li className={`text-${!dataPost.request ? 'gray' : !dataPost.processing ? 'orange' : 'blue'}-600`}>
-                A um prazo de uma semana para o processamento e disponibilização das fotos para a SELEÇÃO.
+                A compra das fotos, entregará arquivos sem qualquer marca d' água.
               </li>
               <li className={`text-${!dataPost.processing ? 'gray' : !dataPost.paymentAccept ? 'orange' : 'blue'}-600`}>
                 Aqui você pode verificar todas as suas FOTOS DISPONIVEIS para COMPRA.

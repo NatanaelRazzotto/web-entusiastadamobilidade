@@ -18,7 +18,7 @@ export async function GET(request) {
     const imageBuffer = Buffer.from(arrayBuffer);
 
     // Path to the watermark image
-    const watermarkPath = path.resolve('./public/logo.png');
+    const watermarkPath = path.resolve('./public/logovetorado25.png');
 
     // Get metadata of the original image
     const originalMetadata = await sharp(imageBuffer).metadata();
