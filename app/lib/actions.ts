@@ -13,7 +13,7 @@ export async function authenticate(prevState: string | undefined, formData: Form
       ...formDataObject,
     });
     console.log("result" + result)
-    if (result == "http://localhost:3000/login") {
+    if (result != "") {
       return { success: true, message: 'Login REALIZADO COM SUCESSO!' };
     } else {
       return { success: false, message: 'Invalid credentials.' };
