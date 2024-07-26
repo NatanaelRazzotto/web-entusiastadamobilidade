@@ -3,9 +3,16 @@ import AcmeLogo from "@/app/ui/acme-logo";
 import LoginForm from "@/app/ui/login-form";
 import { useState } from "react";
 import SimpleLoginForm from "../ui/simple-login-form";
+import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
+import { HomeIcon } from "@heroicons/react/24/outline";
+import { useSession } from "next-auth/react";
+import { lusitana } from "../ui/fonts";
 
 export default function LoginPage() {
   const [typeLogin, setTypeLogin] = useState<boolean>(true);
+  const router = useRouter();
+  const { data: session, status } = useSession();  
 
   const toggleLoginType = () => {
     setTypeLogin((prevTypeLogin) => !prevTypeLogin);
@@ -40,11 +47,27 @@ export default function LoginPage() {
           </button>
    
         </div>
-        {typeLogin ? (
+        {session && session.user.id ?     
+        <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
+        <h1 className={`${lusitana.className} mb-3 text-2xl`}>
+          Login Realizado Com Sucesso!
+        </h1>
+        <p>Click em "Home" e acesse as FUNCIONALIDADE!</p> </div>
+        
+        :       
+        
+        typeLogin ? (
           <SimpleLoginForm />
         ) : (
           <LoginForm  />
         )}
+
+      <div className="mt-4 space-y-3">         
+        
+        <Button className="w-full" onClick={() => router.push('/')}>
+          Go to Home <HomeIcon className="ml-auto h-5 w-5 text-gray-50" />
+        </Button>
+      </div>
       </div>
 
   );

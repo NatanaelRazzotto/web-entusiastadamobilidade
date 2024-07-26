@@ -80,13 +80,7 @@ export default function LoginForm() {
         </div>
         <LoginButton />
     
-        <div className="mt-4 space-y-3">         
         
-          <Button className="w-full" onClick={() => router.push('/')}>
-            Go to Home <HomeIcon className="ml-auto h-5 w-5 text-gray-50" />
-          </Button>
-        </div>
-       
       </div>
     </form>
   );

@@ -37,6 +37,7 @@ export const authConfig: NextAuthConfig = {
       //   isClientOrder =  nextUrl.pathname.startsWith('/clientspace/order/'+auth.user.id);
       // }
        isClientOrder =  nextUrl.pathname.startsWith('/clientspace');
+       console.log("🚀 ~ authorized ~ nextUrl.pathname.startsWith:", nextUrl.pathname)
        console.log("🚀 ~ authorized ~ isClientOrder:", isClientOrder)
 
       if (isClientOrder) {
@@ -48,10 +49,13 @@ export const authConfig: NextAuthConfig = {
           // return NextResponse.redirect(rul);        
           return true
         }
-        return null; // Redirect unauthenticated users to login page
+        return false; // Redirect unauthenticated users to login page
       } else if (isLoggedIn) {
         console.log("🚀 ~ authorized ~ auth?.user:", auth.user);
-        return true; // Exemplo: resposta direta sem redirecionamento
+       /// return true; // Exemplo: resposta direta sem redirecionamento
+       let isLogin =  nextUrl.pathname.startsWith('/login');
+       if (isLogin) return Response.redirect(new URL('/', nextUrl));
+       return true
       }
       return true;
     },

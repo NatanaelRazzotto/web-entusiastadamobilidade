@@ -125,9 +125,10 @@ export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
 ) {
-  console.log("🚀 ~ formData:", formData)
+  console.log("🚀 ~ formData:", {...formData, redirect: true, callbackUrl: '/' } )
   try {
     await signIn('credentials', formData);
+    return 'Login REALIZADO COM SUCESSO!';
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
