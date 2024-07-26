@@ -66,7 +66,7 @@ export default async function Page() {
   }
 
   const posts : Post[] = await prisma.post.findMany();
-  console.log("🚀 ~ Page ~ post:", posts)
+  
   const postTop : Post = posts.find((post) => post.topNews == 1)
   const secondPostTop : Post = posts.find((post) => post.topNews == 2)
   const thirdPostTop : Post = posts.find((post) => post.topNews == 3)

@@ -12,7 +12,7 @@ import { lusitana } from "../ui/fonts";
 export default function LoginPage() {
   const [typeLogin, setTypeLogin] = useState<boolean>(true);
   const router = useRouter();
-  const { data: session, status } = useSession();  
+  // const { data: session, status } = useSession();  
 
   const toggleLoginType = () => {
     setTypeLogin((prevTypeLogin) => !prevTypeLogin);
@@ -47,14 +47,15 @@ export default function LoginPage() {
           </button>
    
         </div>
-        {session && session.user.id ?     
-        <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-        <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-          Login Realizado Com Sucesso!
-        </h1>
-        <p>Click em "Home" e acesse as FUNCIONALIDADE!</p> </div>
+        {
+        // session && session.user.id ?     
+        // <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
+        // <h1 className={`${lusitana.className} mb-3 text-2xl`}>
+        //   Login Realizado Com Sucesso!
+        // </h1>
+        // <p>Click em "Home" e acesse as FUNCIONALIDADE!</p> </div>
         
-        :       
+        // :       
         
         typeLogin ? (
           <SimpleLoginForm />

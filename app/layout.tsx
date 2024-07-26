@@ -22,7 +22,7 @@ export default function RootLayout({
 
       <body className={`${inter.className} antialiased`}>
 
-      <SessionProvider>{children}</SessionProvider>
+      <div>{children}</div>
 
         <Analytics />
       </body>

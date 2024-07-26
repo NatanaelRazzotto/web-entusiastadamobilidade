@@ -111,6 +111,7 @@ export async function getUser(email: string): Promise<User | null> {
 }
 
 export async function getUserPhone(phone: string): Promise<User | null> {
+  console.log("🚀 ~ getUserPhone ~ phone:", phone)
   try {
     const user: User | null = await prisma.user.findUnique({
       where: { phone : phone},

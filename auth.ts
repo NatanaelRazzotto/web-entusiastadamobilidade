@@ -16,7 +16,11 @@ let config = {
       },
       async authorize(credentials) {
         console.log("🚀 ~ authorize ~ credentials:", credentials);
-
+      
+        // Filtrar os campos relevantes
+        const { phone, password } = credentials;
+        console.log("🚀 ~ authorize ~ password:", password)
+        console.log("🚀 ~ authorize ~ phone:", phone)
         const parsedCredentials = z
           .object({
             phone: z.string().regex(/^\(\d{2}\)\d{5}-\d{4}$/, {
@@ -24,9 +28,12 @@ let config = {
             }),
             password: z.string().min(4, { message: "A chave deve ter pelo menos 4 caracteres" }),
           })
-          .safeParse(credentials);
-
+          .safeParse({ phone, password });
+      
+        console.log("🚀 ~ authorize ~ parsedCredentials:", parsedCredentials.error);
+      
         if (parsedCredentials.success) {
+      
           const { phone, password } = parsedCredentials.data;
           console.log("🚀 ~ authorize ~ phone:", phone);
           console.log('validate credentials');
@@ -36,7 +43,7 @@ let config = {
             return null;
           }
 
-          const user = await getUserPhone(phone);
+          const user = await getUserPhone(phone.trim());
           console.log("🚀 ~ authorize ~ user:", user);
           if (!user) return null;
 

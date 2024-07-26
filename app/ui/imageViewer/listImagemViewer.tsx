@@ -1,6 +1,6 @@
 'use client'; // Certifique-se de que este é um Client Component
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, OrderImage, Post, Vehicle } from '../../lib/definitions';
 import Link from "next/link";
 import { saveSelection } from './serverActions';
@@ -9,7 +9,7 @@ import { PopupOrder } from "./popupOrder";
 import sharp from 'sharp';
 import { NextResponse } from "next/server";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 
 export function selectedImagesAtualize(selectedImages : OrderImage[],order: OrderImage) {
@@ -47,8 +47,20 @@ export function ListImagemViewer({ dataPost}) {
   const [serverResponse, setServerResponse] = useState(null); // Estado para armazenar a resposta do servidor
 
   const router = useRouter();
-  const { data: session, status } = useSession();
+  //const { data: session, status } = useSession();
  // let selectedImages : OrderImage[] = []
+
+ const [session, setSession] = useState(null);
+ 
+
+ useEffect(() => {
+   const fetchSession = async () => {
+     const session = await getSession();
+     setSession(session);
+
+   };
+   fetchSession();
+ }, []);
 
   // Função para lidar com a seleção de imagem
   const toggleImageSelection = (order: OrderImage) => {
