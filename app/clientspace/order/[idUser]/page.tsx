@@ -99,7 +99,7 @@ export default async function Page({ params }: { params: { idUser: string } }) {
               
               </p>
               <p className="text-lg font-medium text-gray-700 mb-4">
-                EMAIL: {dataPost[0] && dataPost[0].requestingUser ? dataPost[0].requestingUser.email? dataPost[0].requestingUser.email : "Sem Informações": ""}
+                E-MAIL: {dataPost[0] && dataPost[0].requestingUser ? dataPost[0].requestingUser.email? dataPost[0].requestingUser.email : "Sem Informações": ""}
               </p>
 
             </div>
