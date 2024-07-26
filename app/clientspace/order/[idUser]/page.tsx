@@ -117,7 +117,7 @@ export default async function Page({ params }: { params: { idUser: string } }) {
                 (dataPost as BookOrder[]).map((orderImage: BookOrder) => (
                   <Link
                   key={orderImage.id}
-                  href={!orderImage.processing ? '../book/' + orderImage.id : ""}>
+                  href={!orderImage.processing ? '../book/' + orderImage.id : orderImage.concluded ? orderImage.bookURL : ""}>
                      <div className="bg-white rounded-lg shadow-lg p-6">
   <div className="grid grid-cols-2 gap-4 mb-4">
     <div>

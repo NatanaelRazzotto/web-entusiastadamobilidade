@@ -183,18 +183,21 @@ export async function fetchBookUserId(idUser : string){
 export async function alterOrderImageId(orderImages : OrderImage[]){
  
   try {
-    
-    console.log("🚀 ~ alterOrderImageId ~ orderImage:", orderImages[0])
-    const updatedOrderImage = await prisma.orderImage.update({
-      where: {
-        id : orderImages[0].id
-      },
-      data: {
-        requestImage: orderImages[0].requestImage, // O novo valor para o campo description
-      },
-    });
-    console.log("🚀 ~ alterOrderImageId ~ post:", updatedOrderImage)
 
+    for (let index = 0; index < orderImages.length; index++) {
+     
+      const updatedOrderImage = await prisma.orderImage.update({
+        where: {
+          id : orderImages[index].id
+        },
+        data: {
+          requestImage: orderImages[index].requestImage, // O novo valor para o campo description
+        },
+      });
+      console.log("🚀 ~ alterOrderImageId ~ post:", updatedOrderImage)  
+    }
+
+        
     const OrderBook = await prisma.bookOrder.findFirst({
       where: {
         id : orderImages[0].bookOrderId

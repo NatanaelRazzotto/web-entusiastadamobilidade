@@ -73,7 +73,7 @@ export default function SideNav() {
           </Link>
         )}
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
-        <p className='p-4 hidden md:block'>v1.0.0 | Em Desenvolvimento</p>
+        <p className='p-4 hidden md:block'>v1.1.0 | Em Desenvolvimento</p>
         {!session && (
           <Link
             href="/login"

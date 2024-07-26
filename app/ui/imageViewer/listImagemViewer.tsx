@@ -45,7 +45,7 @@ const getWatermarkedImageUrl = (imageUrl) => {
 export function ListImagemViewer({ dataPost}) {
   const [selectedImages, setSelectedImages] = useState<OrderImage[]>([]);
   const [serverResponse, setServerResponse] = useState(null); // Estado para armazenar a resposta do servidor
-
+  const [edit, setEdit] = useState<boolean>(true);
   const router = useRouter();
   //const { data: session, status } = useSession();
  // let selectedImages : OrderImage[] = []
@@ -76,6 +76,7 @@ export function ListImagemViewer({ dataPost}) {
     // Função para lidar com o clique do botão e chamar a função do servidor
     const handleSaveSelection = async () => {
        console.log("Respos")
+      setEdit(false)
       const response = await alterOrderImageId(selectedImages);
       setServerResponse(response); // Armazena a resposta do servidor no estado
       console.log("Resposta do servidor:", response); // Log para depuração
@@ -84,7 +85,7 @@ export function ListImagemViewer({ dataPost}) {
     // Função para fechar o popup
     const closePopup = () => {
       setServerResponse(null);
-      router.push('/clientspace/order/'+session.user.id);
+      router.push('/')// clientspace/order/'+session.user.id);
     };
   
 
@@ -104,7 +105,7 @@ export function ListImagemViewer({ dataPost}) {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4 mt-8">
         {dataPost.orderImages.length === 0 ? (
           <p>Sem Imagens</p>
         ) : (
@@ -118,8 +119,22 @@ export function ListImagemViewer({ dataPost}) {
             <img
               src={getWatermarkedImageUrl(orderImage.image.pathURL)}
               alt={orderImage.image.title}
-              className="rounded-md w-full object-cover cursor-pointer"
+               className="rounded-md w-full object-cover cursor-pointer"
             />
+
+  <div
+    style={{
+      position: 'absolute', // Torna a marca d'água posicionada em relação ao contêiner
+      top: '10px', // Ajuste a posição conforme necessário
+      left: '10px', // Ajuste a posição conforme necessário
+      background: 'rgba(255, 255, 255, 0.5)', // Fundo semi-transparente para a marca d'água
+      padding: '5px', // Ajuste o preenchimento conforme necessário
+      borderRadius: '5px', // Ajuste o arredondamento dos cantos conforme necessário
+      pointerEvents: 'none' // Evita que a marca d'água interfira na interação com a imagem
+    }}
+  >
+    <span style={{ color: 'black', fontWeight: 'bold' }}>R$10,00</span>
+  </div>
             
           </div>
           
@@ -128,7 +143,7 @@ export function ListImagemViewer({ dataPost}) {
       </div>
 
       {
-       !dataPost.processing && selectedImages.length > 0 ?       
+       edit && !dataPost.processing && selectedImages.length > 0 ?       
        <div className="flex justify-end mt-8">
         <button
           onClick={handleSaveSelection}
