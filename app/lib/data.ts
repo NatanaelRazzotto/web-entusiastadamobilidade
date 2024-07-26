@@ -1,8 +1,11 @@
+"use server"
 import prisma from '../lib/prisma';
 import { 
   Post,
   User,
-  Image
+  Image,
+  BookOrder,
+  OrderImage
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -104,6 +107,129 @@ export async function getUser(email: string): Promise<User | null> {
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
+  }
+}
+
+export async function getUserPhone(phone: string): Promise<User | null> {
+  console.log("🚀 ~ getUserPhone ~ phone:", phone)
+  try {
+    const user: User | null = await prisma.user.findUnique({
+      where: { phone : phone},
+    });
+
+    return user;
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    throw new Error('Failed to fetch user.');
+  }
+}
+
+export async function fetchBookId(idPost : string){
+  try {
+    const post: BookOrder | null = await prisma.bookOrder.findFirst({
+      where: {
+        id: idPost,
+      },
+      include: {
+        requestingUser : true, 
+        orderImages : {
+          include : {
+            image: {
+              include: {
+                vehicle: true,
+              },
+            },
+          }
+        }
+        
+      },
+    });
+
+    return post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function fetchBookUserId(idUser : string){
+  try {
+    const post: BookOrder[] | null = await prisma.bookOrder.findMany({
+      where: {
+        requestingUserId: idUser,
+      },
+      include: {
+        requestingUser : true, 
+        orderImages : {
+          include : {
+            image: {
+              include: {
+                vehicle: true,
+              },
+            },
+          }
+        }
+        
+      },
+    });
+
+    return post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function alterOrderImageId(orderImages : OrderImage[]){
+ 
+  try {
+
+    for (let index = 0; index < orderImages.length; index++) {
+     
+      const updatedOrderImage = await prisma.orderImage.update({
+        where: {
+          id : orderImages[index].id
+        },
+        data: {
+          requestImage: orderImages[index].requestImage, // O novo valor para o campo description
+        },
+      });
+      console.log("🚀 ~ alterOrderImageId ~ post:", updatedOrderImage)  
+    }
+
+        
+    const OrderBook = await prisma.bookOrder.findFirst({
+      where: {
+        id : orderImages[0].bookOrderId
+      },
+      include : {orderImages : true},
+    });
+
+    let selectValue = 0
+    let costValue = 0
+    let unitaryValue = 10.00
+
+    OrderBook.orderImages.forEach(element => {
+      if (element.requestImage === true) selectValue = selectValue + 1; 
+    });
+
+    costValue = unitaryValue * selectValue
+
+    const updatedBookOrder = await prisma.bookOrder.update({
+      where: {
+        id : OrderBook.id
+      },
+      data: {
+        request: costValue > 0 ? true : false, // O novo valor para o campo description
+        costValue : costValue,
+        unit : selectValue
+      },
+    });
+    
+    return "post";
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
   }
 }
 

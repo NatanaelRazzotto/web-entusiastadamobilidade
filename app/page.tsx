@@ -18,10 +18,13 @@ import CardNotice from './ui/portal/cardNotice';
 import SearchBar from './ui/portal/searchBar';
 import HeadMeta from './ui/components/HeadMeta';
 import { Metadata } from 'next';
-import { PageProps } from '.next/types/app/page';
 
 
-export async function generateMetadata( {params: {lang}}: PageProps ):Promise<Metadata> {
+import SideNav from './ui/dashboard/sidenavManager';
+
+
+
+export async function generateMetadata( {params: {lang}} ):Promise<Metadata> {
 
   return {
     title: 'Portal Entusiasta da Mobilidade',
@@ -40,6 +43,7 @@ export async function generateMetadata( {params: {lang}}: PageProps ):Promise<Me
       ],
     }
   };
+
 
 }
 
@@ -62,7 +66,7 @@ export default async function Page() {
   }
 
   const posts : Post[] = await prisma.post.findMany();
-  console.log("🚀 ~ Page ~ post:", posts)
+  
   const postTop : Post = posts.find((post) => post.topNews == 1)
   const secondPostTop : Post = posts.find((post) => post.topNews == 2)
   const thirdPostTop : Post = posts.find((post) => post.topNews == 3)
@@ -77,6 +81,11 @@ export default async function Page() {
   return (
 
     <main>
+       <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+        <div className="w-full flex-none md:w-64">
+            <SideNav />
+        </div>
+        <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
       <div className="container mx-auto px-4"> 
 
       <SearchBar />
@@ -360,6 +369,8 @@ export default async function Page() {
       
      
     </div>
+    </div>
+      </div>      
     </main>
    
   );

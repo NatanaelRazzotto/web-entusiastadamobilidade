@@ -1,55 +1,66 @@
 
-
-
-import { z } from 'zod';
-import { sql } from '@vercel/postgres';
-import type { User } from '@/app/lib/definitions';
-import bcrypt from 'bcrypt';
-import { getUser } from './app/lib/data';
- 
-// async function getUser(email: string): Promise<User | undefined> {
-//   try {
-//     const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
-//     return user.rows[0];
-//   } catch (error) {
-//     console.error('Failed to fetch user:', error);
-//     throw new Error('Failed to fetch user.');
-//   }
-// }
+// /src/app/api/auth/[...nextauth].ts
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { authConfig } from './auth.config';
+import { z } from 'zod';
+import { authConfig } from './auth.config'; // Ajuste o caminho conforme necessário
+import { getUserPhone } from './app/lib/data';
 
-export const { auth, signIn, signOut } = NextAuth({
+let config = {
   ...authConfig,
   providers: [
     Credentials({
       credentials: {
-        // Aqui você define a estrutura esperada para as credenciais
-        email: { label: "Email", type: "text" },
+        phone: { label: "Phone", type: "text" },
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        // Aqui você implementa a lógica de autenticação com as credenciais fornecidas
-        console.log("🚀 ~ authorize ~ credentials:", credentials)
+        console.log("🚀 ~ authorize ~ credentials:", credentials);
+      
+        // Filtrar os campos relevantes
+        const { phone, password } = credentials;
+        console.log("🚀 ~ authorize ~ password:", password)
+        console.log("🚀 ~ authorize ~ phone:", phone)
         const parsedCredentials = z
-          .object({ email: z.string().email(), password: z.string().min(6) })
-          .safeParse(credentials);
- 
+          .object({
+            phone: z.string().regex(/^\(\d{2}\)\d{5}-\d{4}$/, {
+              message: "Número de telefone inválido",
+            }),
+            password: z.string().min(4, { message: "A chave deve ter pelo menos 4 caracteres" }),
+          })
+          .safeParse({ phone, password });
+      
+        console.log("🚀 ~ authorize ~ parsedCredentials:", parsedCredentials.error);
+      
         if (parsedCredentials.success) {
-          const { email, password } = parsedCredentials.data;
-          console.log("🚀 ~ authorize ~ email:", email)
+      
+          const { phone, password } = parsedCredentials.data;
+          console.log("🚀 ~ authorize ~ phone:", phone);
           console.log('validate credentials');
-          const user = await getUser(email);
-          console.log("🚀 ~ authorize ~ user:", user)
+
+          if (phone === "(41)99999-9999") {
+            console.log('NOT credentials');
+            return null;
+          }
+
+          const user = await getUserPhone(phone.trim());
+          console.log("🚀 ~ authorize ~ user:", user);
           if (!user) return null;
-          console.log('OK credentials');
-          return user;
-          
+
+          if (user.verificationCode !== password) {
+            console.log('Senha incorreta');
+            return null;
+          }
+
+          return { name: user.name, email: user.email, image: null , id : user.id};
         }
+
         console.log('Invalid credentials');
         return null;
       },
     }),
   ],
-});
+};
+
+export const { handlers, auth, signIn, signOut } = NextAuth(config)
+

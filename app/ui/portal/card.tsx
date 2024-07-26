@@ -4,7 +4,7 @@ import { Post } from "@/app/lib/definitions"
 import Link from "next/link"
 
 export default function CardPost({postCard}) {
-  console.log("***** ~ CardPost ~ postCard:", postCard)
+ 
   return (
     <Link
     key={'aaaaa'}
