@@ -108,6 +108,7 @@ export type Post = {
   resume?: string | null;
   tagPost?: string | null;
   dateCreate: Date;
+  dateEvent : Date;
 };
 
 

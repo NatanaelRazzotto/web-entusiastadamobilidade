@@ -25,7 +25,8 @@ model Post {
   authorId  String?
   newspaperColumn    NewspaperColumn?     @relation(fields: [newspaperColumnID], references: [id])
   newspaperColumnID  String?
-  dateCreate DateTime
+  dateCreate DateTime @default(now())
+  dateEvent DateTime @default(now())
 
   // Relação muitos para muitos com Image
   images    Image[]   @relation("PostImages")
