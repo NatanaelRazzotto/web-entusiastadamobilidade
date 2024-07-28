@@ -4,6 +4,9 @@ import { Post, Vehicle, Image } from '../../../lib/definitions';
 import Link from 'next/link';
 import React from 'react';
 
+const getWatermarkedImageUrl = (imageUrl) => {
+  return `/api/watermark?imageUrl=${encodeURIComponent(imageUrl)}`;
+};
 
 export async function generateMetadata({ params }: { params: { namePost: string } }): Promise<Metadata> {
   const { namePost } = params;
@@ -37,12 +40,14 @@ export async function generateMetadata({ params }: { params: { namePost: string 
       type: 'article',
       locale: 'pt_BR',
       url: `https://entusiastadamobilidade.vercel.app/posts/${namePost}`,
-      images: {
-        url: `https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`,
-        width: 800,
-        height: 600,
-        alt: dataPost.title,
-      },
+      images: [
+        {
+          url: `https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`,//getWatermarkedImageUrl(dataPost.coverURL)
+          width: 800,
+          height: 600,
+          alt: dataPost.title,
+        },
+      ]
     },
   };
 }
