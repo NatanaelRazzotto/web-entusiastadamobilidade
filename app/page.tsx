@@ -56,6 +56,7 @@ export default async function Page() {
     authorId : "1",
     published : true,
     dateCreate : new Date(),
+    dateEvent : new Date(),
     category : 1,
     topNews : 0,
     namePost : "Há um post no forno!",
