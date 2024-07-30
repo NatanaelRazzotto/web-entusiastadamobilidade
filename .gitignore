@@ -6,6 +6,7 @@
 .pnp.js
 
 /testdrive
+/app/api/newImagesPost
 
 # testing
 /coverage

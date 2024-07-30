@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: { params: { namePost: string 
       url: `https://entusiastadamobilidade.vercel.app/posts/${namePost}`,
       images: [
         {
-          url: `https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`,//getWatermarkedImageUrl(dataPost.coverURL)
+          url: getWatermarkedImageUrl(dataPost.coverURL),
           width: 800,
           height: 600,
           alt: dataPost.title,

@@ -26,6 +26,28 @@ export async function fetchPost() {
   }
 }
 
+export async function fetchPostID(idPost : string){
+  try {
+    const post: Post | null = await prisma.post.findFirst({
+      where: {
+        id: idPost,
+      },
+      include: {
+        images: {
+          include: {
+            vehicle: true,
+          },
+        },
+      },
+    });
+
+    return post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
 export async function fetchPostName(namePost : string){
   try {
     const post: Post | null = await prisma.post.findFirst({
@@ -67,6 +89,21 @@ export async function fetchPostTitle(titlePost : string){
     });
 
     return post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function fetchIdPath(idurl : string){
+  try {
+    const image: Image | null = await prisma.image.findFirst({
+      where: {
+        pathURL: idurl,
+      },      
+    });
+
+    return image;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch revenue data.');
@@ -227,6 +264,28 @@ export async function alterOrderImageId(orderImages : OrderImage[]){
     });
     
     return "post";
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function createImage(orderImages : Image){
+ 
+  try {  
+      const Post = await prisma.image.create({
+        data: {
+          title : orderImages.title,
+          pathURL : orderImages.pathURL,
+          posts: {
+            connect: orderImages.posts.map(post => ({
+              id: post.id, // ou qualquer outro campo único usado para identificar um Post
+            })),
+          },
+        }
+      });
+    
+    return Post;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch revenue data.');
