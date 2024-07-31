@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: { namePost: string 
     openGraph: {
       type: 'article',
       locale: 'pt_BR',
-      url: `https://entusiastadamobilidade.vercel.app/posts/${namePost}`,
+      url: `https://entusiastadamobilidade.vercel.app/portal/post/${namePost}`,
       images: [
         {
           url: getWatermarkedImageUrl(dataPost.coverURL),
