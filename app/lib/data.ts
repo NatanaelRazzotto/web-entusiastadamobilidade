@@ -110,6 +110,21 @@ export async function fetchIdPath(idurl : string){
   }
 }
 
+export async function deleteIdPath(idurl : string){
+  try {
+    const image: Image | null = await prisma.image.delete({
+      where: {
+        id: idurl,
+      },      
+    });
+
+    return image;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
 export async function fetchIdImage(idImage : string){
   try {
     const image: Image | null = await prisma.image.findFirst({
@@ -291,4 +306,74 @@ export async function createImage(orderImages : Image){
     throw new Error('Failed to fetch revenue data.');
   }
 }
+
+export async function updateImage(orderImages : Image){
+ 
+  try {  
+      const Post =  await prisma.image.update({
+        where: { pathURL: orderImages.pathURL },
+        data: {
+          posts: {
+            connect: orderImages.posts.map(post => ({
+              id: post.id, // ou qualquer outro campo único usado para identificar um Post
+            })),
+          },
+        },
+      });
+    
+    return Post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function createImages(orderImages: Image[]) {
+  try {
+    const data = orderImages.map(image => ({
+      title: image.title,
+      pathURL: image.pathURL,
+      authorId: image.authorId,
+    }));
+
+    const createdImages = await prisma.image.createMany({
+      data: data,
+      skipDuplicates: true, // Se você quiser ignorar duplicatas
+    });
+
+    return createdImages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function removeDuplicatePathURLs() {
+  // Encontrar duplicatas
+  const duplicates = await prisma.$queryRaw<
+    { pathURL: string; count: number }[]
+  >`SELECT pathURL, COUNT(*) as count
+    FROM "Image"
+    GROUP BY "pathURL"
+    HAVING COUNT(*) > 1`;
+
+  // for (const duplicate of duplicates) {
+  console.log("🚀 ~ removeDuplicatePathURLs ~ duplicates:", duplicates)
+  //   // Encontrar todas as imagens com o pathURL duplicado
+  //   const images = await prisma.image.findMany({
+  //     where: { pathURL: duplicate.pathURL },
+  //   });
+
+  //   // Manter apenas a primeira imagem e deletar o resto
+  //   for (let i = 1; i < images.length; i++) {
+  //     await prisma.image.delete({
+  //       where: { id: images[i].id },
+  //     });
+  //   }
+  // }
+}
+
+
+
+
 

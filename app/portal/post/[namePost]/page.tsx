@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: { params: { namePost: string 
     return {
       title: 'Portal Entusiasta da Mobilidade',
       description: 'O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte',
+      keywords: 'notícias, fotografias, transporte, modais, mobilidade',
       openGraph: {
         type: 'website',
         locale: 'pt_BR',
@@ -36,6 +37,7 @@ export async function generateMetadata({ params }: { params: { namePost: string 
   return {
     title: dataPost.title,
     description: dataPost.resume || 'O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte',
+    keywords: 'notícias, fotografias, transporte, modais, mobilidade',
     openGraph: {
       type: 'article',
       locale: 'pt_BR',
@@ -195,8 +197,13 @@ export default async function Page({ params }: { params: { namePost: string } })
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+
+          {
+            <p> Confira as {dataPost.images.length}  Fotos Disponíveis</p>
+          }
           {
             dataPost.images.length === 0 ? <p>Sem Imagens</p> :
+           
               dataPost.images.map((image) => (
                 <Link href={'../pictures/' + image.id} key={image.id}>
                   <div className="col-span-1">

@@ -35,8 +35,9 @@ model Post {
 model Image {
   id        String     @id @default(uuid())
   title     String
+  nameFile    String   @default("")
   description String?
-  pathURL   String?
+  pathURL   String @unique 
   published Boolean @default(false)
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?
