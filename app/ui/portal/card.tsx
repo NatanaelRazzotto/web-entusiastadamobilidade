@@ -1,14 +1,15 @@
 'use client'
 
 import { Post } from "@/app/lib/definitions"
+import { getCategoyrUrl } from "@/app/lib/utils"
 import Link from "next/link"
 
-export default function CardPost({postCard}) {
+export default function CardPost({postCard, cardTop}) {
  
   return (
     <Link
-    key={'aaaaa'}
-    href={'portal/post/' + postCard.namePost}>
+    key={postCard.id}
+    href={`portal/${getCategoyrUrl(postCard)}/` + postCard.namePost}>
   <div className="bg-white rounded-md shadow-md relative">
   <div className="relative">
     <img
@@ -22,9 +23,14 @@ export default function CardPost({postCard}) {
     <h2 className="text-xl font-bold">
       {postCard.title}
     </h2>
-    <p className="text-sm">
+    {
+      cardTop ?  
+      <p className="text-sm">
       {postCard.resume}     
-    </p>
+      </p>
+      :""
+    }
+   
   </div>
 </div>
 

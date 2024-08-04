@@ -1,15 +1,12 @@
 import { Metadata } from 'next';
 import { fetchPostName } from '@/app/lib/data';
 import { Post, Vehicle, Image } from '../../../lib/definitions';
+import { getWatermarkedImageUrl, getCategoyrUrl} from '../../../lib/utils'
 import Link from 'next/link';
 import React from 'react';
 
-const getWatermarkedImageUrl = (imageUrl) => {
-  return `/api/watermark?imageUrl=${encodeURIComponent(imageUrl)}`;
-};
-
-export async function generateMetadata({ params }: { params: { namePost: string } }): Promise<Metadata> {
-  const { namePost } = params;
+export async function generateMetadata({ params }: { params: { category: string; namePost: string } }): Promise<Metadata> {
+  const { category, namePost } = params;
 
   const dataPost: Post = await fetchPostName(namePost);
 
@@ -41,7 +38,7 @@ export async function generateMetadata({ params }: { params: { namePost: string 
     openGraph: {
       type: 'article',
       locale: 'pt_BR',
-      url: `https://entusiastadamobilidade.vercel.app/portal/post/${namePost}`,
+      url: `https://entusiastadamobilidade.vercel.app/portal/${getCategoyrUrl(dataPost)}/${namePost}`,
       images: [
         {
           url: getWatermarkedImageUrl(dataPost.coverURL),
@@ -54,8 +51,9 @@ export async function generateMetadata({ params }: { params: { namePost: string 
   };
 }
 
-export default async function Page({ params }: { params: { namePost: string } }) {
-  const { namePost } = params;
+export default async function Page({ params }: {params: { category: string; namePost: string }}) {
+  const { category, namePost } = params;
+  console.log("🚀 ~ generateMetadata ~ category:", category)
 
   let dataPost: Post | null = null;
   let dataVehicle: Vehicle[] = [];
@@ -196,27 +194,33 @@ export default async function Page({ params }: { params: { namePost: string } })
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+        <div className="bg-white rounded-md shadow-md p-4 mt-8">
+          <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+            <h2 className="font-bold mt-2 mb-1"> Confira! {dataPost.images.length} Fotos Disponíveis</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
 
-          {
-            <p> Confira as {dataPost.images.length}  Fotos Disponíveis</p>
-          }
-          {
-            dataPost.images.length === 0 ? <p>Sem Imagens</p> :
-           
-              dataPost.images.map((image) => (
-                <Link href={'../pictures/' + image.id} key={image.id}>
-                  <div className="col-span-1">
-                    <img
-                      src={`https://drive.google.com/thumbnail?id=${image.pathURL}&sz=w1000`}
-                      alt={image.title}
-                      className="rounded-md w-full object-cover"
-                    />
-                  </div>
-                </Link>
-              ))
-          }
+       
+            {
+              dataPost.images.length === 0 ? <p>Sem Imagens</p> :
+            
+                dataPost.images.map((image) => (
+                  <Link href={'../pictures/' + image.id} key={image.id}>
+                    <div className="col-span-1">
+                      <img
+                        src={`https://drive.google.com/thumbnail?id=${image.pathURL}&sz=w1000`}
+                        alt={image.title}
+                        className="rounded-md w-full object-cover"
+                      />
+                    </div>
+                  </Link>
+                ))
+            }
+            </div>
+        
         </div>
+
+       
 
         <div className="flex justify-end mt-8">
           <Link href={"/"}>

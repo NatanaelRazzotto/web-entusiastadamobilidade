@@ -113,7 +113,7 @@ export default async function Page() {
         <div className="col-span-2">
         {/* News card 1 */}
 
-        {posts.length === 0 && !postTop? ( <CardPost postCard={postDefault} />) : postTop != undefined? (<CardPost postCard={postTop} />) : (   <CardPost postCard={postDefault} />)
+        {posts.length === 0 && !postTop? ( <CardPost postCard={postDefault} cardTop={true}/>) : postTop != undefined? (<CardPost postCard={postTop} cardTop={true}/>) : (   <CardPost postCard={postDefault} cardTop={true}/>)
     }
         
     
@@ -123,9 +123,9 @@ export default async function Page() {
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
             {/* News card 2 */}
             <div>
-            {posts.length === 0 && !secondPostTop? ( <CardPost postCard={postDefault} />) : secondPostTop != undefined? (<CardPost postCard={secondPostTop} />) : (   <CardPost postCard={postDefault} />)}
+            {posts.length === 0 && !secondPostTop? ( <CardPost postCard={postDefault} cardTop={false}/>) : secondPostTop != undefined? (<CardPost postCard={secondPostTop} cardTop={false}/>) : (   <CardPost postCard={postDefault} cardTop={false}/>)}
 
-            {posts.length === 0 && !thirdPostTop? ( <CardPost postCard={postDefault} />) : thirdPostTop != undefined? (<CardPost postCard={thirdPostTop} />) : (   <CardPost postCard={postDefault} />)}
+            {posts.length === 0 && !thirdPostTop? ( <CardPost postCard={postDefault} cardTop={false} />) : thirdPostTop != undefined? (<CardPost postCard={thirdPostTop} cardTop={false}/>) : (   <CardPost postCard={postDefault} cardTop={false}/>)}
             </div>
             
            

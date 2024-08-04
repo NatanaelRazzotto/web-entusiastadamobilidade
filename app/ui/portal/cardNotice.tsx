@@ -1,13 +1,14 @@
 'use client'
 
 import { Post } from "@/app/lib/definitions"
+import { getCategoyrUrl } from "@/app/lib/utils"
 import Link from "next/link"
 
 export default function CardNotice({postCard }) {
   return (
     <Link
-    key={'aaaaa'}
-    href={'portal/post/' + postCard.namePost}>
+    key={postCard.id}
+    href={`portal/${getCategoyrUrl(postCard)}/` + postCard.namePost}>
          <div className="bg-white rounded-md shadow-md">
             <img
                 src={`https://drive.google.com/thumbnail?id=${postCard.coverURL}&sz=w1000`}

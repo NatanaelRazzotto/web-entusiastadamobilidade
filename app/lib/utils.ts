@@ -1,4 +1,14 @@
-import { Revenue } from './definitions';
+import { Post, Revenue } from './definitions';
+
+export const getWatermarkedImageUrl = (imageUrl : string) => {
+  return `/api/watermark?imageUrl=${encodeURIComponent(imageUrl)}`;
+};
+
+export const getCategoyrUrl = (dataPost : Post) => {
+  let cat = dataPost.category == 1 ? "transporte-publico" : dataPost.category == 2 ? "aviacao" : dataPost.category == 3 ? "ferrovia" : dataPost.category == 4 ? "automoveis" : "post"
+  console.log("🚀 ~ getCategoyrUrl ~ cat:", cat)
+  return cat
+};
 
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('en-US', {
