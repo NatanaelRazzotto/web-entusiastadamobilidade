@@ -21,6 +21,7 @@ import { Metadata } from 'next';
 
 
 import SideNav from './ui/dashboard/sidenavManager';
+import { getCategoyrUrl } from './lib/utils';
 
 
 
@@ -248,9 +249,11 @@ export default async function Page() {
           }        
           
           <div className="flex justify-end mt-8">
+            <Link href={'portal/'+getCategoyrUrl(1)}>
             <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
               Ver mais
             </button>
+            </Link>
           </div>
         
         </div>
@@ -288,9 +291,11 @@ export default async function Page() {
           }    
 
           <div className="flex justify-end mt-8">
+          <Link href={'portal/'+getCategoyrUrl(2)}>
             <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
               Ver mais
             </button>
+            </Link>
           </div>
         
         </div>
@@ -319,9 +324,11 @@ export default async function Page() {
             )
           }  
           <div className="flex justify-end mt-8">
+          <Link href={'portal/'+getCategoyrUrl(3)}>
             <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
               Ver mais
             </button>
+            </Link>
           </div>
         
         </div>
@@ -352,9 +359,11 @@ export default async function Page() {
             )
           }   
           <div className="flex justify-end mt-8">
-            <button style={{height:"50px"}} className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
+          <Link href={'portal/'+getCategoyrUrl(4)}>
+            <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
               Ver mais
             </button>
+            </Link>
           </div>
         
         </div>

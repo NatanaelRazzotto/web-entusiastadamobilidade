@@ -8,7 +8,7 @@ export default function CardNotice({postCard }) {
   return (
     <Link
     key={postCard.id}
-    href={`portal/${getCategoyrUrl(postCard)}/` + postCard.namePost}>
+    href={`portal/${getCategoyrUrl(postCard.category)}/` + postCard.namePost}>
          <div className="bg-white rounded-md shadow-md">
             <img
                 src={`https://drive.google.com/thumbnail?id=${postCard.coverURL}&sz=w1000`}

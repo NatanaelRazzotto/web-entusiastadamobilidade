@@ -4,9 +4,14 @@ export const getWatermarkedImageUrl = (imageUrl : string) => {
   return `/api/watermark?imageUrl=${encodeURIComponent(imageUrl)}`;
 };
 
-export const getCategoyrUrl = (dataPost : Post) => {
-  let cat = dataPost.category == 1 ? "transporte-publico" : dataPost.category == 2 ? "aviacao" : dataPost.category == 3 ? "ferrovia" : dataPost.category == 4 ? "automoveis" : "post"
-  console.log("🚀 ~ getCategoyrUrl ~ cat:", cat)
+export const getCategoyrUrl = (category : number) => {
+  let cat = category == 1 ? "transporte-publico" : category == 2 ? "aviacao" : category == 3 ? "ferrovia" : category == 4 ? "automoveis" : "post"
+
+  return cat
+};
+
+export const getConvertUrl = (url : string) => {
+  let cat = url == "transporte-publico" ? 1 : url == "aviacao" ? 2 : url == "ferrovia" ? 3  : url == "automoveis" ? 4 : 0
   return cat
 };
 

@@ -65,7 +65,7 @@ export default function SearchBar() {
             <div className="absolute top-full left-0 w-full mt-2 bg-white text-black rounded-md z-10">
               {searchResults.map((result) => (
                 <div key={result.id} className="p-2 border-b border-gray-200">
-                  <Link className="hover:text-gray-500" href={`portal/${getCategoyrUrl(result)}/${result.namePost}`}>
+                  <Link className="hover:text-gray-500" href={`portal/${getCategoyrUrl(result.category)}/${result.namePost}`}>
                     {result.title}
                   </Link>
                 </div>

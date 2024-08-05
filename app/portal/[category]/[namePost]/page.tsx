@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: { category: string;
     openGraph: {
       type: 'article',
       locale: 'pt_BR',
-      url: `https://entusiastadamobilidade.vercel.app/portal/${getCategoyrUrl(dataPost)}/${namePost}`,
+      url: `https://entusiastadamobilidade.vercel.app/portal/${getCategoyrUrl(dataPost.category)}/${namePost}`,
       images: [
         {
           url: getWatermarkedImageUrl(dataPost.coverURL),
@@ -100,7 +100,6 @@ export default async function Page({ params }: {params: { category: string; name
 
   // Função para renderizar texto com quebras de linha
   function renderContentWithLineBreaks(content: string) {
-    console.log("🚀 ~ renderContentWithLineBreaks ~ content:", content);
    // let a = content.split('\n')
     return content.split('\\n').map((line, index) => (
       <React.Fragment key={index}>

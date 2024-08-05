@@ -9,7 +9,7 @@ export default function CardPost({postCard, cardTop}) {
   return (
     <Link
     key={postCard.id}
-    href={`portal/${getCategoyrUrl(postCard)}/` + postCard.namePost}>
+    href={`portal/${getCategoyrUrl(postCard.category)}/` + postCard.namePost}>
   <div className="bg-white rounded-md shadow-md relative">
   <div className="relative">
     <img

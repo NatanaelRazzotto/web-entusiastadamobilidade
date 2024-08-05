@@ -70,6 +70,28 @@ export async function fetchPostName(namePost : string){
   }
 }
 
+export async function fetchPostCategory(idCategory : number){
+  try {
+    const post: Post[] = await prisma.post.findMany({
+      where: {
+        category: idCategory,
+      },
+      include: {
+        images: {
+          include: {
+            vehicle: true,
+          },
+        },
+      },
+    });
+
+    return post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
 export async function fetchPostTitle(titlePost : string){
   try {
     const post: Post[] = await prisma.post.findMany({
