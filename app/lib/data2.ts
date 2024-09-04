@@ -226,6 +226,7 @@ export async function getUser(email: string) {
     return user.rows[0] as User;
   } catch (error) {
     console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
+   return null
+   // throw new Error('Failed to fetch user.');
   }
 }

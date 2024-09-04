@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import { getUserPhone } from '../../../lib/data';
+import { getUser } from "@/app/lib/data";
 
 
 const handler = NextAuth({
@@ -65,9 +66,11 @@ const handler = NextAuth({
       ],
       callbacks: {
         async signIn({ user, account, profile }) {
+          console.log("🚀 ~ signIn ~ user:", user)
           if (account.provider === "google") {
             // Verifique se o usuário já está salvo no sistema
-            const existingUser = "natanael"//await getUserByEmail(user.email);
+            const existingUser =  await getUser(user.email);
+            console.log("🚀 ~ signIn ~ existingUser:", existingUser)
             
             if (!existingUser) {
               // Se o usuário não existe no banco de dados, você pode impedi-lo de logar
@@ -85,6 +88,16 @@ const handler = NextAuth({
         async session({ session, user, token }) {
           // Você pode adicionar informações adicionais na sessão aqui, se necessário
           return session;
+        },
+        async jwt({ token, user }) {
+          console.log("🚀 ~ jwt ~ user:", user)
+          console.log("🚀 ~ jwt ~ token:", token)
+          // if (user) {
+          //   // Supondo que você tenha o papel do usuário no objeto `user`
+          //   token.role = user.role;
+          // }
+          token.role = "test";
+          return token;
         },
       }
     });
