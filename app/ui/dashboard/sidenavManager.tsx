@@ -4,7 +4,7 @@ import Link from 'next/link';
 import NavLinks from '@/app/ui/dashboard/nav-links-portal';
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon, PowerIcon } from '@heroicons/react/24/outline';
-import { useSession, signOut as nextAuthSignOut, getSession } from 'next-auth/react'; // Use signOut do next-auth
+import { useSession, signOut as nextAuthSignOut, getSession, signOut } from 'next-auth/react'; // Use signOut do next-auth
 import { useRouter } from 'next/navigation';
 import { clsx } from 'clsx';
 import { usePathname } from 'next/navigation';
@@ -26,11 +26,13 @@ export default function SideNav() {
   // }, [status]);
 
   const [session, setSession] = useState(null);
+  console.log("🚀 ~ SideNav ~ session:", session)
  
 
   useEffect(() => {
     const fetchSession = async () => {
       const session = await getSession();
+      console.log("🚀 ~ fetchSession ~ session:", session)
       setSession(session);
 
     };
@@ -39,9 +41,11 @@ export default function SideNav() {
 
 
   const handleSignOut = async () => {
-    await serverSignOut(); // Chama sua função de logout do servidor
-    await nextAuthSignOut(); // Chama o signOut do next-auth
-    router.push('/login'); // Redireciona para a página de login
+    //await serverSignOut(); // Chama sua função de logout do servidor
+    //await nextAuthSignOut(); // Chama o signOut do next-auth
+    signOut({ callbackUrl: "/" }); // Redireciona para a página inicial após o logout
+
+   // router.push('/login'); // Redireciona para a página de login
   };
 
   return (

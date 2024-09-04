@@ -6,7 +6,7 @@ import SimpleLoginForm from "../ui/simple-login-form";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { HomeIcon } from "@heroicons/react/24/outline";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { lusitana } from "../ui/fonts";
 
 export default function LoginPage() {
@@ -57,11 +57,16 @@ export default function LoginPage() {
         
         // :       
         
-        typeLogin ? (
-          <SimpleLoginForm />
-        ) : (
-          <LoginForm  />
-        )}
+        // typeLogin ? (
+        //   <SimpleLoginForm />
+        // ) : (
+        //   <LoginForm  />
+        // )
+          <button onClick={() => signIn('google',{ callbackUrl :"/"})} 
+          className="flex gap-2 items-center border border-neutral-988 p-2 rounded-nd">
+           Login google
+          </button>
+        }
 
       <div className="mt-4 space-y-3">         
         

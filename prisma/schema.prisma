@@ -183,8 +183,7 @@ model User {
   sessions      Session[]
   imagens Image[]
   bookOrders BookOrder[]
-
-
+  UserRole   Float     @default(4) 
 }
 
 model NewspaperColumn {
