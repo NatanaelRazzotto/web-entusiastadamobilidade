@@ -92,11 +92,16 @@ const handler = NextAuth({
         async jwt({ token, user }) {
           console.log("🚀 ~ jwt ~ user:", user)
           console.log("🚀 ~ jwt ~ token:", token)
-          // if (user) {
-          //   // Supondo que você tenha o papel do usuário no objeto `user`
-          //   token.role = user.role;
-          // }
-          token.role = "test";
+
+          if (user){
+            var existingUser = await getUser(token.email.trim());
+
+            if (existingUser){
+              token.idUser = existingUser.id;
+              token.role = existingUser.UserRole;
+            }
+          }
+          
           return token;
         },
       }

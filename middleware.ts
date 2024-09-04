@@ -19,42 +19,18 @@ export async function middleware(req: NextRequest) {
 
 
   // Se não houver token, redirecionar para login
-  if (!token) {
-   
+  if (!token) {   
     return null//NextResponse.redirect(new URL('/login', req.url));
   }
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/check-user`, {
-    headers: { 
-      'Authorization': `Bearer ${sessionToken.value || ''}`,
-      'Content-Type': 'application/json' 
-    }
-  });
-  
-  
-  const data = await res.json();
-  console.log("🚀 ~ middleware ~ data:", data)
-
-  // if (res.status === 401 || res.status === 404) {
-  //   return NextResponse.redirect(new URL('/login', req.url));
-  // }
-
-
-  // if (existingUser.UserRole == UserRole.VISIT){
-  //   console.log("🚀 deu certo:")
-  // }
-  // else{
-  //   console.log("🚀 nao certo:")
-  // }
-
-//   // Proteger rotas específicas por hierarquia
-//   if (pathname.startsWith('/admin') && token.role !== 'admin') {
-//     return NextResponse.redirect(new URL('/unauthorized', req.url));
-//   }
+  // Proteger rotas específicas por hierarquia
+  if (pathname.startsWith('/managerspace') && token.role !== UserRole.ADMIN) {
+    return NextResponse.redirect(new URL('/api/auth/error?error=AccessDenied', req.url));
+  }
 
   return NextResponse.next();
 }
 
 export const config = {
-    matcher: '/portal/:path*',
+    matcher: ['/managerspace/:path*','/clientspace/:path*',]
   };
