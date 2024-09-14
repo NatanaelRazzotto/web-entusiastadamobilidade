@@ -1,0 +1,20 @@
+.slider-container {
+    height: 90%;
+    display: 'flex';
+    justify-content: 'center';
+    align-items: 'center';  
+
+  }
+  .slide-content {
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  /* .slide-content iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+   */

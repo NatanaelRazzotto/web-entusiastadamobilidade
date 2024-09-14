@@ -4,6 +4,8 @@ import { Post, Vehicle, Image } from '../../../lib/definitions';
 import { getWatermarkedImageUrl, getCategoyrUrl} from '../../../lib/utils'
 import Link from 'next/link';
 import React from 'react';
+import SliderCover from '@/app/ui/portal/slider';
+
 
 export async function generateMetadata({ params }: { params: { category: string; namePost: string } }): Promise<Metadata> {
   const { category, namePost } = params;
@@ -112,7 +114,7 @@ export default async function Page({ params }: {params: { category: string; name
   return (
     <main>
       <div className="container mx-auto px-4">
-        <div className="relative flex justify-between rounded-b-lg text-white bg-black">
+        <div className="relative flex justify-between rounded-b-lg text-white bg-slate-950">
           <div className='relative flex justify-between' style={{ width: "5%" }}>
             <div className='rounded-l' style={{ height: "100%", width: "50%", backgroundColor: "brown" }}></div>
             <div style={{ height: "100%", width: "50%", backgroundColor: "chocolate" }}></div>
@@ -132,30 +134,26 @@ export default async function Page({ params }: {params: { category: string; name
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-          <div className="col-span-2">
-            <img
-              src={`https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`}
-              alt="Imagem da Matéria"
-              className="rounded-t-md w-full object-cover"
-            />
-          </div>
-          <div className="col-span-1">
-            <div className="bg-white rounded-md shadow-md p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-black ">
+            <div className="col-span-2 ">
+              <SliderCover dataPost={dataPost} />
+            </div>
+            <div className="col-span-1 justify-self-end w-72 p-4" >
+            <div className=" rounded-md shadow-md p-1">
               <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
                 <h2 className="font-bold mt-2 mb-1">Resumo da Matéria</h2>
               </div>
-              <p className="py-4 text-black text-sm">
+              <p className="py-4 text-white text-sm">
                 {dataPost.resume ? dataPost.resume : "Sem informações de resumo."}
               </p>
             </div>
-            <div className="bg-white rounded-md shadow-md p-4">
+            <div className=" rounded-md shadow-md p-1">
               <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-                <h2 className="font-bold mt-2 mb-1">Veículos Contidos na Matéria</h2>
+                <h2 className="font-bold mt-2 mb-1">Veículos na Matéria</h2>
               </div>
               {
                 dataVehicle.length === 0 ?
-                  <p className="py-4 text-black text-sm">Sem informações dos Veículos.</p> :
+                  <p className="py-4 text-white text-sm">Sem informações dos Veículos.</p> :
                   dataVehicle.map((vehicle) => (
                     <Link href={'portal/pictures/'} key={vehicle.serialNumber}>
                       <p className="py-4 text-black text-sm">
@@ -165,19 +163,19 @@ export default async function Page({ params }: {params: { category: string; name
                   ))
               }
             </div>
-            <div className="bg-white rounded-md shadow-md p-4">
+            <div className=" rounded-md shadow-md p-1">
               <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
                 <h2 className="font-bold mt-2 mb-1">Categoria</h2>
               </div>
-              <p className="py-4 text-black text-sm">
+              <p className="py-4 text-white text-sm">
                 {dataPost.category == 1 ? "Transporte Público" : dataPost.category == 2 ? "Aviação" : dataPost.category == 3 ? "Ferrovia" : dataPost.category == 4 ? "Automóveis" : "Geral"}
               </p>
             </div>
-            <div className="bg-white rounded-md shadow-md p-4">
+            <div className=" rounded-md shadow-md p-1">
               <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
                 <h2 className="font-bold mt-2 mb-1">Dia de Publicação</h2>
               </div>
-              <p className="py-4 text-black text-sm">
+              <p className="py-4 text-white text-sm">
                 {dataPost.dateCreate ? formatDate(dataPost.dateCreate.toString()) : "Sem informações de data."}
               </p>
             </div>
