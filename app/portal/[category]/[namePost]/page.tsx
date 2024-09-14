@@ -134,12 +134,12 @@ export default async function Page({ params }: {params: { category: string; name
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-black ">
-            <div className="col-span-2 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-slate-950">
+            <div className="col-span-2 bg-black ">
               <SliderCover dataPost={dataPost} />
             </div>
-            <div className="col-span-1 justify-self-end w-72 p-4" >
-            <div className=" rounded-md shadow-md p-1">
+            <div className="col-span-1 justify-self-end w-72 p-4 mt-4 mr-4 " >
+            <div className=" rounded-md shadow-md p-1 ">
               <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
                 <h2 className="font-bold mt-2 mb-1">Resumo da Matéria</h2>
               </div>

@@ -14,9 +14,9 @@ function SampleNextArrow(props) {
     style={{ 
       ...style, 
       display: "block",    
-      scale : "15px",
-      right: "5px", // Ajuste a distância da borda direita
-      zIndex: 10 // Garante que o botão esteja acima dos slides
+      scale : "15px",      
+      right: "5px", // Ajuste a distância da borda direita      
+      zIndex: 10 // Garante que o botão esteja acima dos slides  
     }}
     onClick={onClick}
   />
@@ -41,6 +41,7 @@ function SamplePrevArrow(props) {
 }
 
 export default function SliderCover({dataPost }) {
+  console.log("🚀 ~ SliderCover ~ dataPost:", dataPost)
   var settings = {
     dots: true,
     infinite: true,
@@ -52,25 +53,45 @@ export default function SliderCover({dataPost }) {
     prevArrow: <SamplePrevArrow />
   };
   return (
-    <Slider {...settings} className="slider-container">
-      <div className="slide-content">
-        <iframe
-                className="h-96 xs:h-44 sm:h-96 md:h-96 lg:h-96 xl:h-[450px] mt-8"
-        style={{ width:"100%", border: 'none' }} // Remover bordas se necessário
-        src="https://www.youtube.com/embed/nxRt-TWFuCA?controls=&modestbranding=1"
-        title="YouTube Video"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      ></iframe>
-    </div>
+
     <div>
-     <img
-        src={`https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`}
-        alt="Imagem da Matéria"
-        className="rounded-t-md w-full object-cover"
-      />
-    </div>    
-    </Slider>
+      {
+        dataPost && dataPost.videos.length > 0 ? <Slider {...settings} className="slider-container">
+        <div className="slide-content pt-4 pl-4 pr-4">
+          <iframe
+                  className="h-96 xs:h-44 sm:h-96 md:h-96 lg:h-96 xl:h-[450px] "
+          style={{ width:"100%", border: 'none' }} // Remover bordas se necessário
+          src={`https://www.youtube.com/embed/${dataPost.videos[0].pathURL}?controls=&modestbranding=1`}
+          title="YouTube Video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+       </div>  
+       <div  className=" pt-4 pl-4 pr-4" >
+        <img
+            src={`https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`}
+            alt="Imagem da Matéria"
+            className="rounded-t-md w-full object-cover"
+          />
+        </div>    
+       
+     
+           
+      </Slider> 
+        :
+          <div  className=" mt-4 ml-4  pr-4">
+            <img
+            src={`https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`}
+            alt="Imagem da Matéria"
+            className="rounded-t-md w-full object-cover"
+          /> 
+              </div>
+      }
+
+    </div>
+
+    
+    
   );
 }
 

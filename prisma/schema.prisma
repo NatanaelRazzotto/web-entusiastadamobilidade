@@ -30,6 +30,7 @@ model Post {
 
   // Relação muitos para muitos com Image
   images    Image[]   @relation("PostImages")
+  videos    Video[]   @relation("PostVideos")
 }
 
 model Image {
@@ -47,6 +48,23 @@ model Image {
   posts     Post[]   @relation("PostImages") 
   vehicle   Vehicle[] @relation("VehicleImages")
   orderImages    OrderImage[]  
+}
+
+model Video {
+  id        String     @id @default(uuid())
+  title     String
+  nameFile    String   @default("")
+  description String?
+  pathURL   String @unique 
+  published Boolean @default(false)
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?
+  dateCreate  DateTime   @default(now()) 
+
+  // Relação muitos para muitos com Post
+  posts     Post[]   @relation("PostVideos") 
+  vehicle   Vehicle[] @relation("VehicleVideos")
+  
 }
 
 model BookOrder {
@@ -87,11 +105,12 @@ model OrderImage {
 }
 
 model Vehicle {
-  id        String     @id @default(uuid())
+  id                String     @id @default(uuid())
   plate             String?
   serialNumber      String?
   operatingCategory Float
   images            Image[]   @relation("VehicleImages")
+  videos            Video[]   @relation("VehicleVideos")
   bodywork          Bodywork? @relation(fields: [bodyworkID], references: [id])
   bodyworkID        String?
   powertrain        Powertrain? @relation(fields: [powertrainID], references: [id])
@@ -182,6 +201,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   imagens Image[]
+  videos Video[]
   bookOrders BookOrder[]
   UserRole   Float     @default(4) 
 }

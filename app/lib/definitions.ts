@@ -1,4 +1,4 @@
-import { PrismaClient, Post as PrismaPost, User as PrismaUser, Image as PrismaImage } from '@prisma/client';
+import { User as PrismaUser} from '@prisma/client';
 import { number } from 'zod';
 // This file contains type definitions for your data.
 // It describes the shape of the data, and what data type each property should accept.
@@ -103,6 +103,7 @@ export type Post = {
   newspaperColumnID?: string | null;
   authorId: string;
   images?: Image[]; // Deve ser uma lista de Image, conforme definido
+  videos?:  Video[];
   category: number;
   topNews: number;
   resume?: string | null;
@@ -127,7 +128,19 @@ export type Image = {
   
 };
 
+export type Video = {
+  id: string;
+  title: string;
+  description?: string | null; // Deve coincidir com a definição no Prisma
+  pathURL?: string | null; // Deve coincidir com a definição no Prisma
+  published: boolean;
 
+  authorId: string;
+  dateCreate?: Date; // Deve coincidir com a definição no Prisma
+  posts?: Post[]; // Deve ser uma lista de Post, conforme definido
+  vehicle?: Vehicle[]; // Relacionamento com Vehicle, conforme definido
+  
+};
 
 export type Vehicle = {
   id: string;

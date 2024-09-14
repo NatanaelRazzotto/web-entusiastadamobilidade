@@ -60,6 +60,7 @@ export async function fetchPostName(namePost : string){
             vehicle: true,
           },
         },
+        videos : true
       },
     });
 
