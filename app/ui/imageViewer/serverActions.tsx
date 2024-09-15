@@ -1,7 +1,9 @@
 // ./app/ui/imageViewer/serverActions.ts
 'use server';
 
-import { signOut } from "auth";
+import { signOut } from "next-auth/react";
+
+
 
 export const saveSelection = async (formData) => {
   const selectedImages = formData.getAll('selectedImages');
@@ -10,5 +12,7 @@ export const saveSelection = async (formData) => {
 };
 
 export async function serverSignOut() {
-  await signOut();
+  //await signOut();
+  //signOut({ callbackUrl: "/" }); // Redireciona para a página inicial após o logout
+
 }

@@ -60,6 +60,7 @@ export async function fetchPostName(namePost : string){
             vehicle: true,
           },
         },
+        videos : true
       },
     });
 
@@ -180,7 +181,7 @@ export async function getUser(email: string): Promise<User | null> {
     return user;
   } catch (error) {
     console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
+    return null//throw new Error('Failed to fetch user.');
   }
 }
 

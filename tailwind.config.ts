@@ -18,6 +18,9 @@ const config: Config = {
           600: '#2F6FEB',
         },
       },
+      screens : {
+        'xs': {'max': '399px'},
+      }
     },
     keyframes: {
       shimmer: {
