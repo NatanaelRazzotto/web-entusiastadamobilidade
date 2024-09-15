@@ -25,8 +25,11 @@ export async function middleware(req: NextRequest) {
 
   // Proteger rotas específicas por hierarquia
   if (pathname.startsWith('/managerspace') && token.role !== UserRole.ADMIN) {
-    return NextResponse.redirect(new URL('/api/auth/error?error=AccessDenied', req.url));
+    console.log("entrou")
+    return NextResponse.next();
+   // return NextResponse.redirect(new URL('/api/auth/error?error=AccessDenied', req.url));
   }
+  console.log("passou")
 
   return NextResponse.next();
 }
