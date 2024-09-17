@@ -4,26 +4,29 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+  ShoppingBagIcon,
+  BriefcaseIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
-
-
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
-const links = [
-  { name: 'Home', href: '/', icon: HomeIcon },
-  // {
-  //   name: 'Busca por Intinerários',
-  //   href: '/',
-  //   icon: DocumentDuplicateIcon,
-  // },
-];
 
-export default function NavLinks() {
+
+export default function NavLinksManager({session}) {
   const pathname = usePathname();
+
+  const links = [
+    { name: 'Aquisiçao de Fotos', href: '/clientspace/order/'+session.user.id, icon: ShoppingBagIcon },
+    {
+      name: 'Espaco do Gestor',
+      href: '/managerspace/drafts',
+      icon: BriefcaseIcon,
+    },
+  ];
+
   return (
     <>
       {links.map((link) => {

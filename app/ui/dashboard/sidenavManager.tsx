@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { clsx } from 'clsx';
 import { usePathname } from 'next/navigation';
 import { serverSignOut } from '../imageViewer/serverActions';
+import NavLinksManager from './nav-links-portal-manager';
 
 
 export default function SideNav() {
@@ -63,20 +64,12 @@ export default function SideNav() {
       </Link>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />
-        {session && (
-          <Link
-            key={"clientspace"}
-            href={'/clientspace/order/'+session.user.id}
-            className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-orange-100 p-3 text-sm font-medium hover:text-orange-700 hover:bg-orange-500 md:flex-none md:justify-start md:p-2 md:px-3',
-              {
-                'bg-orange-100 text-orange-700': pathname === '/clientspace/order/'+session.user.id,
-              },
-            )}
-          >
-            <ArrowRightIcon className="w-5 md:w-6" />  <span>Aquisição de Fotos</span>
-          </Link>
-        )}
+        {session ?
+      
+            <NavLinksManager session={session}/>
+        
+          : ""
+        }
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
 
         {!session && (

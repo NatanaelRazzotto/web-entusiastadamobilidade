@@ -19,9 +19,6 @@ export default function CardNoticeVideo({postCard }) {
               <h2 className="text-xl font-bold">
                 {postCard.title}
               </h2>
-              <ul className="list-disc list-inside text-gray-600 text-sm">
-                <li>{postCard.resume}</li>
-              </ul>
             </div>
           </div>
 
