@@ -5,11 +5,10 @@ import { Post } from "@/app/lib/definitions"
 import Link from "next/link"
 import CardNotice from "./cardNotice"
 import { CategoryPost, getCategoryUrlNumber } from "@/app/lib/enums/categoryPost"
+import CardNoticeVideo from "./cardNoticeVideo"
 
 
-export default function ListNotices({newspaperColumnID = "",categoryPost, posts }) {
-
-  
+export default function ListVideos({newspaperColumnID = "",categoryPost, videos }) {  
   
   const postDefault : Post = {
     id : "1",
@@ -30,37 +29,31 @@ export default function ListNotices({newspaperColumnID = "",categoryPost, posts 
     <div >
     <div className="py-4">
       <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-        <h2 className="font-bold mt-2 mb-1">{CategoryPost[categoryPost]}</h2>
+        <h2 className="font-bold mt-2 mb-1">Videos</h2>
       </div>
     </div>
     {/* News card 1 */}
     {
-        posts.slice(3, 6) .length === 0 ? (
+        videos.slice(0, 3) .length === 0 ? (
           <CardNotice postCard={postDefault} />
         ) : (
         <div>
           {
-            newspaperColumnID == "" ? posts
-            .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == categoryPost && post.published) 
-            .slice(0, 4) 
-            .map((post) => <CardNotice postCard={post} />)
-            :
-            posts
-            .filter((post) => post.newspaperColumnID == newspaperColumnID && post.published) 
+            videos
             .slice(0, 3) 
-            .map((post) => <CardNotice postCard={post} />)
+            .map((post) => <CardNoticeVideo postCard={post} />)
           
           }
         </div>
       )
     }   
-    <div className="flex justify-end mt-8">
+    {/* <div className="flex justify-end mt-8">
     <Link href={'portal/'+getCategoryUrlNumber(categoryPost)}>
       <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
         Ver mais
       </button>
       </Link>
-    </div>
+    </div> */}
   
   </div>
     )

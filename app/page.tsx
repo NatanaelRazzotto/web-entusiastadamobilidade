@@ -12,7 +12,7 @@ import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { useRouter } from 'next/router';
 import CardPost from './ui/portal/card';
 
-import { Post } from './lib/definitions';
+import { Post , Video} from './lib/definitions';
 
 import CardNotice from './ui/portal/cardNotice';
 import SearchBar from './ui/portal/searchBar';
@@ -24,6 +24,7 @@ import SideNav from './ui/dashboard/sidenavManager';
 import { getCategoyrUrl } from './lib/utils';
 import ListNotices from './ui/portal/listNotices';
 import { CategoryPost } from './lib/enums/categoryPost';
+import ListVideos from './ui/portal/listVideos';
 
 
 
@@ -70,6 +71,8 @@ export default async function Page() {
   }
 
   const posts : Post[] = await prisma.post.findMany();
+
+  const videos : Video[] = await prisma.video.findMany();
   
   const postTop : Post = posts.find((post) => post.topNews == 1)
   const secondPostTop : Post = posts.find((post) => post.topNews == 2)
@@ -86,10 +89,12 @@ export default async function Page() {
 
     <main>
        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-        <div className="w-full flex-none md:w-64">
-            <SideNav />
-        </div>
-        <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
+          <div className="w-full flex-none md:w-64">
+              <SideNav />
+          </div>
+        
+  
+      <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
       <div className="container mx-auto px-4"> 
 
       <SearchBar />
@@ -226,35 +231,33 @@ export default async function Page() {
    
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        
-      <ListNotices newspaperColumnID={"030e0d2f-5aad-4018-934a-420b23448fd9"} categoryPost={CategoryPost.TransportePublico} posts={posts}/>
-
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
+              <ListNotices newspaperColumnID={"030e0d2f-5aad-4018-934a-420b23448fd9"} categoryPost={CategoryPost.TransportePublico} posts={posts}/>
+              </div>   
         {/* 1 */}
-
-        <ListNotices categoryPost={CategoryPost.Aviacao} posts={posts}/>       
-
-        {/* 1 */}
-
-        <ListNotices categoryPost={CategoryPost.Ferrovia} posts={posts}/>
-
-        
-        {/* 1 */}
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
           <ListNotices categoryPost={CategoryPost.Automoveis} posts={posts}/>
+          </div>  
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
+          <ListNotices categoryPost={CategoryPost.Aviacao} posts={posts}/> 
+          <ListNotices categoryPost={CategoryPost.Ferrovia} posts={posts}/>   
+          </div>   
         {/* 1 */}
-
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
        
-
-
+        <ListVideos categoryPost={CategoryPost.Automoveis} videos={videos}/>
+        </div>   
+        {/* 1 */}
         
-      
+        
+        {/* 1 */}
       </div>
-
-
       
      
     </div>
     </div>
-      </div>      
+    </div>
+     
     </main>
    
   );
