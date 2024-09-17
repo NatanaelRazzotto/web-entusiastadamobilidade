@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import type { NextRequest } from 'next/server';
 import { getUser } from './app/lib/data';
-import { UserRole } from './app/lib/UsersRoles';
+import { UserRole } from './app/lib/enums/UsersRoles';
 import Email from 'next-auth/providers/email';
 
 

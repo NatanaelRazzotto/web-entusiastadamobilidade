@@ -22,6 +22,8 @@ import { Metadata } from 'next';
 
 import SideNav from './ui/dashboard/sidenavManager';
 import { getCategoyrUrl } from './lib/utils';
+import ListNotices from './ui/portal/listNotices';
+import { CategoryPost } from './lib/enums/categoryPost';
 
 
 
@@ -225,150 +227,22 @@ export default async function Page() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-">
-          <div className="py-4">
-            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">Transporte Público</h2>
-            </div>
-          </div>
-          {/* News card 1 */}
+      <ListNotices newspaperColumnID={"030e0d2f-5aad-4018-934a-420b23448fd9"} categoryPost={CategoryPost.TransportePublico} posts={posts}/>
 
-          {
-              posts.slice(3, 6) .length === 0 ? (
-                <CardNotice postCard={postDefault} />
-              ) : (
-              <div>
-                {
-                  posts
-                  .filter((post) => post.newspaperColumnID == "030e0d2f-5aad-4018-934a-420b23448fd9" && post.published) 
-                  .slice(0, 3) 
-                  .map((post) => <CardNotice postCard={post} />)
-                }
-              </div>
-            )
-          }        
-          
-          <div className="flex justify-end mt-8">
-            <Link href={'portal/'+getCategoyrUrl(1)}>
-            <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
-              Ver mais
-            </button>
-            </Link>
-          </div>
+        {/* 1 */}
+
+        <ListNotices categoryPost={CategoryPost.Aviacao} posts={posts}/>       
+
+        {/* 1 */}
+
+        <ListNotices categoryPost={CategoryPost.Ferrovia} posts={posts}/>
+
         
-        </div>
-
+        {/* 1 */}
+          <ListNotices categoryPost={CategoryPost.Automoveis} posts={posts}/>
         {/* 1 */}
 
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-          <div className="py-4">
-            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">Aviação</h2>
-            </div>
-          </div>
-          {/* News card 1 */}
-            {/* 
-              TransportePublico: 1,
-              Aviacao: 2,
-              Ferrovia: 3,
-              Automoveis: 4,
-
-            
-            1 */}
-          {
-              posts.slice(3, 6) .length === 0 ? (
-                <CardNotice postCard={postDefault} />
-              ) : (
-              <div>
-                {
-                  posts
-                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 2&& post.published) 
-                  .slice(0, 4) 
-                  .map((post) => <CardNotice postCard={post} />)
-                }
-              </div>
-            )
-          }    
-
-          <div className="flex justify-end mt-8">
-          <Link href={'portal/'+getCategoyrUrl(2)}>
-            <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
-              Ver mais
-            </button>
-            </Link>
-          </div>
-        
-        </div>
-
-        {/* 1 */}
-
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-          <div className="py-4">
-            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">Ferrovia</h2>
-            </div>
-          </div>
-          {/* News card 1 */}
-          {
-              posts.slice(3, 6) .length === 0 ? (
-                <CardNotice postCard={postDefault} />
-              ) : (
-              <div>
-                {
-                  posts
-                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 3&& post.published) 
-                  .slice(0, 4) 
-                  .map((post) => <CardNotice postCard={post} />)
-                }
-              </div>
-            )
-          }  
-          <div className="flex justify-end mt-8">
-          <Link href={'portal/'+getCategoyrUrl(3)}>
-            <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
-              Ver mais
-            </button>
-            </Link>
-          </div>
-        
-        </div>
-
-        {/* 1 */}
-
-        {/* 1 */}
-
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-          <div className="py-4">
-            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">Automóveis</h2>
-            </div>
-          </div>
-          {/* News card 1 */}
-          {
-              posts.slice(3, 6) .length === 0 ? (
-                <CardNotice postCard={postDefault} />
-              ) : (
-              <div>
-                {
-                  posts
-                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 4 && post.published) 
-                  .slice(0, 4) 
-                  .map((post) => <CardNotice postCard={post} />)
-                }
-              </div>
-            )
-          }   
-          <div className="flex justify-end mt-8">
-          <Link href={'portal/'+getCategoyrUrl(4)}>
-            <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
-              Ver mais
-            </button>
-            </Link>
-          </div>
-        
-        </div>
-
-        {/* 1 */}
+       
 
 
         
