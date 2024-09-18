@@ -13,22 +13,23 @@ export async function generateMetadata({ params }: { params: { category: string;
 
   if (urlConvert == 0) {
     return {
-      title: 'Portal Entusiasta da Mobilidade',
-      description: 'O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte',
+
+      title: 'Entusiasta da Mobilidade',
+      description: 'O Portal de Noticias e Fotografias que é Entusiasta dos Modais de Transporte',
       keywords: 'notícias, fotografias, transporte, modais, mobilidade',
-      openGraph: {
+      openGraph : {
         type: 'website',
         locale: 'pt_BR',
-        url: 'https://entusiastadamobilidade.vercel.app/',
+        url: process.env.SITE_URL,     
         images: [
           {
-            url: 'https://entusiastadamobilidade.vercel.app/CARTAO.png',
+            url: process.env.SITE_URL +'/CARTAO.png',
             width: 800,
             height: 600,
             alt: 'Imagem de capa',
-          },
+          }
         ],
-      },
+      }
     };
   }
 
@@ -39,10 +40,10 @@ export async function generateMetadata({ params }: { params: { category: string;
     openGraph: {
       type: 'article',
       locale: 'pt_BR',
-      url: `https://entusiastadamobilidade.vercel.app/portal/${category}`,
+      url: process.env.SITE_URL+ `/${category}`,
       images: [
         {
-          url: 'https://entusiastadamobilidade.vercel.app/CARTAO.png',
+          url: process.env.SITE_URL+'/CARTAO.png',
           width: 800,
           height: 600,
           alt: category,

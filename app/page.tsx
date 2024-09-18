@@ -31,15 +31,17 @@ import ListVideos from './ui/portal/listVideos';
 export async function generateMetadata( {params: {lang}} ):Promise<Metadata> {
 
   return {
-    title: 'Portal Entusiasta da Mobilidade',
+    
+    title: 'Entusiasta da Mobilidade',
     description: 'O Portal de Noticias e Fotografias que é Entusiasta dos Modais de Transporte',
+    keywords: 'notícias, fotografias, transporte, modais, mobilidade',
     openGraph : {
       type: 'website',
       locale: 'pt_BR',
-      url: 'https://entusiastadamobilidade.vercel.app/',     
+      url: process.env.SITE_URL,     
       images: [
         {
-          url: 'https://entusiastadamobilidade.vercel.app/CARTAO.png',
+          url: process.env.SITE_URL +'/CARTAO.png',
           width: 800,
           height: 600,
           alt: 'Imagem de capa',

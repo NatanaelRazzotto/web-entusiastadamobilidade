@@ -5,6 +5,7 @@ import { getWatermarkedImageUrl, getCategoyrUrl} from '../../../lib/utils'
 import Link from 'next/link';
 import React from 'react';
 import SliderCover from '@/app/ui/portal/slider';
+import { getCategoryUrlNumber } from '@/app/lib/enums/categoryPost';
 
 
 export async function generateMetadata({ params }: { params: { category: string; namePost: string } }): Promise<Metadata> {
@@ -20,10 +21,10 @@ export async function generateMetadata({ params }: { params: { category: string;
       openGraph: {
         type: 'website',
         locale: 'pt_BR',
-        url: 'https://entusiastadamobilidade.vercel.app/',
+        url: process.env.SITE_URL,
         images: [
           {
-            url: 'https://entusiastadamobilidade.vercel.app/CARTAO.png',
+            url: process.env.SITE_URL + 'CARTAO.png',
             width: 800,
             height: 600,
             alt: 'Imagem de capa',
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }: { params: { category: string;
     openGraph: {
       type: 'article',
       locale: 'pt_BR',
-      url: `https://entusiastadamobilidade.vercel.app/portal/${getCategoyrUrl(dataPost.category)}/${namePost}`,
+      url: process.env.SITE_URL +`/portal/${getCategoryUrlNumber(dataPost.category)}/${namePost}`,
       images: [
         {
           url: getWatermarkedImageUrl(dataPost.coverURL),
