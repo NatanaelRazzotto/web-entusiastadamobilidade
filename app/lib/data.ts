@@ -308,6 +308,36 @@ export async function alterOrderImageId(orderImages : OrderImage[]){
   }
 }
 
+export async function createPost(newPost : Post,existingUser : User){
+ console.log("🚀 ~ createPost ~ existingUser:", existingUser)
+ console.log("🚀 ~ createPost ~ newPost:", newPost.category ? newPost.category : 0)
+ 
+  try {  
+      const Post = await prisma.post.create({
+        data: {
+          namePost: newPost.namePost,
+          title: newPost.title,
+          content: newPost.content,
+          coverURL: newPost.coverURL,
+          published: newPost.published ? newPost.published : false,
+          // newspaperColumnID?: string | null;
+          authorId: existingUser.id,
+          category:newPost.category ? newPost.category : 0,
+          topNews: newPost.topNews,
+          resume: newPost.resume,
+          tagPost: newPost.tagPost,
+          
+          }
+        }
+      );
+    
+    return Post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
 export async function createImage(orderImages : Image){
  
   try {  

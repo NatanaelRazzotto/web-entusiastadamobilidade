@@ -1,13 +1,15 @@
-import NextAuth from "next-auth"
+
 import GoogleProvider from "next-auth/providers/google";
 
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import { getUserPhone } from '../../../lib/data';
 import { getUser } from "@/app/lib/data";
+import nextAuth from "next-auth";
 
 
-const handler = NextAuth({
+
+const handler = nextAuth({
     providers: [
         GoogleProvider({
           clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -87,6 +89,7 @@ const handler = NextAuth({
         },
         async session({ session, user, token }) {
           // Você pode adicionar informações adicionais na sessão aqui, se necessário
+          session.accessToken = token
           return session;
         },
         async jwt({ token, user }) {
@@ -100,6 +103,7 @@ const handler = NextAuth({
               token.idUser = existingUser.id;
               token.role = existingUser.UserRole;
             }
+         
           }
           
           return token;

@@ -6,15 +6,45 @@ import * as Select from '@radix-ui/react-select';
 import { ChevronDownIcon } from '@radix-ui/themes';
 import { CheckIcon } from '@heroicons/react/20/solid';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
+import { CategoryPost } from '@/app/lib/enums/categoryPost';
 
+import { getSession } from "next-auth/react";
 export default function Page() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
-  async function handleCreateGoal(data) {
-    console.log("🚀 ~ handleCreateGoal ~ data:", data);
+  
+async function handleCreateGoal(data) {
+  console.log("🚀 ~ handleCreateGoal ~ data:", data);
+
+  try {
+    // Obter a sessão no lado do cliente
+    const session = await getSession();
+    console.log("🚀 ~ handleCreateGoal ~ session:", session)
+
+   
+
+    const response = await fetch("/api/post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.accessToken}`, // Passa o token no cabeçalho
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const result = await response.json();
+      console.error(result.message);
+    } else {
+      const result = await response.json();
+      console.log(result.message);
+    }
+  } catch (error) {
+    console.error("Erro ao registrar categoria:", error);
   }
+}
 
   const handleSelectChange = (value) => {
     setValue('topNews', Number(value));
@@ -41,30 +71,40 @@ export default function Page() {
       <div className="flex flex-col">
         <label className="text-sm font-medium text-gray-700">Category:</label>
         <Select.Root onValueChange={handleSelectChangeCategory}>
-          <Select.Trigger className="mt-1 flex items-center justify-between p-2 border border-gray-300 rounded-md bg-white">
-            <Select.Value placeholder="Select option" />
-            <Select.Icon>
-              <ChevronDownIcon />
-            </Select.Icon>
-          </Select.Trigger>
+        <Select.Trigger className="mt-1 flex items-center justify-between p-2 border border-gray-300 rounded-md bg-white">
+          <Select.Value placeholder="Select option" />
+          <Select.Icon>
+            <ChevronDownIcon />
+          </Select.Icon>
+        </Select.Trigger>
 
-          <Select.Content className="bg-white border border-gray-300 rounded-md shadow-lg">
-            <Select.ScrollUpButton className="flex justify-center py-2">
-              <ChevronUpIcon />
-            </Select.ScrollUpButton>
-            <Select.Viewport className="p-2">
-              <Select.Item value="0" className="flex items-center justify-between p-2 hover:bg-gray-100 rounded-md cursor-pointer">
-                <Select.ItemText>No</Select.ItemText>
-                <Select.ItemIndicator>
-                  <CheckIcon className="w-5 h-5 text-green-500" />
-                </Select.ItemIndicator>
-              </Select.Item>
-            </Select.Viewport>
-            <Select.ScrollDownButton className="flex justify-center py-2">
-              <ChevronDownIcon />
-            </Select.ScrollDownButton>
-          </Select.Content>
-        </Select.Root>
+        <Select.Content className="bg-white border border-gray-300 rounded-md shadow-lg">
+          <Select.ScrollUpButton className="flex justify-center py-2">
+            <ChevronUpIcon />
+          </Select.ScrollUpButton>
+
+          <Select.Viewport className="p-2">
+            {Object.entries(CategoryPost)
+              .filter(([key, value]) => typeof value === "number") // filtra apenas as chaves do enum
+              .map(([key, value]) => (
+                <Select.Item
+                  key={value}
+                  value={value.toString()} // converte o valor para string, necessário para o Select.Item
+                  className="flex items-center justify-between p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+                >
+                  <Select.ItemText>{key}</Select.ItemText>
+                  <Select.ItemIndicator>
+                    <CheckIcon className="w-5 h-5 text-green-500" />
+                  </Select.ItemIndicator>
+                </Select.Item>
+              ))}
+          </Select.Viewport>
+
+          <Select.ScrollDownButton className="flex justify-center py-2">
+            <ChevronDownIcon />
+          </Select.ScrollDownButton>
+        </Select.Content>
+      </Select.Root>
         {errors.category && <span className="text-sm text-red-600 mt-1">This field is required</span>}
       </div>
 
@@ -103,7 +143,7 @@ export default function Page() {
               <ChevronUpIcon />
             </Select.ScrollUpButton>
             <Select.Viewport className="p-2">
-              {["No", "Top", "SubPrimeiro"].map((option, index) => (
+              {["No", "Top", "SubPrimeiro", "SubSegundo"].map((option, index) => (
                 <Select.Item key={index} value={String(index)} className="flex items-center justify-between p-2 hover:bg-gray-100 rounded-md cursor-pointer">
                   <Select.ItemText>{option}</Select.ItemText>
                   <Select.ItemIndicator>

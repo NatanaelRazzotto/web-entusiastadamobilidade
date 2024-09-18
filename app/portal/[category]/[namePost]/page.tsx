@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: { category: string;
 
   if (!dataPost) {
     return {
-      title: 'Portal Entusiasta da Mobilidade',
+      title: 'Entusiasta da Mobilidade',
       description: 'O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte',
       keywords: 'notícias, fotografias, transporte, modais, mobilidade',
       openGraph: {
