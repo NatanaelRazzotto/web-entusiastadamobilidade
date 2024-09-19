@@ -13,8 +13,14 @@ const handler = nextAuth({
     providers: [
         GoogleProvider({
           clientId: process.env.GOOGLE_CLIENT_ID!,
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+          authorization: {
+            params: {
+              scope: 'openid email profile https://www.googleapis.com/auth/drive',
+            },
+          },
         }),
+        
         Credentials({
             credentials: {
               phone: { label: "Phone", type: "text" },
@@ -68,6 +74,7 @@ const handler = nextAuth({
       ],
       callbacks: {
         async signIn({ user, account, profile }) {
+          console.log("🚀 ~ signIn ~ account:", account)
           console.log("🚀 ~ signIn ~ user:", user)
           if (account.provider === "google") {
             // Verifique se o usuário já está salvo no sistema
@@ -77,7 +84,7 @@ const handler = nextAuth({
             if (!existingUser) {
               // Se o usuário não existe no banco de dados, você pode impedi-lo de logar
               console.log("Usuário não registrado no sistema");
-              return false;
+              return true;
             }
             
             // Se o usuário já existe, permita o login
