@@ -89,20 +89,31 @@ const handler = nextAuth({
         },
         async session({ session, user, token }) {
           // Você pode adicionar informações adicionais na sessão aqui, se necessário
-          session.accessToken = token
+          session.accessToken = token.accessToken as string
+          session.user.idUser = token.idUser as string ;
+          session.user.role = token.role  as number;
+          session.user.email = token.email;
+          session.user.name = token.name;
+
           return session;
         },
-        async jwt({ token, user }) {
+        async jwt({ token, user, account }) {
           console.log("🚀 ~ jwt ~ user:", user)
           console.log("🚀 ~ jwt ~ token:", token)
 
           if (user){
             var existingUser = await getUser(token.email.trim());
 
+            if (account?.provider === "google") {
+              token.accessToken = account.access_token;
+            }
+
             if (existingUser){
               token.idUser = existingUser.id;
               token.role = existingUser.UserRole;
             }
+
+
          
           }
           

@@ -29,7 +29,7 @@ async function handleCreateGoal(data) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`, // Passa o token no cabeçalho
+      //  Authorization: `Bearer ${session.accessToken}`, // Passa o token no cabeçalho
       },
       body: JSON.stringify(data),
     });

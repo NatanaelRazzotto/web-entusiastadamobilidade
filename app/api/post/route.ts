@@ -25,6 +25,8 @@ export async function POST(req: NextRequest) { // Use NextRequest aqui
     return NextResponse.json({ error: 'No token found' }, { status: 401 });
   }
 
+  console.log("JWT ---AAAA Token info:", token);
+
   const existingUser = await getUser(token.email.trim());
 
   if (!existingUser) {

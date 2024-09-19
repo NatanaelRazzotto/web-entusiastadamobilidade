@@ -4,8 +4,10 @@ import { JWT } from 'next-auth/jwt';
 
 declare module 'next-auth' {
   interface Session {
-    accessToken?: JWT;  // Define o tipo para o token de acesso
+    accessToken?: string;  // Define o tipo para o token de acesso
     user?: {
+      idUser?: string;
+      role?: number;
       name?: string;
       email?: string;
       image?: string;
