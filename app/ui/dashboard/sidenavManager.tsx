@@ -10,6 +10,7 @@ import { clsx } from 'clsx';
 import { usePathname } from 'next/navigation';
 import { serverSignOut } from '../imageViewer/serverActions';
 import NavLinksManager from './nav-links-portal-manager';
+import ThemeSwitcher from '../themeSwitcher ';
 
 
 export default function SideNav() {
@@ -71,6 +72,7 @@ export default function SideNav() {
           : ""
         }
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
+        <ThemeSwitcher/>
 
         {!session && (
           <Link

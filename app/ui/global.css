@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-color: #f7fafc; /* cor clara */
+  --text-color: #1a202c; /* cor escura */
+}
+
+.dark {
+  --bg-color: #1a202c; /* cor escura */
+  --text-color: #f7fafc; /* cor clara */
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+
 input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;

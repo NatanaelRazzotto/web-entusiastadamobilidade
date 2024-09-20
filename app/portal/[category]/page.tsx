@@ -118,7 +118,7 @@ export default async function Page({ params }: {params: { category: string }}) {
               {
                 posts
                 .filter((post) => post.published)               
-                .map((post) => <CardNotice postCard={post} />)
+                .map((post) => <CardNotice key={post.id} postCard={post} />)
               }
             </div>
             

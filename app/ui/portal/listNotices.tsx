@@ -7,9 +7,7 @@ import CardNotice from "./cardNotice"
 import { CategoryPost, getCategoryUrlNumber } from "@/app/lib/enums/categoryPost"
 
 
-export default function ListNotices({newspaperColumnID = "",categoryPost, posts }) {
-
-  
+export default function ListNotices({newspaperColumnID = "",categoryPost, posts }) {  
   
   const postDefault : Post = {
     id : "1",
@@ -36,19 +34,19 @@ export default function ListNotices({newspaperColumnID = "",categoryPost, posts 
     {/* News card 1 */}
     {
         posts.slice(3, 6) .length === 0 ? (
-          <CardNotice postCard={postDefault} />
+          <CardNotice key={postDefault.id}  postCard={postDefault} />
         ) : (
         <div>
           {
             newspaperColumnID == "" ? posts
             .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == categoryPost && post.published) 
             .slice(0, 4) 
-            .map((post) => <CardNotice postCard={post} />)
+            .map((post) => <CardNotice key={post.id} postCard={post} />)
             :
             posts
             .filter((post) => post.newspaperColumnID == newspaperColumnID && post.published) 
             .slice(0, 3) 
-            .map((post) => <CardNotice postCard={post} />)
+            .map((post) => <CardNotice key={post.id} postCard={post} />)
           
           }
         </div>

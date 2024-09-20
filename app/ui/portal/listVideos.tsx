@@ -41,7 +41,7 @@ export default function ListVideos({newspaperColumnID = "",categoryPost, videos 
           {
             videos
             .slice(0, 3) 
-            .map((post) => <CardNoticeVideo postCard={post} />)
+            .map((post) => <CardNoticeVideo key={post.id} postCard={post} />)
           
           }
         </div>
