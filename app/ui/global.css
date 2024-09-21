@@ -2,19 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg-color: #f7fafc; /* cor clara */
-  --text-color: #1a202c; /* cor escura */
-}
-
-.dark {
-  --bg-color: #1a202c; /* cor escura */
-  --text-color: #f7fafc; /* cor clara */
-}
-
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  @apply bg-primarybg-light text-text-light; /* Modo claro */
+}
+
+.dark body {
+  @apply bg-primarybg-dark text-text-dark; /* Modo escuro */
 }
 
 

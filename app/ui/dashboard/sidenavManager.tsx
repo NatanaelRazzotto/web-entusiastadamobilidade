@@ -52,9 +52,9 @@ export default function SideNav() {
   };
 
   return (
-    <div key={forceUpdate} className="flex h-full flex-col px-3 py-4 md:px-2">
+    <div key={forceUpdate} className="flex h-full flex-col px-3 py-4 md:px-2 bg-secondarybg-dark text-text-dark">
       <Link
-        className="mb-2 flex h-20 items-end justify-start rounded-md bg-slate-950 md:h-40"
+        className="mb-2 flex h-20 items-end justify-start rounded-md bg-black md:h-40"
         href="/"
       >
         <div style={{ height: "100%", width: "5%", backgroundColor: "brown", left: "0px" }}></div>
@@ -63,29 +63,32 @@ export default function SideNav() {
           <AcmeLogo />
         </div>
       </Link>
+      <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />
+        <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
         {session ?
       
             <NavLinksManager session={session}/>
         
           : ""
         }
-        <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
+        <div className="hidden h-auto w-full grow rounded-md md:block"></div>
+        <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
         <ThemeSwitcher/>
-
+        <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
         {!session && (
           <Link
             href="/login"
-            className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
+            className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md text-orange-700 p-3 text-sm font-medium hover:bg-primarybg-dark hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
           >
-            <ArrowRightIcon className="w-5 md:w-6" />  <span>Log in Manager</span>
+            <ArrowRightIcon className="w-5 md:w-6 " />  <span>Log in Manager</span>
           </Link>
         )}
         {session && (
           <button
             onClick={handleSignOut}
-            className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
+            className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md text-orange-700 sp-3 text-sm font-medium hover:bg-primarybg-dark hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
           >
             <PowerIcon className="w-6" />
             <div className="hidden md:block">Sign Out</div>

@@ -9,7 +9,7 @@ export default function CardNoticeVideo({postCard }) {
     <Link
     key={postCard.id}
     href={`https://www.youtube.com/watch?v=${postCard.pathURL}`}>
-         <div className="bg-white rounded-md shadow-md">
+         <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark  rounded-md shadow-md">
             <img
                 src={`https://img.youtube.com/vi/${postCard.pathURL}/hqdefault.jpg`}
                   alt="Imagem da Matéria"

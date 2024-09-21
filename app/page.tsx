@@ -149,7 +149,7 @@ export default async function Page() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Blog 1 */}
-        <div className="bg-white rounded-md shadow-md p-4">
+        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark  rounded-md shadow-md p-4">
           <Link href={"https://www.facebook.com/webtvbusologa"} legacyBehavior>
           <a target="_blank" rel="noopener noreferrer">
           <div className="flex items-center">
@@ -169,7 +169,7 @@ export default async function Page() {
           </Link>
         </div>
         {/* Blog 2 */}
-        <div className="bg-white rounded-md shadow-md p-4">
+        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark rounded-md shadow-md p-4">
         <Link target='_blank' href={"https://www.instagram.com/entusiastadamobilidade/"} legacyBehavior>
           <a target="_blank" rel="noopener noreferrer">
           <div className="flex items-center">
@@ -189,7 +189,7 @@ export default async function Page() {
           </Link>
         </div>
         {/* Blog 3 */}
-        <div className="bg-white rounded-md shadow-md p-4">
+        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark  rounded-md shadow-md p-4">
           <Link href={"https://www.youtube.com/channel/UCAzsEfkJ4e6G-wFQv8srFXA"} legacyBehavior>
           <a target="_blank" rel="noopener noreferrer">
           <div className="flex items-center">
@@ -210,7 +210,7 @@ export default async function Page() {
         </div>
         {/* Blog 4 */}
         {/* <p className="text-gray-600 text-sm hidden md:block" > */}
-        <div className="bg-white rounded-md shadow-md p-4">
+        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark  rounded-md shadow-md p-4">
           <Link href={"https://www.youtube.com/channel/UC2m3YJu7rARj1wQhFMHmNrg"}legacyBehavior>
           <a target="_blank" rel="noopener noreferrer">
           <div className="flex items-center">

@@ -13,10 +13,21 @@ const config: Config = {
         '13': 'repeat(13, minmax(0, 1fr))',
       },
       colors: {
-        blue: {
-          400: '#2589FE',
-          500: '#0070F3',
-          600: '#2F6FEB',
+        primarybg: {
+          light: '#f7fafc', // Cor clara
+          dark: '#111827',  // Cor escura
+        },
+        secondarybg: {
+          light: '#f7fafc', // Cor clara
+          dark: '#030712',  // Cor escura
+        },
+        tertiarybg: {
+          light: '#f7fafc', // Cor clara       
+          dark: '#020617',  // Cor escura
+        },
+        text: {
+          light: '#1a202c', // Texto escuro
+          dark: '#f7fafc',  // Texto claro
         },
       },
       screens : {

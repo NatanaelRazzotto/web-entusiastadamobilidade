@@ -27,14 +27,14 @@ export default function ThemeToggle() {
 
   return (
     <div>
-      <label htmlFor="theme-toggle">Dark Mode</label>
+      <label className='text-orange-700' htmlFor="theme-toggle">Dark Mode</label>
       <Switch.Root
         id="theme-toggle"
         checked={isDarkMode}
         onCheckedChange={toggleTheme}
-        className="w-10 h-6 bg-gray-300 rounded-full relative"
+        className="w-10 h-6 bg-orange-700 rounded-full relative"
       >
-        <Switch.Thumb className={`w-4 h-4 bg-white rounded-full transition-transform transform ${isDarkMode ? 'translate-x-4' : ''}`} />
+        <Switch.Thumb className={`w-4 h-4 bg-orange-300 rounded-full transition-transform transform ${isDarkMode ? 'translate-x-4' : ''}`} />
       </Switch.Root>
     </div>
   )

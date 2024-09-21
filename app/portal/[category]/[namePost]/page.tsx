@@ -115,7 +115,8 @@ export default async function Page({ params }: {params: { category: string; name
   return (
     <main>
       <div className="container mx-auto px-4">
-        <div className="relative flex justify-between rounded-b-lg text-white bg-slate-950">
+        <div className="relative flex justify-between rounded-b-lg bg-black text-text-dark">
+          
           <div className='relative flex justify-between' style={{ width: "5%" }}>
             <div className='rounded-l' style={{ height: "100%", width: "50%", backgroundColor: "brown" }}></div>
             <div style={{ height: "100%", width: "50%", backgroundColor: "chocolate" }}></div>
@@ -135,8 +136,8 @@ export default async function Page({ params }: {params: { category: string; name
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-slate-950">
-            <div className="col-span-2 bg-black ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2 bg-secondarybg-dark text-text-dark">
+            <div className="col-span-2 bg-black h-auto">
               <SliderCover dataPost={dataPost} />
             </div>
             <div className="col-span-1 justify-self-end w-72 p-4 mt-4 mr-4 " >
@@ -183,16 +184,16 @@ export default async function Page({ params }: {params: { category: string; name
           </div>
         </div>
 
-        <div className="bg-white rounded-md shadow-md p-4 mt-8">
+        <div className="bg-primarybg-light text-text-light dark:bg-primarybg-dark dark:text-text-dark rounded-md shadow-md p-4 mt-8">
           <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
             <h2 className="font-bold mt-2 mb-1">MÁTERIA INTEGRA</h2>
           </div>
-          <p className="py-4 text-black">
+          <p className="py-4 ">
             {renderContentWithLineBreaks(dataPost.content)}
           </p>
         </div>
 
-        <div className="bg-white rounded-md shadow-md p-4 mt-8">
+        <div className="bg-primarybg-light text-text-light dark:bg-primarybg-dark dark:text-text-dark shadow-md p-4 mt-8">
           <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
             <h2 className="font-bold mt-2 mb-1"> Confira! {dataPost.images.length} Fotos Disponíveis</h2>
           </div>
