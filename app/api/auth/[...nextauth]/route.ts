@@ -11,15 +11,36 @@ import nextAuth from "next-auth";
 
 const handler = nextAuth({
     providers: [
-        GoogleProvider({
-          clientId: process.env.GOOGLE_CLIENT_ID!,
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-          authorization: {
-            params: {
-              scope: 'openid email profile https://www.googleapis.com/auth/drive',
-            },
+      GoogleProvider({
+        id: 'google-basic', // Provedor Google sem Google Drive
+        clientId: process.env.GOOGLE_CLIENT_ID!,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        authorization: {
+          params: {
+            scope: 'openid email profile', // Escopos mínimos para obter email e perfil
           },
-        }),
+        },
+        profile(profile) {
+          return {
+            id: profile.sub,
+            name: profile.name,
+            email: profile.email,
+            image: profile.picture,
+          };
+        },
+      }),
+    
+    
+      GoogleProvider({
+        id: 'google-drive', // Provedor Google com Google Drive
+        clientId: process.env.GOOGLE_CLIENT_ID!,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        authorization: {
+          params: {
+            scope: 'openid email profile https://www.googleapis.com/auth/drive', // Inclui Google Drive
+          },
+        },
+      }),
         
         Credentials({
             credentials: {
@@ -74,9 +95,10 @@ const handler = nextAuth({
       ],
       callbacks: {
         async signIn({ user, account, profile }) {
+          console.log("🚀aaa")
           console.log("🚀 ~ signIn ~ account:", account)
           console.log("🚀 ~ signIn ~ user:", user)
-          if (account.provider === "google") {
+          if (account.provider === "google-basic" || account.provider === "google-drive") {
             // Verifique se o usuário já está salvo no sistema
             const existingUser =  await getUser(user.email);
             console.log("🚀 ~ signIn ~ existingUser:", existingUser)
@@ -84,7 +106,7 @@ const handler = nextAuth({
             if (!existingUser) {
               // Se o usuário não existe no banco de dados, você pode impedi-lo de logar
               console.log("Usuário não registrado no sistema");
-              return true;
+              return false;
             }
             
             // Se o usuário já existe, permita o login
@@ -95,6 +117,7 @@ const handler = nextAuth({
           return true;
         },
         async session({ session, user, token }) {
+          console.log("bbb")
           // Você pode adicionar informações adicionais na sessão aqui, se necessário
           session.accessToken = token.accessToken as string
           session.user.idUser = token.idUser as string ;
@@ -105,13 +128,14 @@ const handler = nextAuth({
           return session;
         },
         async jwt({ token, user, account }) {
+          console.log("🚀ccc")
           console.log("🚀 ~ jwt ~ user:", user)
           console.log("🚀 ~ jwt ~ token:", token)
 
           if (user){
             var existingUser = await getUser(token.email.trim());
 
-            if (account?.provider === "google") {
+            if (account?.provider === "google-basic" || account?.provider === "google-drive") {
               token.accessToken = account.access_token;
             }
 

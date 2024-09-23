@@ -88,7 +88,7 @@ async function handleCreateGoal(data) {
               .filter(([key, value]) => typeof value === "number") // filtra apenas as chaves do enum
               .map(([key, value]) => (
                 <Select.Item
-                  key={value}
+ 
                   value={value.toString()} // converte o valor para string, necessário para o Select.Item
                   className="flex items-center justify-between p-2 hover:bg-gray-100 rounded-md cursor-pointer"
                 >
