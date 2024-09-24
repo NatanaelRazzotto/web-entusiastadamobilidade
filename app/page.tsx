@@ -36,6 +36,8 @@ export async function generateMetadata( {params: {lang}} ):Promise<Metadata> {
     description: 'O Portal de Noticias e Fotografias que é Entusiasta dos Modais de Transporte',
     keywords: 'notícias, fotografias, transporte, modais, mobilidade',
     openGraph : {
+      siteName : 'Entusiasta da Mobilidade',
+      title : 'Entusiasta da Mobilidade',
       type: 'website',
       locale: 'pt_BR',
       url: process.env.SITE_URL,     

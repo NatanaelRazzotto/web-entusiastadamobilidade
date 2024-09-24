@@ -36,7 +36,7 @@ export default function NavLinksManager({session}) {
           key={link.name}
           href={link.href}
           className={clsx(
-            'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-orange-100 p-3 text-sm font-medium hover:text-orange-700 hover:bg-orange-500 md:flex-none md:justify-start md:p-2 md:px-3',
+            'flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:text-orange-700 hover:bg-primarybg-dark md:flex-none md:justify-start md:p-2 md:px-3',
             {
               'bg-orange-100 text-orange-700': pathname === link.href,
             },

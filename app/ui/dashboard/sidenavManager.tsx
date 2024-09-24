@@ -67,7 +67,7 @@ export default function SideNav() {
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />
         <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
-        {session ?
+        {session && session.user.role == 4 ?
       
             <NavLinksManager session={session}/>
         

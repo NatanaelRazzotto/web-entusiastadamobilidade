@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: { params: { category: string;
 
   if (!dataPost) {
     return {
+
       title: 'Entusiasta da Mobilidade',
       description: 'O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte',
       keywords: 'notícias, fotografias, transporte, modais, mobilidade',
@@ -35,12 +36,21 @@ export async function generateMetadata({ params }: { params: { category: string;
   }
 
   return {
-    title: dataPost.title,
+    applicationName :  'Entusiasta da Mobilidade',
+    title:{
+      default : dataPost.title,
+      template : '%s | Entusiasta da Mobilidade'
+    } ,
     description: dataPost.resume || 'O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte',
     keywords: 'notícias, fotografias, transporte, modais, mobilidade',
-    openGraph: {
+    openGraph: {  
+      siteName : 'Entusiasta da Mobilidade',
+      title : {
+        default : dataPost.title,
+        template : '%s | Entusiasta da Mobilidade'
+      } ,
       type: 'article',
-      locale: 'pt_BR',
+      locale: 'pt_BR',      
       url: process.env.SITE_URL +`/portal/${getCategoryUrlNumber(dataPost.category)}/${namePost}`,
       images: [
         {
