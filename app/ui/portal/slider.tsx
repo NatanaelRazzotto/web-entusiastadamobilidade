@@ -41,7 +41,7 @@ function SamplePrevArrow(props) {
 }
 
 export default function SliderCover({dataPost }) {
-  console.log("🚀 ~ SliderCover ~ dataPost:", dataPost)
+
   var settings = {
     dots: true,
     infinite: true,
@@ -54,10 +54,10 @@ export default function SliderCover({dataPost }) {
   };
   return (
 
-    <div>
+    <div className="h-auto">
       {
         dataPost && dataPost.videos.length > 0 ? <Slider {...settings} className="slider-container">
-        <div className="slide-content pt-4 pl-4 pr-4">
+        <div className="slide-content pt-4 pl-4 pr-4 h-auto">
           <iframe
                   className="h-96 xs:h-44 sm:h-96 md:h-96 lg:h-96 xl:h-[450px] "
           style={{ width:"100%", border: 'none' }} // Remover bordas se necessário

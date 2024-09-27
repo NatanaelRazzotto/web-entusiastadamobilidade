@@ -5,6 +5,7 @@ import { getWatermarkedImageUrl, getCategoyrUrl} from '../../../lib/utils'
 import Link from 'next/link';
 import React from 'react';
 import SliderCover from '@/app/ui/portal/slider';
+import { getCategoryUrlNumber } from '@/app/lib/enums/categoryPost';
 
 
 export async function generateMetadata({ params }: { params: { category: string; namePost: string } }): Promise<Metadata> {
@@ -14,16 +15,17 @@ export async function generateMetadata({ params }: { params: { category: string;
 
   if (!dataPost) {
     return {
-      title: 'Portal Entusiasta da Mobilidade',
+
+      title: 'Entusiasta da Mobilidade',
       description: 'O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte',
       keywords: 'notícias, fotografias, transporte, modais, mobilidade',
       openGraph: {
         type: 'website',
         locale: 'pt_BR',
-        url: 'https://entusiastadamobilidade.vercel.app/',
+        url: process.env.SITE_URL,
         images: [
           {
-            url: 'https://entusiastadamobilidade.vercel.app/CARTAO.png',
+            url: process.env.SITE_URL + 'CARTAO.png',
             width: 800,
             height: 600,
             alt: 'Imagem de capa',
@@ -34,13 +36,22 @@ export async function generateMetadata({ params }: { params: { category: string;
   }
 
   return {
-    title: dataPost.title,
+    applicationName :  'Entusiasta da Mobilidade',
+    title:{
+      default : dataPost.title,
+      template : '%s | Entusiasta da Mobilidade'
+    } ,
     description: dataPost.resume || 'O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte',
     keywords: 'notícias, fotografias, transporte, modais, mobilidade',
-    openGraph: {
+    openGraph: {  
+      siteName : 'Entusiasta da Mobilidade',
+      title : {
+        default : dataPost.title,
+        template : '%s | Entusiasta da Mobilidade'
+      } ,
       type: 'article',
-      locale: 'pt_BR',
-      url: `https://entusiastadamobilidade.vercel.app/portal/${getCategoyrUrl(dataPost.category)}/${namePost}`,
+      locale: 'pt_BR',      
+      url: process.env.SITE_URL +`/portal/${getCategoryUrlNumber(dataPost.category)}/${namePost}`,
       images: [
         {
           url: getWatermarkedImageUrl(dataPost.coverURL),
@@ -55,7 +66,6 @@ export async function generateMetadata({ params }: { params: { category: string;
 
 export default async function Page({ params }: {params: { category: string; namePost: string }}) {
   const { category, namePost } = params;
-  console.log("🚀 ~ generateMetadata ~ category:", category)
 
   let dataPost: Post | null = null;
   let dataVehicle: Vehicle[] = [];
@@ -114,7 +124,8 @@ export default async function Page({ params }: {params: { category: string; name
   return (
     <main>
       <div className="container mx-auto px-4">
-        <div className="relative flex justify-between rounded-b-lg text-white bg-slate-950">
+        <div className="relative flex justify-between rounded-b-lg bg-black text-text-dark">
+          
           <div className='relative flex justify-between' style={{ width: "5%" }}>
             <div className='rounded-l' style={{ height: "100%", width: "50%", backgroundColor: "brown" }}></div>
             <div style={{ height: "100%", width: "50%", backgroundColor: "chocolate" }}></div>
@@ -134,8 +145,8 @@ export default async function Page({ params }: {params: { category: string; name
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-slate-950">
-            <div className="col-span-2 bg-black ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2 bg-secondarybg-dark text-text-dark">
+            <div className="col-span-2 bg-black h-auto">
               <SliderCover dataPost={dataPost} />
             </div>
             <div className="col-span-1 justify-self-end w-72 p-4 mt-4 mr-4 " >
@@ -156,7 +167,7 @@ export default async function Page({ params }: {params: { category: string; name
                   <p className="py-4 text-white text-sm">Sem informações dos Veículos.</p> :
                   dataVehicle.map((vehicle) => (
                     <Link href={'portal/pictures/'} key={vehicle.serialNumber}>
-                      <p className="py-4 text-black text-sm">
+                      <p className="py-4 text-white text-sm">
                         {vehicle.serialNumber.toString()}
                       </p>
                     </Link>
@@ -182,16 +193,16 @@ export default async function Page({ params }: {params: { category: string; name
           </div>
         </div>
 
-        <div className="bg-white rounded-md shadow-md p-4 mt-8">
+        <div className="bg-primarybg-light text-text-light dark:bg-primarybg-dark dark:text-text-dark rounded-md shadow-md p-4 mt-8">
           <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
             <h2 className="font-bold mt-2 mb-1">MÁTERIA INTEGRA</h2>
           </div>
-          <p className="py-4 text-black">
+          <p className="py-4 ">
             {renderContentWithLineBreaks(dataPost.content)}
           </p>
         </div>
 
-        <div className="bg-white rounded-md shadow-md p-4 mt-8">
+        <div className="bg-primarybg-light text-text-light dark:bg-primarybg-dark dark:text-text-dark shadow-md p-4 mt-8">
           <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
             <h2 className="font-bold mt-2 mb-1"> Confira! {dataPost.images.length} Fotos Disponíveis</h2>
           </div>

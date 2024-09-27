@@ -47,26 +47,12 @@ export default function LoginPage() {
           </button>
    
         </div>
-        {
-        // session && session.user.id ?     
-        // <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-        // <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-        //   Login Realizado Com Sucesso!
-        // </h1>
-        // <p>Click em "Home" e acesse as FUNCIONALIDADE!</p> </div>
-        
-        // :       
-        
-        // typeLogin ? (
-        //   <SimpleLoginForm />
-        // ) : (
-        //   <LoginForm  />
-        // )
-          <button onClick={() => signIn('google',{ callbackUrl :"/"})} 
-          className="flex gap-2 items-center border border-neutral-988 p-2 rounded-nd">
-           Login google
-          </button>
-        }
+
+      
+        <button  className="flex gap-2 items-center border border-neutral-988 p-2 rounded-nd" onClick={() => signIn('google-basic')}>Login com Google</button>
+
+ 
+        <button        className="flex gap-2 items-center border border-neutral-988 p-2 rounded-nd"onClick={() => signIn('google-drive')}>Login com Google (Gestor)</button>
 
       <div className="mt-4 space-y-3">         
         

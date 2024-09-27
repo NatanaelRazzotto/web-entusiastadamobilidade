@@ -12,7 +12,7 @@ import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { useRouter } from 'next/router';
 import CardPost from './ui/portal/card';
 
-import { Post } from './lib/definitions';
+import { Post , Video} from './lib/definitions';
 
 import CardNotice from './ui/portal/cardNotice';
 import SearchBar from './ui/portal/searchBar';
@@ -22,21 +22,28 @@ import { Metadata } from 'next';
 
 import SideNav from './ui/dashboard/sidenavManager';
 import { getCategoyrUrl } from './lib/utils';
+import ListNotices from './ui/portal/listNotices';
+import { CategoryPost } from './lib/enums/categoryPost';
+import ListVideos from './ui/portal/listVideos';
 
 
 
 export async function generateMetadata( {params: {lang}} ):Promise<Metadata> {
 
   return {
-    title: 'Portal Entusiasta da Mobilidade',
+    
+    title: 'Entusiasta da Mobilidade',
     description: 'O Portal de Noticias e Fotografias que é Entusiasta dos Modais de Transporte',
+    keywords: 'notícias, fotografias, transporte, modais, mobilidade',
     openGraph : {
+      siteName : 'Entusiasta da Mobilidade',
+      title : 'Entusiasta da Mobilidade',
       type: 'website',
       locale: 'pt_BR',
-      url: 'https://entusiastadamobilidade.vercel.app/',     
+      url: process.env.SITE_URL,     
       images: [
         {
-          url: 'https://entusiastadamobilidade.vercel.app/CARTAO.png',
+          url: process.env.SITE_URL +'/CARTAO.png',
           width: 800,
           height: 600,
           alt: 'Imagem de capa',
@@ -68,6 +75,8 @@ export default async function Page() {
   }
 
   const posts : Post[] = await prisma.post.findMany();
+
+  const videos : Video[] = await prisma.video.findMany();
   
   const postTop : Post = posts.find((post) => post.topNews == 1)
   const secondPostTop : Post = posts.find((post) => post.topNews == 2)
@@ -84,10 +93,12 @@ export default async function Page() {
 
     <main>
        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-        <div className="w-full flex-none md:w-64">
-            <SideNav />
-        </div>
-        <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
+          <div className="w-full flex-none md:w-64">
+              <SideNav />
+          </div>
+        
+  
+      <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
       <div className="container mx-auto px-4"> 
 
       <SearchBar />
@@ -95,7 +106,7 @@ export default async function Page() {
 
       <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white bg-orange-700 ">
         <p className="text-sm">
-          É NOSSO ANIVERSÁRIO!!!!! 12 ANOS DE WEB TV BUSÓLOGA BR!!! ANOS DE ENTUSIASTA!!!!! ---SITE EM CONSTRUÇÃO---
+          INFORMAÇÕES SOBRE O TRANSPORTE COLETIVO ---SITE EM CONSTRUÇÃO---
         </p>
      
       </div>  
@@ -140,7 +151,7 @@ export default async function Page() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Blog 1 */}
-        <div className="bg-white rounded-md shadow-md p-4">
+        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark  rounded-md shadow-md p-4">
           <Link href={"https://www.facebook.com/webtvbusologa"} legacyBehavior>
           <a target="_blank" rel="noopener noreferrer">
           <div className="flex items-center">
@@ -160,7 +171,7 @@ export default async function Page() {
           </Link>
         </div>
         {/* Blog 2 */}
-        <div className="bg-white rounded-md shadow-md p-4">
+        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark rounded-md shadow-md p-4">
         <Link target='_blank' href={"https://www.instagram.com/entusiastadamobilidade/"} legacyBehavior>
           <a target="_blank" rel="noopener noreferrer">
           <div className="flex items-center">
@@ -180,7 +191,7 @@ export default async function Page() {
           </Link>
         </div>
         {/* Blog 3 */}
-        <div className="bg-white rounded-md shadow-md p-4">
+        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark  rounded-md shadow-md p-4">
           <Link href={"https://www.youtube.com/channel/UCAzsEfkJ4e6G-wFQv8srFXA"} legacyBehavior>
           <a target="_blank" rel="noopener noreferrer">
           <div className="flex items-center">
@@ -201,7 +212,7 @@ export default async function Page() {
         </div>
         {/* Blog 4 */}
         {/* <p className="text-gray-600 text-sm hidden md:block" > */}
-        <div className="bg-white rounded-md shadow-md p-4">
+        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark  rounded-md shadow-md p-4">
           <Link href={"https://www.youtube.com/channel/UC2m3YJu7rARj1wQhFMHmNrg"}legacyBehavior>
           <a target="_blank" rel="noopener noreferrer">
           <div className="flex items-center">
@@ -224,163 +235,33 @@ export default async function Page() {
    
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-">
-          <div className="py-4">
-            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">Transporte Público</h2>
-            </div>
-          </div>
-          {/* News card 1 */}
-
-          {
-              posts.slice(3, 6) .length === 0 ? (
-                <CardNotice postCard={postDefault} />
-              ) : (
-              <div>
-                {
-                  posts
-                  .filter((post) => post.newspaperColumnID == "030e0d2f-5aad-4018-934a-420b23448fd9" && post.published) 
-                  .slice(0, 3) 
-                  .map((post) => <CardNotice postCard={post} />)
-                }
-              </div>
-            )
-          }        
-          
-          <div className="flex justify-end mt-8">
-            <Link href={'portal/'+getCategoyrUrl(1)}>
-            <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
-              Ver mais
-            </button>
-            </Link>
-          </div>
-        
-        </div>
-
-        {/* 1 */}
-
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-          <div className="py-4">
-            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">Aviação</h2>
-            </div>
-          </div>
-          {/* News card 1 */}
-            {/* 
-              TransportePublico: 1,
-              Aviacao: 2,
-              Ferrovia: 3,
-              Automoveis: 4,
-
-            
-            1 */}
-          {
-              posts.slice(3, 6) .length === 0 ? (
-                <CardNotice postCard={postDefault} />
-              ) : (
-              <div>
-                {
-                  posts
-                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 2&& post.published) 
-                  .slice(0, 4) 
-                  .map((post) => <CardNotice postCard={post} />)
-                }
-              </div>
-            )
-          }    
-
-          <div className="flex justify-end mt-8">
-          <Link href={'portal/'+getCategoyrUrl(2)}>
-            <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
-              Ver mais
-            </button>
-            </Link>
-          </div>
-        
-        </div>
-
+              <ListNotices newspaperColumnID={"030e0d2f-5aad-4018-934a-420b23448fd9"} categoryPost={CategoryPost.TransportePublico} posts={posts}/>
+              </div>   
         {/* 1 */}
-
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-          <div className="py-4">
-            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">Ferrovia</h2>
-            </div>
-          </div>
-          {/* News card 1 */}
-          {
-              posts.slice(3, 6) .length === 0 ? (
-                <CardNotice postCard={postDefault} />
-              ) : (
-              <div>
-                {
-                  posts
-                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 3&& post.published) 
-                  .slice(0, 4) 
-                  .map((post) => <CardNotice postCard={post} />)
-                }
-              </div>
-            )
-          }  
-          <div className="flex justify-end mt-8">
-          <Link href={'portal/'+getCategoyrUrl(3)}>
-            <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
-              Ver mais
-            </button>
-            </Link>
-          </div>
-        
-        </div>
-
-        {/* 1 */}
-
-        {/* 1 */}
-
+          <ListNotices categoryPost={CategoryPost.Automoveis} posts={posts}/>
+          </div>  
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-          <div className="py-4">
-            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h2 className="font-bold mt-2 mb-1">Automóveis</h2>
-            </div>
-          </div>
-          {/* News card 1 */}
-          {
-              posts.slice(3, 6) .length === 0 ? (
-                <CardNotice postCard={postDefault} />
-              ) : (
-              <div>
-                {
-                  posts
-                  .filter((post) => post.newspaperColumnID != "030e0d2f-5aad-4018-934a-420b23448fd9" && post.category == 4 && post.published) 
-                  .slice(0, 4) 
-                  .map((post) => <CardNotice postCard={post} />)
-                }
-              </div>
-            )
-          }   
-          <div className="flex justify-end mt-8">
-          <Link href={'portal/'+getCategoyrUrl(4)}>
-            <button style={{height:"50px"}}  className="bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">
-              Ver mais
-            </button>
-            </Link>
-          </div>
-        
-        </div>
-
+          <ListNotices categoryPost={CategoryPost.Aviacao} posts={posts}/> 
+          <ListNotices categoryPost={CategoryPost.Ferrovia} posts={posts}/>   
+          </div>   
         {/* 1 */}
-
-
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
+       
+        <ListVideos categoryPost={CategoryPost.Automoveis} videos={videos}/>
+        </div>   
+        {/* 1 */}
         
-      
+        
+        {/* 1 */}
       </div>
-
-
       
      
     </div>
     </div>
-      </div>      
+    </div>
+     
     </main>
    
   );

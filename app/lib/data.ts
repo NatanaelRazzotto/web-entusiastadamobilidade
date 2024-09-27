@@ -95,13 +95,16 @@ export async function fetchPostCategory(idCategory : number){
 
 export async function fetchPostTitle(titlePost : string){
   try {
+    const titlePostSearch = titlePost.trim(); // Remove espaços extras
+
     const post: Post[] = await prisma.post.findMany({
       where: {
         title: {
-          contains : titlePost,
+          contains: titlePostSearch,
+          mode: 'insensitive', // Torna a comparação indiferente a maiúsculas/minúsculas
         }
       },
-      take : 5,
+      take: 5, // Limita o número de resultados
       include: {
         images: {
           include: {
@@ -302,6 +305,36 @@ export async function alterOrderImageId(orderImages : OrderImage[]){
     });
     
     return "post";
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function createPost(newPost : Post,existingUser : User){
+ console.log("🚀 ~ createPost ~ existingUser:", existingUser)
+ console.log("🚀 ~ createPost ~ newPost:", newPost.category ? newPost.category : 0)
+ 
+  try {  
+      const Post = await prisma.post.create({
+        data: {
+          namePost: newPost.namePost,
+          title: newPost.title,
+          content: newPost.content,
+          coverURL: newPost.coverURL,
+          published: newPost.published ? newPost.published : false,
+          // newspaperColumnID?: string | null;
+          authorId: existingUser.id,
+          category:newPost.category ? newPost.category : 0,
+          topNews: newPost.topNews,
+          resume: newPost.resume,
+          tagPost: newPost.tagPost,
+          
+          }
+        }
+      );
+    
+    return Post;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch revenue data.');

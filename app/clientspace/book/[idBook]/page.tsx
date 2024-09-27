@@ -42,11 +42,11 @@ export default async function Page({ params }: { params: { idBook: string } }) {
     dataPost = response
     if (dataPost){
       if (dataPost.orderImages[0]){
-        console.log("🚀 ~ llllll:", dataPost.orderImages[0].image.vehicle)
+
         dataPost.orderImages.forEach(element => {
           if (element.image.vehicle[0]){
             dataVehicle.push(element.image.vehicle[0])
-            console.log("🚀 ~ dataVehicle:", dataVehicle)
+
           }         
 
         });
