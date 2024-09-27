@@ -168,7 +168,7 @@ export default async function Page({ params }: {params: { category: string; name
                   <p className="py-4 text-white text-sm">Sem informações dos Veículos.</p> :
                   dataVehicle.map((vehicle) => (
                     <Link href={'portal/pictures/'} key={vehicle.serialNumber}>
-                      <p className="py-4 text-black text-sm">
+                      <p className="py-4 text-white text-sm">
                         {vehicle.serialNumber.toString()}
                       </p>
                     </Link>

@@ -106,7 +106,7 @@ export default async function Page() {
 
       <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white bg-orange-700 ">
         <p className="text-sm">
-          ---SITE EM CONSTRUÇÃO---
+          INFORMAÇÕES SOBRE O TRANSPORTE COLETIVO ---SITE EM CONSTRUÇÃO---
         </p>
      
       </div>  
