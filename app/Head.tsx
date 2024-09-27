@@ -4,7 +4,7 @@ import Script from 'next/script';
 const GA_TRACKING_ID = process.env.GA_TRACKING_ID//'G-XXXXXXXXXX'; // Substitua pelo seu ID de rastreamento
 
 
-export default function Head() {
+export default function HeadAnalytics() {
 
   return (
     <>

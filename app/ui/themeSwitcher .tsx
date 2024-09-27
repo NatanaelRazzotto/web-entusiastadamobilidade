@@ -7,8 +7,10 @@ export default function ThemeToggle() {
   useEffect(() => {
     const root = window.document.documentElement
     const storedTheme = localStorage.getItem('theme')
-    if (storedTheme === 'dark') {
+
+    if (storedTheme === 'dark' || !storedTheme) {  // Se não houver tema setado, define como dark
       root.classList.add('dark')
+      localStorage.setItem('theme', 'dark') // Salva como dark se for a primeira vez
       setIsDarkMode(true)
     }
   }, [])
@@ -26,9 +28,7 @@ export default function ThemeToggle() {
   }
 
   return (
-    <div >
-
-      
+    <div>
       <label className='hidden sm:block text-orange-700' htmlFor="theme-toggle">Dark Mode</label>
       <Switch.Root
         id="theme-toggle"
