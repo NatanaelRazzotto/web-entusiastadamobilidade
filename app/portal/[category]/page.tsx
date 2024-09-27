@@ -107,7 +107,7 @@ export default async function Page({ params }: {params: { category: string }}) {
           </div>
         </div>       
 
-        <div className="bg-white rounded-md shadow-md p-4 mt-8">
+        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark  rounded-md shadow-md p-4">
          
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
         

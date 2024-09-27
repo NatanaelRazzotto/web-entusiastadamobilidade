@@ -106,7 +106,7 @@ export default async function Page() {
 
       <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white bg-orange-700 ">
         <p className="text-sm">
-          É NOSSO ANIVERSÁRIO!!!!! 12 ANOS DE WEB TV BUSÓLOGA BR!!! ANOS DE ENTUSIASTA!!!!! ---SITE EM CONSTRUÇÃO---
+          ---SITE EM CONSTRUÇÃO---
         </p>
      
       </div>  

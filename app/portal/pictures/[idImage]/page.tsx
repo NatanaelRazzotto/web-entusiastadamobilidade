@@ -142,15 +142,15 @@ export default async function Page({ params }: { params: { idImage: string } }) 
 
   return (
     <main>
-      <div className="container mx-auto px-4">
-
-      <div className="relative flex  justify-between rounded-b-lg rounded-b-lg  text-white bg-black">
-      <div className='relative flex  justify-between'  style={{ width: "5%" }}>
-        <div className='rounded-l' style={{ height: "100%", width: "50%", backgroundColor: "brown" }}></div>
-        <div style={{ height: "100%", width: "50%", backgroundColor: "chocolate" }}></div>
-      </div>
-      <div style={{ width: "80%", padding: "10px"}}>
-        <h2 className="text-xl font-bold">
+   <div className="container mx-auto px-4">
+        <div className="relative flex justify-between rounded-b-lg bg-black text-text-dark">
+          
+          <div className='relative flex justify-between' style={{ width: "5%" }}>
+            <div className='rounded-l' style={{ height: "100%", width: "50%", backgroundColor: "brown" }}></div>
+            <div style={{ height: "100%", width: "50%", backgroundColor: "chocolate" }}></div>
+          </div>
+          <div style={{ width: "80%", padding: "10px" }}>
+            <h2 className="text-xl font-bold">
           {dataPost.title}
         </h2>
       </div>
@@ -167,49 +167,46 @@ export default async function Page({ params }: { params: { idImage: string } }) 
     </div>
 
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-          <div className="col-span-2">
-          <iframe
-            src={`https://drive.google.com/file/d/${dataPost.pathURL}/preview`}
-            title={dataPost.title}
-            className="rounded-md w-full object-cover"     
-            height="100%"     
-            style={{ border: 'none' }}
-          ></iframe>
-          </div>
-          <div className="col-span-1">
-            <div className="flex">
-            <div className="bg-white rounded-md shadow-md p-4">
-            
-              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2 bg-secondarybg-dark text-text-dark">
+      <div className="col-span-2 bg-black h-auto">
+        <iframe
+          src={`https://drive.google.com/file/d/${dataPost.pathURL}/preview`}
+          title={dataPost.title}
+          className="rounded-md w-full object-cover"     
+          height="100%"     
+          style={{ border: 'none' }}
+        ></iframe>
+      </div>
+      <div className="col-span-1 justify-self-end p-4 mt-4 mr-4 " >
+          <div className="flex">
+          <div className=" rounded-md shadow-md p-1 ">
+          <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
                 <h2 className="font-bold mt-2 mb-1"> Prefixo do Veículo</h2>
               </div>      
   
-              <p className="py-4 text-black text-sm">
+              <p className="py-4 text-white text-sm">
                 {dataPost.vehicle.length > 0 ? dataPost.vehicle[0].serialNumber : "Sem Prefixo"}
               </p>
 
             </div>
-            <div className="bg-white rounded-md shadow-md p-4">
-            
+            <div className=" rounded-md shadow-md p-1 ">
               <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
                 <h2 className="font-bold mt-2 mb-1">Placa do Veículo</h2>
               </div>      
 
-              <p className="py-4 text-black text-sm">
+              <p className="py-4 text-white text-sm">
                {dataPost.vehicle.length > 0 ? dataPost.vehicle[0].plate : "SEM PLACA"}
               </p>
 
             </div>
             </div>
             <div className="flex">
-            <div className="bg-white rounded-md shadow-md p-4">
-            
-              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+            <div className=" rounded-md shadow-md p-1 ">
+            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
                 <h2 className="font-bold mt-2 mb-1"> Fabricante da Carroceria</h2>
               </div>      
   
-              <p className="py-4 text-black text-sm">
+              <p className="py-4 text-white text-sm">
                 {dataPost.vehicle.length > 0 ? 
                   dataPost.vehicle[0].bodywork ?
                    dataPost.vehicle[0].bodywork.manufacturer ?
@@ -217,13 +214,12 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </p>
 
             </div>
-            <div className="bg-white rounded-md shadow-md p-4">
-            
-              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+            <div className=" rounded-md shadow-md p-1 ">
+            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
                 <h2 className="font-bold mt-2 mb-1"> Modelo de Carroceria</h2>
               </div>      
 
-              <p className="py-4 text-black text-sm">
+              <p className="py-4 text-white text-sm">
               {dataPost.vehicle.length > 0 ? 
                   dataPost.vehicle[0].bodywork ?
                    dataPost.vehicle[0].bodywork.nameModel : "Sem Info" :  "Sem Info"}
@@ -233,13 +229,12 @@ export default async function Page({ params }: { params: { idImage: string } }) 
             </div>
 
             <div className="flex">
-            <div className="bg-white rounded-md shadow-md p-4">
-            
-              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+            <div className=" rounded-md shadow-md p-1 ">
+            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
                 <h2 className="font-bold mt-2 mb-1"> Fabricante do Chassi</h2>
               </div>      
   
-              <p className="py-4 text-black text-sm">
+              <p className="py-4 text-white text-sm">
               {dataPost.vehicle.length > 0? 
                   dataPost.vehicle[0].powertrain ?
                    dataPost.vehicle[0].powertrain.manufacturer ?
@@ -247,13 +242,12 @@ export default async function Page({ params }: { params: { idImage: string } }) 
               </p>
 
             </div>
-            <div className="bg-white rounded-md shadow-md p-4">
-            
-              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+            <div className=" rounded-md shadow-md p-1 ">
+            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
                 <h2 className="font-bold mt-2 mb-1"> Modelo de Carroceria</h2>
               </div>      
 
-              <p className="py-4 text-black text-sm">
+              <p className="py-4 text-white text-sm">
               {dataPost.vehicle.length > 0 ? 
                   dataPost.vehicle[0].powertrain ?
                    dataPost.vehicle[0].powertrain.nameModel : "Sem Info":  "Sem Info"}
@@ -263,26 +257,24 @@ export default async function Page({ params }: { params: { idImage: string } }) 
             </div>
 
             <div className="flex">
-            <div className="bg-white rounded-md shadow-md p-4">
-            
-              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+            <div className=" rounded-md shadow-md p-1 ">
+            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
                 <h2 className="font-bold mt-2 mb-1"> Operador do Veículo</h2>
               </div>      
   
-              <p className="py-4 text-black text-sm">
+              <p className="py-4 text-white text-sm">
                 {dataPost.vehicle.length > 0 ? dataPost.vehicle[0].operator ? dataPost.vehicle[0].operator.name : "Sem Operador": "Sem Operador"}
               </p>
 
             </div>
-              <div className="bg-white rounded-md shadow-md p-4">
-              
-              <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+            <div className=" rounded-md shadow-md p-1 ">
+            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
               <h2 className="font-bold mt-2 mb-1">   
                 Dia de Publicação
                   </h2>
                 </div>     
     
-              <p className="py-4 text-black text-sm">
+              <p className="py-4 text-white text-sm">
                 {dataPost.dateCreate ? formatDate(dataPost.dateCreate.toString()) : "Sem informações de resumo."}
               </p>
 
@@ -295,14 +287,14 @@ export default async function Page({ params }: { params: { idImage: string } }) 
           
         </div>
 
-        <div className="bg-white rounded-md shadow-md p-4 mt-8">
-          <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+        <div className="bg-primarybg-light text-text-light dark:bg-primarybg-dark dark:text-text-dark rounded-md shadow-md p-4 mt-8">
+        <div className="inline-block rounded-lg dark:text-text-dark bg-orange-700 px-4">
               <h2 className="font-bold mt-2 mb-1">   
                 COMENTÁRIOS
               </h2>
           </div>     
     
-          <p className="py-4 text-black ">
+          <p className="py-4 text-black dark:text-text-dark ">
             EM BREVE!!!
           </p>
         </div>
