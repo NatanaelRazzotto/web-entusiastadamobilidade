@@ -48,12 +48,10 @@ const handler = nextAuth({
               password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
-              console.log("🚀 ~ authorize ~ credentials:", credentials);
             
               // Filtrar os campos relevantes
               const { phone, password } = credentials;
-              console.log("🚀 ~ authorize ~ password:", password)
-              console.log("🚀 ~ authorize ~ phone:", phone)
+
               const parsedCredentials = z
                 .object({
                   phone: z.string().regex(/^\(\d{2}\)\d{5}-\d{4}$/, {
@@ -63,12 +61,11 @@ const handler = nextAuth({
                 })
                 .safeParse({ phone, password });
             
-              console.log("🚀 ~ authorize ~ parsedCredentials:", parsedCredentials.error);
             
               if (parsedCredentials.success) {
             
                 const { phone, password } = parsedCredentials.data;
-                console.log("🚀 ~ authorize ~ phone:", phone);
+                console.log("🚀 ~ authorize ~ phone:");
                 console.log('validate credentials');
       
                 if (phone === "(41)99999-9999") {
@@ -77,7 +74,7 @@ const handler = nextAuth({
                 }
       
                 const user = await getUserPhone(phone.trim());
-                console.log("🚀 ~ authorize ~ user:", user);
+                console.log("🚀 ~ authorize ~ user:");
                 if (!user) return null;
       
                 if (user.verificationCode !== password) {
@@ -95,17 +92,15 @@ const handler = nextAuth({
       ],
       callbacks: {
         async signIn({ user, account, profile }) {
-          console.log("🚀aaa")
-          console.log("🚀 ~ signIn ~ account:", account)
-          console.log("🚀 ~ signIn ~ user:", user)
+
           if (account.provider === "google-basic" || account.provider === "google-drive") {
             // Verifique se o usuário já está salvo no sistema
             const existingUser =  await getUser(user.email);
-            console.log("🚀 ~ signIn ~ existingUser:", existingUser)
+
             
             if (!existingUser) {
               // Se o usuário não existe no banco de dados, você pode impedi-lo de logar
-              console.log("Usuário não registrado no sistema");
+
               return false;
             }
             
@@ -117,7 +112,7 @@ const handler = nextAuth({
           return true;
         },
         async session({ session, user, token }) {
-          console.log("bbb")
+
           // Você pode adicionar informações adicionais na sessão aqui, se necessário
           session.accessToken = token.accessToken as string
           session.user.idUser = token.idUser as string ;
@@ -128,9 +123,6 @@ const handler = nextAuth({
           return session;
         },
         async jwt({ token, user, account }) {
-          console.log("🚀ccc")
-          console.log("🚀 ~ jwt ~ user:", user)
-          console.log("🚀 ~ jwt ~ token:", token)
 
           if (user){
             var existingUser = await getUser(token.email.trim());

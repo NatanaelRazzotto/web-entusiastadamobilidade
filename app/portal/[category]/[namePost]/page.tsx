@@ -66,7 +66,6 @@ export async function generateMetadata({ params }: { params: { category: string;
 
 export default async function Page({ params }: {params: { category: string; namePost: string }}) {
   const { category, namePost } = params;
-  console.log("🚀 ~ generateMetadata ~ category:", category)
 
   let dataPost: Post | null = null;
   let dataVehicle: Vehicle[] = [];

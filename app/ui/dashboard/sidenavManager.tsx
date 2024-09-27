@@ -29,13 +29,13 @@ export default function SideNav() {
   // }, [status]);
 
   const [session, setSession] = useState(null);
-  console.log("🚀 ~ SideNav ~ session:", session)
+
  
 
   useEffect(() => {
     const fetchSession = async () => {
       const session = await getSession();
-      console.log("🚀 ~ fetchSession ~ session:", session)
+
       setSession(session);
 
     };

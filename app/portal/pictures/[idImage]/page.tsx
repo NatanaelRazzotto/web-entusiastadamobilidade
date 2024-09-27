@@ -44,7 +44,6 @@ export default async function Page({ params }: { params: { idImage: string } }) 
 
     // const [data, setData] = useState< Post | null>(null);
   const { idImage: idImage } = params;
-  console.log('Parâmetro idImage:', idImage);
 
   let dataPost : Image | null = null;
   let dataVehicle : Vehicle [] = [];
@@ -52,7 +51,6 @@ export default async function Page({ params }: { params: { idImage: string } }) 
 
   try {
     const response : Image= await fetchIdImage(idImage)
-    console.log("🚀 ~ response:", response)
     
     if (response == null) {
       throw new Error('Erro na busca de dados');
@@ -83,9 +81,8 @@ export default async function Page({ params }: { params: { idImage: string } }) 
   }
 
   if (!dataPost) {
-    //notFound();
-  
-    console.log("🚀 ~ notFound();:")}
+
+  }
    
   //({ data, error }: PageProps) {//({ params }: { params: { namePost: string } }) {
   // const [data, setData] = useState< Post | null>(null);

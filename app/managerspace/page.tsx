@@ -32,14 +32,14 @@ export default function Page() {
 
   // Função de envio do formulário
   async function handleCreateGoal(data) {
-    console.log("🚀 ~ handleCreateGoal ~ data:", data);
+
     try {
       // Obter a sessão no lado do cliente
       const session = await getSession();
-      console.log("🚀 ~ handleCreateGoal ~ session:", session);
+
 
       // Fazer algo com as imagens selecionadas
-      console.log("Imagens selecionadas:", selectedImages);
+
       // Aqui você pode enviar as imagens selecionadas para uma API, salvar no banco, etc.
     } catch (error) {
       console.error("Erro ao registrar categoria:", error);

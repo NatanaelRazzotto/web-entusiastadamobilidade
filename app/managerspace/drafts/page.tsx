@@ -16,14 +16,10 @@ export default function Page() {
 
   
 async function handleCreateGoal(data) {
-  console.log("🚀 ~ handleCreateGoal ~ data:", data);
 
   try {
     // Obter a sessão no lado do cliente
-    const session = await getSession();
-    console.log("🚀 ~ handleCreateGoal ~ session:", session)
-
-   
+    const session = await getSession();   
 
     const response = await fetch("/api/post", {
       method: "POST",

@@ -30,7 +30,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'No token found' }, { status: 401 });
   }
 
-  console.log("JWT ---AAAA Token info:", token);
 
   const existingUser = await getUser(token.email.trim());
 

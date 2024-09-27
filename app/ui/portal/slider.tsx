@@ -41,7 +41,7 @@ function SamplePrevArrow(props) {
 }
 
 export default function SliderCover({dataPost }) {
-  console.log("🚀 ~ SliderCover ~ dataPost:", dataPost)
+
   var settings = {
     dots: true,
     infinite: true,

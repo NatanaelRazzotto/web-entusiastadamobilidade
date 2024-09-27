@@ -31,7 +31,7 @@ export function selectedImagesAtualize(selectedImages : OrderImage[],order: Orde
     // Se não está selecionada, marcar
     // console.log("🚀 ~ setSelectedImages ~ order:", order)
     order.requestImage = !order.requestImage;
-    console.log("a ~ setSelectedImages ~ order:", order)
+
   
     return [...selectedImages, order];
   }
@@ -64,7 +64,7 @@ export function ListImagemViewer({ dataPost}) {
 
   // Função para lidar com a seleção de imagem
   const toggleImageSelection = (order: OrderImage) => {
-    console.log("🚀 ~ toggleImageSelection ~ order:")
+
     let listS = selectedImagesAtualize(selectedImages, order)
 
     setSelectedImages(listS)
@@ -75,11 +75,9 @@ export function ListImagemViewer({ dataPost}) {
 
     // Função para lidar com o clique do botão e chamar a função do servidor
     const handleSaveSelection = async () => {
-       console.log("Respos")
       setEdit(false)
       const response = await alterOrderImageId(selectedImages);
       setServerResponse(response); // Armazena a resposta do servidor no estado
-      console.log("Resposta do servidor:", response); // Log para depuração
     };
   
     // Função para fechar o popup
@@ -92,12 +90,12 @@ export function ListImagemViewer({ dataPost}) {
   const validateList = (order: OrderImage) => {
     const existing = selectedImages.find((selected) => selected.imageId === order.imageId);
     if (existing) {
-      console.log("🚀🚀🚀🚀 ~ validateList ~ existing.requestImage:", existing.requestImage)
+
       return existing.requestImage
     }
      
     else{
-      console.log("🚀 ~ validateList ~ order.requestImage:", order.requestImage)
+
       return order.requestImage
     }
       

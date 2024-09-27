@@ -2,9 +2,7 @@
 import Head from 'next/head';
 
 const HeadMeta = ({ title, description, image }) => {
-  console.log("🚀 ~ HeadMeta ~ image:", image)
-  console.log("🚀 ~ HeadMeta ~ description:", description)
-  console.log("🚀 ~ HeadMeta ~ title:", title)
+
   return (
     <Head>
       <title>{title}</title>

@@ -25,7 +25,6 @@ export async function POST(req: NextRequest) { // Use NextRequest aqui
     return NextResponse.json({ error: 'No token found' }, { status: 401 });
   }
 
-  console.log("JWT ---AAAA Token info:", token);
 
   const existingUser = await getUser(token.email.trim());
 
@@ -36,7 +35,6 @@ export async function POST(req: NextRequest) { // Use NextRequest aqui
   try {
     
     const body = await req.json(); // Parse o corpo da requisição (os dados do novo post)
-    console.log("🚀 ~ POST ~ body:", body)
     const newPost = await createPost(body,existingUser); // Função para criar um novo post no banco de dados
 
     return NextResponse.json({ message: 'Post created successfully', post: newPost }, { status: 201 });
