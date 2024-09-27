@@ -26,8 +26,10 @@ export default function ThemeToggle() {
   }
 
   return (
-    <div>
-      <label className='text-orange-700' htmlFor="theme-toggle">Dark Mode</label>
+    <div >
+
+      
+      <label className='hidden sm:block text-orange-700' htmlFor="theme-toggle">Dark Mode</label>
       <Switch.Root
         id="theme-toggle"
         checked={isDarkMode}

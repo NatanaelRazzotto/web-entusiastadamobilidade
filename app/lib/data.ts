@@ -95,13 +95,16 @@ export async function fetchPostCategory(idCategory : number){
 
 export async function fetchPostTitle(titlePost : string){
   try {
+    const titlePostSearch = titlePost.trim(); // Remove espaços extras
+
     const post: Post[] = await prisma.post.findMany({
       where: {
         title: {
-          contains : titlePost,
+          contains: titlePostSearch,
+          mode: 'insensitive', // Torna a comparação indiferente a maiúsculas/minúsculas
         }
       },
-      take : 5,
+      take: 5, // Limita o número de resultados
       include: {
         images: {
           include: {
