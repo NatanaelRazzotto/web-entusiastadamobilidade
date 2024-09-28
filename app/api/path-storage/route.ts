@@ -6,20 +6,23 @@ import { getToken } from 'next-auth/jwt';
 import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
 
-async function listImages(authClient: OAuth2Client, folderIdParam : string): Promise<any> {
-  const folderId = folderIdParam//'12vbwVt0WI3gNnG_IN3YA1ZHXgVgBoMLy'; // Substitute pelo ID da pasta
+async function listFolders(authClient: OAuth2Client): Promise<any> {
+  const folderId = '11_tnSU5GUKnfXHPgh7akZPT33wPnnQYX'; // ID da pasta
   const drive = google.drive({ version: 'v3', auth: authClient });
+
   const res = await drive.files.list({
-    q: `'${folderId}' in parents and mimeType contains 'image/'`,
+    q: `'${folderId}' in parents and mimeType = 'application/vnd.google-apps.folder'`,
     fields: 'nextPageToken, files(id, name)',
   });
-  const files = res.data.files;
-  if (files.length === 0) {
-    console.log('No files found.');
+
+  const folders = res.data.files;
+
+  if (!folders || folders.length === 0) {
+    console.log('No folders found.');
     return [];
   }
 
-  return files;
+  return folders;
 }
 
 
@@ -30,17 +33,11 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'No token found' }, { status: 401 });
   }
 
+
   const existingUser = await getUser(token.email.trim());
 
   if (!existingUser) {
     return NextResponse.json({ error: 'User not found' }, { status: 404 });
-  }
-
-  // Obtém o parâmetro `category` da query string da URL
-  const folderId = req.nextUrl.searchParams.get('category'); // Exemplo de parâmetro `category`
-
-  if (!folderId) {
-    return NextResponse.json({ error: 'Folder ID not provided' }, { status: 400 });
   }
 
   const accessToken = token.accessToken;
@@ -51,8 +48,9 @@ export async function GET(req: NextRequest) {
   });
 
   try {
-    // Authorize e liste as imagens usando o folderId da query string
-    const files = await listImages(authClient, folderId);
+    // Authorize and list images
+
+    const files = await listFolders(authClient);
 
     return NextResponse.json(files);
   } catch (error) {
