@@ -122,8 +122,8 @@ export type Image = {
 
   authorId: string;
   dateCreate?: Date; // Deve coincidir com a definição no Prisma
-  posts?: Post[]; // Deve ser uma lista de Post, conforme definido
-  vehicle?: Vehicle[]; // Relacionamento com Vehicle, conforme definido
+  postsIDs  ?:        String[]
+  vehicleIDs ?:         String[]
   orderImages  ?:  OrderImage[]   
   
 };
@@ -137,8 +137,8 @@ export type Video = {
 
   authorId: string;
   dateCreate?: Date; // Deve coincidir com a definição no Prisma
-  posts?: Post[]; // Deve ser uma lista de Post, conforme definido
-  vehicle?: Vehicle[]; // Relacionamento com Vehicle, conforme definido
+  postsIDs  ?:        String[]
+  vehicleIDs ?:         String[]
   
 };
 
@@ -147,7 +147,7 @@ export type Vehicle = {
   plate?: string | null; // Deve coincidir com a definição no Prisma
   serialNumber?: string | null; // Deve coincidir com a definição no Prisma
   operatingCategory: number;
-  images?: Image[]; // Tornar images opcional, se for o caso
+  imageIDs?: string[]; // Tornar images opcional, se for o caso
   bodywork?: Bodywork | null; // Deve coincidir com a definição no Prisma
   bodyworkID: string;
   powertrain?: Powertrain | null; // Deve coincidir com a definição no Prisma

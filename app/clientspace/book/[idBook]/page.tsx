@@ -20,7 +20,6 @@ export default async function Page({ params }: { params: { idBook: string } }) {
 
 
   let dataPost : BookOrder | null = null;
-  let dataVehicle : Vehicle [] = [];
   let error = null;
 
   try {
@@ -40,19 +39,7 @@ export default async function Page({ params }: { params: { idBook: string } }) {
     }
 
     dataPost = response
-    if (dataPost){
-      if (dataPost.orderImages[0]){
-
-        dataPost.orderImages.forEach(element => {
-          if (element.image.vehicle[0]){
-            dataVehicle.push(element.image.vehicle[0])
-
-          }         
-
-        });
-      }
-    }
- 
+    
   
   } catch (err) {
     error = err.message;
