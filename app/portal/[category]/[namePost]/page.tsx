@@ -79,13 +79,13 @@ export default async function Page({ params }: {params: { category: string; name
     }
 
     dataPost = response;
-    if (dataPost && dataPost.images[0]) {
-      dataPost.images.forEach((element) => {
-        if (element.vehicle[0]) {
-          dataVehicle.push(element.vehicle[0]);
-        }
-      });
-    }
+    // if (dataPost && dataPost.images[0]) {
+    //   dataPost.images.forEach((element) => {
+    //     if (element.vehicle[0]) {
+    //       dataVehicle.push(element.vehicle[0]);
+    //     }
+    //   });
+    // }
   } catch (err) {
     error = err.message;
   }

@@ -25,9 +25,9 @@ console.log("🚀 ~ ImageGenerate ~ body:", body)
       published: false,
       pathURL: file.id.toString(), // Certifique-se de que pathURL é uma string
       authorId: '7279d284-f63b-4abc-ab6f-765e2284f9f3',
-      posts: [
-        post
-      ],
+      // posts: [
+      //   post
+      // ],
     };
 
     if (!imagePath) {      

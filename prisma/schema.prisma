@@ -45,8 +45,8 @@ model Image {
   dateCreate  DateTime   @default(now()) 
 
   // Relação muitos para muitos com Post
-  posts     Post[]   @relation("PostImages") 
-  vehicle   Vehicle[] @relation("VehicleImages")
+posts     Post[]   @relation("PostImages") 
+  vehicleIDs          String[]
   orderImages    OrderImage[]  
 }
 
@@ -63,7 +63,7 @@ model Video {
 
   // Relação muitos para muitos com Post
   posts     Post[]   @relation("PostVideos") 
-  vehicle   Vehicle[] @relation("VehicleVideos")
+  vehicleIDs          String[]
   
 }
 
@@ -102,60 +102,6 @@ model OrderImage {
   image       Image      @relation(fields: [imageId], references: [id])
 
   @@unique([bookOrderId, imageId])
-}
-
-model Vehicle {
-  id                String     @id @default(uuid())
-  plate             String?
-  serialNumber      String?
-  operatingCategory Float
-  images            Image[]   @relation("VehicleImages")
-  videos            Video[]   @relation("VehicleVideos")
-  bodywork          Bodywork? @relation(fields: [bodyworkID], references: [id])
-  bodyworkID        String?
-  powertrain        Powertrain? @relation(fields: [powertrainID], references: [id])
-  powertrainID      String?
-  operator          Operator? @relation(fields: [operatorID], references: [id])
-  operatorID        String?
-}
-model Bodywork {
-  id        String     @id @default(uuid())
-  nameModel       String
-  description      String?
-  serialNumber String?
-  year Float
-  vehicles Vehicle[]
-  manufacturer    Manufacturer?     @relation(fields: [manufacturerID], references: [id])
-  manufacturerID  String?
-}
-
-model Powertrain {
-   id        String     @id @default(uuid())
-  nameModel       String
-  description      String?
-  serialNumber String?
-  year Float
-  fuel Float
-  vehicles Vehicle[]
-  manufacturer    Manufacturer?     @relation(fields: [manufacturerID], references: [id])
-  manufacturerID  String?
-}
-
-model Manufacturer {
-  id        String     @id @default(uuid())
-  name      String
-  cnpj      String?
-  nationality String
-  bodyworks Bodywork[]
-  powertrain Powertrain []
-}
-
-model Operator {
-   id        String     @id @default(uuid())
-  name      String
-  cnpj      String?
-  nationality String
-  vehicle  Vehicle []
 }
 
 

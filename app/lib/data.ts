@@ -33,11 +33,11 @@ export async function fetchPostID(idPost : string){
         id: idPost,
       },
       include: {
-        images: {
-          include: {
-            vehicle: true,
-          },
-        },
+        // images: {
+        //   include: {
+        //     vehicle: true,
+        //   },
+        // },
       },
     });
 
@@ -55,11 +55,12 @@ export async function fetchPostName(namePost : string){
         namePost: namePost,
       },
       include: {
-        images: {
-          include: {
-            vehicle: true,
-          },
-        },
+        images : true,
+        // images: {
+        //   include: {
+        //     vehicle: true,
+        //   },
+        // },
         videos : true
       },
     });
@@ -78,11 +79,11 @@ export async function fetchPostCategory(idCategory : number){
         category: idCategory,
       },
       include: {
-        images: {
-          include: {
-            vehicle: true,
-          },
-        },
+        // images: {
+        //   include: {
+        //     vehicle: true,
+        //   },
+        // },
       },
     });
 
@@ -106,11 +107,11 @@ export async function fetchPostTitle(titlePost : string){
       },
       take: 5, // Limita o número de resultados
       include: {
-        images: {
-          include: {
-            vehicle: true,
-          },
-        },
+        // images: {
+        //   include: {
+        //     vehicle: true,
+        //   },
+        // },
       },
     });
 
@@ -158,13 +159,13 @@ export async function fetchIdImage(idImage : string){
         id: idImage,
       },
       include: {       
-        vehicle: {
-          include: {
-            bodywork: {include: {manufacturer: true}},
-            powertrain: {include: {manufacturer: true}},
-            operator : true
-          },
-        },
+        // vehicle: {
+        //   include: {
+        //     bodywork: {include: {manufacturer: true}},
+        //     powertrain: {include: {manufacturer: true}},
+        //     operator : true
+        //   },
+        // },
       },
     });
 
@@ -212,11 +213,11 @@ export async function fetchBookId(idPost : string){
         requestingUser : true, 
         orderImages : {
           include : {
-            image: {
-              include: {
-                vehicle: true,
-              },
-            },
+            // image: {
+            //   include: {
+            //     vehicle: true,
+            //   },
+            // },
           }
         }
         
@@ -240,11 +241,11 @@ export async function fetchBookUserId(idUser : string){
         requestingUser : true, 
         orderImages : {
           include : {
-            image: {
-              include: {
-                vehicle: true,
-              },
-            },
+            // image: {
+            //   include: {
+            //     vehicle: true,
+            //   },
+            // },
           }
         }
         
@@ -348,11 +349,11 @@ export async function createImage(orderImages : Image){
         data: {
           title : orderImages.title,
           pathURL : orderImages.pathURL,
-          posts: {
-            connect: orderImages.posts.map(post => ({
-              id: post.id, // ou qualquer outro campo único usado para identificar um Post
-            })),
-          },
+          // posts: {
+          //   connect: orderImages.posts.map(post => ({
+          //     id: post.id, // ou qualquer outro campo único usado para identificar um Post
+          //   })),
+          // },
         }
       });
     
@@ -369,11 +370,11 @@ export async function updateImage(orderImages : Image){
       const Post =  await prisma.image.update({
         where: { pathURL: orderImages.pathURL },
         data: {
-          posts: {
-            connect: orderImages.posts.map(post => ({
-              id: post.id, // ou qualquer outro campo único usado para identificar um Post
-            })),
-          },
+          // posts: {
+          //   connect: orderImages.posts.map(post => ({
+          //     id: post.id, // ou qualquer outro campo único usado para identificar um Post
+          //   })),
+          // },
         },
       });
     
