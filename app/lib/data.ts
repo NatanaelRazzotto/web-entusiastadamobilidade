@@ -370,11 +370,11 @@ export async function updateImage(orderImages : Image){
       const Post =  await prisma.image.update({
         where: { pathURL: orderImages.pathURL },
         data: {
-          // posts: {
-          //   connect: orderImages.posts.map(post => ({
-          //     id: post.id, // ou qualquer outro campo único usado para identificar um Post
-          //   })),
-          // },
+          posts: {
+            connect: orderImages.posts.map(post => ({
+              id: post.id, // ou qualquer outro campo único usado para identificar um Post
+            })),
+          },
         },
       });
     
@@ -389,8 +389,10 @@ export async function createImages(orderImages: Image[]) {
   try {
     const data = orderImages.map(image => ({
       title: image.title,
+      nameFile : image.nameFile,
       pathURL: image.pathURL,
       authorId: image.authorId,
+      vehicleIDs : image.vehicleIDs
     }));
 
     const createdImages = await prisma.image.createMany({

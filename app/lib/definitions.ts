@@ -116,13 +116,14 @@ export type Post = {
 export type Image = {
   id: string;
   title: string;
+  nameFile : string; 
   description?: string | null; // Deve coincidir com a definição no Prisma
   pathURL?: string | null; // Deve coincidir com a definição no Prisma
   published: boolean;
 
   authorId: string;
   dateCreate?: Date; // Deve coincidir com a definição no Prisma
-  postsIDs  ?:        string[]
+  posts  ?:        Post[]
   vehicleIDs ?:         string[]
   orderImages  ?:  OrderImage[]   
   
