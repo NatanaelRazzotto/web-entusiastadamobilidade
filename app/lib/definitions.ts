@@ -122,8 +122,8 @@ export type Image = {
 
   authorId: string;
   dateCreate?: Date; // Deve coincidir com a definição no Prisma
-  postsIDs  ?:        String[]
-  vehicleIDs ?:         String[]
+  postsIDs  ?:        string[]
+  vehicleIDs ?:         string[]
   orderImages  ?:  OrderImage[]   
   
 };
