@@ -5,7 +5,7 @@ import { createImages, createPost, deleteIdPath, fetchIdPath, fetchPostID, fetch
 import { getToken } from 'next-auth/jwt';
 
 function generatedMetaTitle (vehicle : any , existingUser: any){
-  return vehicle.operator.name + " "+vehicle.serialNumber + " Onibus - Autoria de " + existingUser.name + " - Entusiasta da Mobilidade"
+  return vehicle.serialNumber +' | '+ vehicle.operator.name + " | "+ " - Autoria de " + existingUser.name + " | Entusiasta da Mobilidade"
 }
 
 async function ImageGenerate(body : any,existingUser: any){

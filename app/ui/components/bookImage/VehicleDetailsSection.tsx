@@ -1,11 +1,11 @@
 'use client'
-import { Image, Vehicle } from "@/app/lib/definitions";
+import { Image, OperationalVehicle } from "@/app/lib/definitions";
 
 import { useEffect, useState } from "react";
 
 export default function VehicleDetailsSection({ dataPost }: {dataPost: Image | null }) {
   
-    const [dataVehicle, setDataVehicle] = useState<Vehicle | null>(null);
+    const [dataVehicle, setDataVehicle] = useState<OperationalVehicle | null>(null);
   
     useEffect(() => {
       if (dataPost && dataPost.vehicleIDs.length > 0) {
@@ -14,7 +14,7 @@ export default function VehicleDetailsSection({ dataPost }: {dataPost: Image | n
           // setIsLoading(true);
           console.log("🚀 ~ fetchFolders ~ process.env.SERVER_URL:", process.env.NEXT_PUBLIC_SERVER_URL)
           try {
-            const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+`/vehicles/${dataPost.vehicleIDs[0]}`); // Adiciona o parâmetro na rota
+            const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+`/operational-vehicle/${dataPost.vehicleIDs[0]}`); // Adiciona o parâmetro na rota
             const data = await response.json();          
             console.log("🚀 ~ fetchFolders ~ data:", data)
             setDataVehicle(data); // Atualiza as pastas baseadas na categoria
@@ -47,15 +47,15 @@ export default function VehicleDetailsSection({ dataPost }: {dataPost: Image | n
   }
 
   
-function VehicleInfo({ dataVehicle }: { dataVehicle: Vehicle | null }) {
+function VehicleInfo({ dataVehicle }: { dataVehicle: OperationalVehicle | null }) {
   return (
     <>
       <InfoCard title="Prefixo do Veículo" value={dataVehicle?.serialNumber || "Sem Prefixo"} />
       <InfoCard title="Placa do Veículo" value={dataVehicle?.plate || "SEM PLACA"} />
-      <InfoCard title="Fabricante da Carroceria" value={dataVehicle?.bodywork?.manufacturer?.name || "Sem Info"} />
-      <InfoCard title="Modelo de Carroceria" value={dataVehicle?.bodywork?.nameModel || "Sem Info"} />
-      <InfoCard title="Fabricante do Chassi" value={dataVehicle?.powertrain?.manufacturer?.name || "Sem Info"} />
-      <InfoCard title="Modelo do Chassi" value={dataVehicle?.powertrain?.nameModel || "Sem Info"} />
+      <InfoCard title="Fabricante da Carroceria" value={dataVehicle?.registeredVehicle?.bodywork?.manufacturer?.name || "Sem Info"} />
+      <InfoCard title="Modelo de Carroceria" value={dataVehicle?.registeredVehicle?.bodywork?.nameModel || "Sem Info"} />
+      <InfoCard title="Fabricante do Chassi" value={dataVehicle?.registeredVehicle?.powertrain?.manufacturer?.name || "Sem Info"} />
+      <InfoCard title="Modelo do Chassi" value={dataVehicle?.registeredVehicle?.powertrain?.nameModel || "Sem Info"} />
       <InfoCard title="Operador do Veículo" value={dataVehicle?.operator?.name || "Sem Operador"} />
     </>
   );

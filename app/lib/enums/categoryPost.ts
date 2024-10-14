@@ -1,3 +1,5 @@
+import { User } from "../definitions";
+
 // Definindo o enum para as categorias
 export enum CategoryPost {
     TransportePublico = 1,
@@ -27,6 +29,16 @@ export const getCategoryUrlNumber = (category: CategoryPost): string => {
     default:
         return "post";
     }
+  }
+
+  export const getUrlPicture = (user: User): string => {
+
+    if (user && user.name){
+      return user.name
+    }
+
+    return "WTBUS";
+  
   }
     
   // Função para converter uma URL em uma categoria usando o enum

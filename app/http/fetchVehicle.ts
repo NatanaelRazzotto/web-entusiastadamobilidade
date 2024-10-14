@@ -1,6 +1,6 @@
-import { Vehicle } from "../lib/definitions";
+import { OperationalVehicle } from "../lib/definitions";
 
-export default function fetchVehicleData(vehicleIDs: string): Promise<Vehicle | null> {
+export default function fetchVehicleData(vehicleIDs: string): Promise<OperationalVehicle | null> {
     return fetch(process.env.NEXT_PUBLIC_SERVER_URL + `/vehicles/${vehicleIDs[0]}`)
       .then((response) => response.json())
       .catch((error) => {

@@ -1,11 +1,11 @@
 
 import { useEffect, useState } from "react";
-import { Image, Post, Vehicle } from "../../../lib/definitions";
+import { Image } from "../../../../lib/definitions";
 import { fetchIdImage, fetchPostName } from "@/app/lib/data";
 import { Metadata } from "next";
 import Link from "next/link";
 import { getWatermarkedImageUrl } from "@/app/lib/utils";
-import { getCategoryUrlNumber } from "@/app/lib/enums/categoryPost";
+import { getCategoryUrlNumber, getUrlPicture } from "@/app/lib/enums/categoryPost";
 import VehicleDetailsSection from "@/app/ui/components/bookImage/VehicleDetailsSection";
 
 interface PageProps {
@@ -15,9 +15,9 @@ interface PageProps {
 export async function generateMetadata({ params }: {params: { idImage: string}}): Promise<Metadata> {
   const { idImage } = params;
 
-  const dataPost: Image | null = await fetchIdImage(idImage)  
+  const dataImage: Image | null = await fetchIdImage(idImage)  
 
-  if (!dataPost) {
+  if (!dataImage) {
     return {
       title: "Entusiasta da Mobilidade",
       description: "O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte",
@@ -38,26 +38,26 @@ export async function generateMetadata({ params }: {params: { idImage: string}})
     };
   }
 
-  // return {
-  //   title: dataPost.title,
-  //   description: dataPost.description || "O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte",
-  //   keywords: "notícias, fotografias, transporte, modais, mobilidade",
-  //   openGraph: {
-  //     siteName: "Entusiasta da Mobilidade",
-  //     title: dataPost.title,
-  //     type: "article",
-  //     locale: "pt_BR",
-  //     url: `${process.env.SITE_URL}/portal/${getCategoryUrlNumber(dataPost.category)}/${namePost}`,
-  //     images: [
-  //       {
-  //         url: getWatermarkedImageUrl(dataPost.coverURL),
-  //         width: 800,
-  //         height: 600,
-  //         alt: dataPost.title,
-  //       },
-  //     ],
-  //   },
-  // };
+  return {
+    title: dataImage.title,
+    description: dataImage.title || "O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte",
+    keywords: "notícias, fotografias, transporte, modais, mobilidade",
+    openGraph: {
+      siteName: "Entusiasta da Mobilidade",
+      title: dataImage.title,
+      type: "website",
+      locale: "pt_BR",
+      url: `${process.env.SITE_URL}/portal/album/${getUrlPicture(dataImage.author)}/${dataImage.id}`,
+      images: [
+        {
+          url: getWatermarkedImageUrl(dataImage.pathURL),
+          width: 800,
+          height: 600,
+          alt: dataImage.title,
+        },
+      ],
+    },
+  };
 }
 
 export default async function Page({ params }: {params: { idImage: string}}) {

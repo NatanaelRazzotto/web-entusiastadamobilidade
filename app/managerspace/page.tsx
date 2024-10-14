@@ -296,30 +296,34 @@ export default function Page() {
               </Select.Icon>
             </Select.Trigger>
 
+            {folders && folders.length > 0 ? 
             <Select.Content className="bg-white border border-gray-300 rounded-md shadow-lg">
-              <Select.ScrollUpButton className="flex justify-center py-2">
-                <ChevronUpIcon />
-              </Select.ScrollUpButton>
+            <Select.ScrollUpButton className="flex justify-center py-2">
+              <ChevronUpIcon />
+            </Select.ScrollUpButton>
 
-              <Select.Viewport className="p-2">
-                {folders.map((folder) => (
-                  <Select.Item
-                    key={folder.id}
-                    value={folder.id} // ID da pasta
-                    className="flex items-center text-black justify-between p-2 hover:bg-gray-100 rounded-md cursor-pointer"
-                  >
-                    <Select.ItemText    className="text-black" >{folder.name}</Select.ItemText> {/* Nome da pasta */}
-                    <Select.ItemIndicator>
-                      <CheckIcon className="w-5 h-5 text-green-500" />
-                    </Select.ItemIndicator>
-                  </Select.Item>
-                ))}
-              </Select.Viewport>
+            <Select.Viewport className="p-2">
+              {folders.map((folder) => (
+                <Select.Item
+                  key={folder.id}
+                  value={folder.id} // ID da pasta
+                  className="flex items-center text-black justify-between p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+                >
+                  <Select.ItemText    className="text-black" >{folder.name}</Select.ItemText> {/* Nome da pasta */}
+                  <Select.ItemIndicator>
+                    <CheckIcon className="w-5 h-5 text-green-500" />
+                  </Select.ItemIndicator>
+                </Select.Item>
+              ))}
+            </Select.Viewport>
 
-              <Select.ScrollDownButton className="flex justify-center py-2">
-                <ChevronDownIcon />
-              </Select.ScrollDownButton>
-            </Select.Content>
+            <Select.ScrollDownButton className="flex justify-center py-2">
+              <ChevronDownIcon />
+            </Select.ScrollDownButton>
+          </Select.Content>
+            : ""}
+
+            
           </Select.Root>
           {errors.category && <span className="text-sm text-red-600 mt-1">This field is required</span>}
         </div>
