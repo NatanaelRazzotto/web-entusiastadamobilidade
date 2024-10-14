@@ -1,7 +1,7 @@
 'use client'; // Certifique-se de que este é um Client Component
 
 import React, { useEffect, useState } from "react";
-import { Image, OrderImage, Post, Vehicle } from '../../lib/definitions';
+import { Image, OrderImage,  } from '../../lib/definitions';
 import Link from "next/link";
 import { saveSelection } from './serverActions';
 import { alterOrderImageId } from "@/app/lib/data";

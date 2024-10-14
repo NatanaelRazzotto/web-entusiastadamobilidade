@@ -7,7 +7,7 @@ import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
 
 async function listFolders(authClient: OAuth2Client): Promise<any> {
-  const folderId = '11_tnSU5GUKnfXHPgh7akZPT33wPnnQYX'; // ID da pasta
+  const folderId = '1t2MYzYPNFbsyHNm1jLwIBAGhFCktmLaD'; // ID da pasta
   const drive = google.drive({ version: 'v3', auth: authClient });
 
   const res = await drive.files.list({

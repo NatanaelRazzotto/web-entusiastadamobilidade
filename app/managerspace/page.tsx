@@ -13,12 +13,21 @@ import { ChevronDownIcon } from "@radix-ui/themes";
 export default function Page() {
   const [images, setImages] = useState([]);
   const [folders, setFolders] = useState([]);
+  const [vehicles, setVehicles] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPost, setSelectedPost] = useState(null);
+  
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
+
+
+  const [searchTermVehicle, setSearchTermVehicle] = useState("");
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
+  const [openVehicle, setOpenVehicle] = useState(false);
+  const [isLoadingVehicle, setIsLoadingVehicle] = useState(false);
+  const [searchResultsVehicle, setSearchResultsVehicle] = useState([]);
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
@@ -27,6 +36,7 @@ export default function Page() {
       .then((response) => response.json())
       .then((data) => setFolders(data));
   }, []);
+  
  
   useEffect(() => {
     if (selectedCategory) {
@@ -72,10 +82,38 @@ export default function Page() {
     }
   };
 
+  const handleSearchVehicles = async () => {
+    if (searchTermVehicle.trim() === '') {
+      setOpenVehicle(true);
+      return;
+    } else {
+      setOpenVehicle(false);
+    }
+
+    setIsLoadingVehicle(true);
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL +`/operational-vehicle/serial-number/${searchTermVehicle}`);
+      const data = await response.json();
+      setSearchResultsVehicle(data);
+      setOpenVehicle(data.length > 0);
+    } catch (error) {
+      console.error('Error searching:', error);
+    } finally {
+      setIsLoadingVehicle(false);
+    }
+  };
+
   const handleSelectPost = (post) => {
     setSelectedPost(post);
     setValue("post", post.id);
     setOpen(false);
+  };
+
+  const handleSelectVehicle = (post) => {
+    console.log("🚀 ~ handleSelectVehicle ~ post:", post)
+    setSelectedVehicle(post);
+    setValue("Vehicle", post.id);
+    setOpenVehicle(false);
   };
 
   async function handleCreateGoal(data) {
@@ -184,6 +222,70 @@ export default function Page() {
           </span>
         )}
 
+        <h2>Selecione o Veiculo:</h2>
+        <div className="relative flex flex-col items-center p-4 text-white bg-black">
+          <div className="flex items-center w-full">
+            <input
+              className="w-10/12 bg-gray-900 rounded-md p-2 text-white focus:outline-none focus:ring focus:ring-blue-500"
+              placeholder="Procurar por um prefixo."
+              value={searchTermVehicle}
+              onChange={(e) => setSearchTermVehicle(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSearchVehicles();
+              }}
+            />
+            <button
+              className="w-2/12 ml-2 rounded-md border border-white p-2 hover:bg-gray-800 flex items-center justify-center"
+              onClick={handleSearchVehicles}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <FiLoader className="animate-spin text-white" size={24} />
+              ) : (
+                <FiSearch size={24} />
+              )}
+            </button>
+          </div>
+
+          <Popover.Root open={openVehicle} onOpenChange={setOpenVehicle}>
+            <Popover.Anchor className="w-full mt-2" />
+            <Popover.Content
+              align="start"
+              sideOffset={5}
+              className="w-10/12 bg-white text-black rounded-md shadow-lg z-10 max-h-60 overflow-y-auto"
+            >
+              {searchResultsVehicle.length > 0 ? (
+                searchResultsVehicle.map((result) => (
+                  <div
+                    key={result.id}
+                    className="block p-2 hover:bg-gray-200 cursor-pointer"
+                    onClick={() => handleSelectVehicle(result)}
+                  >
+                 {result.serialNumber}
+                  </div>
+                ))
+              ) : (
+                <div className="p-2 text-red-500">Nenhum resultado encontrado.</div>
+              )}
+            </Popover.Content>
+          </Popover.Root>
+
+          <div
+            className={`absolute top-full left-0 mt-2 p-2 bg-red-500 text-white rounded-md z-10 ${
+              searchTermVehicle.trim() === "" && openVehicle ? "block" : "hidden"
+            }`}
+          >
+            Por favor, insira um termo de busca válido.
+          </div>
+        </div>
+
+        {selectedVehicle && <p>Veículo Selecionado: {selectedVehicle.serialNumber}</p>}
+        {errors.post && (
+          <span className="text-sm text-red-600 mt-1">
+            Este campo é obrigatório
+          </span>
+        )}
+
         <h2>Selecione o Path Drive:</h2>
         <div className="flex flex-col">
           <Select.Root onValueChange={handleSelectChangeCategory}>
@@ -194,33 +296,38 @@ export default function Page() {
               </Select.Icon>
             </Select.Trigger>
 
+            {folders && folders.length > 0 ? 
             <Select.Content className="bg-white border border-gray-300 rounded-md shadow-lg">
-              <Select.ScrollUpButton className="flex justify-center py-2">
-                <ChevronUpIcon />
-              </Select.ScrollUpButton>
+            <Select.ScrollUpButton className="flex justify-center py-2">
+              <ChevronUpIcon />
+            </Select.ScrollUpButton>
 
-              <Select.Viewport className="p-2">
-                {folders.map((folder) => (
-                  <Select.Item
-                    key={folder.id}
-                    value={folder.id} // ID da pasta
-                    className="flex items-center text-black justify-between p-2 hover:bg-gray-100 rounded-md cursor-pointer"
-                  >
-                    <Select.ItemText    className="text-black" >{folder.name}</Select.ItemText> {/* Nome da pasta */}
-                    <Select.ItemIndicator>
-                      <CheckIcon className="w-5 h-5 text-green-500" />
-                    </Select.ItemIndicator>
-                  </Select.Item>
-                ))}
-              </Select.Viewport>
+            <Select.Viewport className="p-2">
+              {folders.map((folder) => (
+                <Select.Item
+                  key={folder.id}
+                  value={folder.id} // ID da pasta
+                  className="flex items-center text-black justify-between p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+                >
+                  <Select.ItemText    className="text-black" >{folder.name}</Select.ItemText> {/* Nome da pasta */}
+                  <Select.ItemIndicator>
+                    <CheckIcon className="w-5 h-5 text-green-500" />
+                  </Select.ItemIndicator>
+                </Select.Item>
+              ))}
+            </Select.Viewport>
 
-              <Select.ScrollDownButton className="flex justify-center py-2">
-                <ChevronDownIcon />
-              </Select.ScrollDownButton>
-            </Select.Content>
+            <Select.ScrollDownButton className="flex justify-center py-2">
+              <ChevronDownIcon />
+            </Select.ScrollDownButton>
+          </Select.Content>
+            : ""}
+
+            
           </Select.Root>
           {errors.category && <span className="text-sm text-red-600 mt-1">This field is required</span>}
         </div>
+        
 
         <h2>Selecione as imagens:</h2>
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 mt-8">

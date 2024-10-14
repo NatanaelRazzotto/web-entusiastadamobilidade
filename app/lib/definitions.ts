@@ -91,7 +91,22 @@ export type InvoiceForm = {
 
 ///
 
-export type User = PrismaUser;
+export type User = {
+  id?: string;
+  name?: string;
+  verificationCode?: string;
+  password?: string;
+  phone?: string;
+  email?: string;
+  emailVerified ?: Date;
+  image?: string;
+  imagens ?:  Image[]
+  videos ?: Video[]
+  posts  ?:       Post[]
+  bookOrders  ?: BookOrder[]
+  UserRole ?:  number 
+};
+
 
 export type Post = {
   id: string;
@@ -116,14 +131,15 @@ export type Post = {
 export type Image = {
   id: string;
   title: string;
+  nameFile : string; 
   description?: string | null; // Deve coincidir com a definição no Prisma
   pathURL?: string | null; // Deve coincidir com a definição no Prisma
   published: boolean;
-
+  author   ?: User;
   authorId: string;
   dateCreate?: Date; // Deve coincidir com a definição no Prisma
-  postsIDs  ?:        String[]
-  vehicleIDs ?:         String[]
+  posts  ?:        Post[]
+  vehicleIDs ?:         string[]
   orderImages  ?:  OrderImage[]   
   
 };
@@ -142,18 +158,27 @@ export type Video = {
   
 };
 
-export type Vehicle = {
+export type OperationalVehicle = {
   id: string;
   plate?: string | null; // Deve coincidir com a definição no Prisma
   serialNumber?: string | null; // Deve coincidir com a definição no Prisma
   operatingCategory: number;
   imageIDs?: string[]; // Tornar images opcional, se for o caso
+  operator?: Operator; // Deve coincidir com a definição no Prisma
+  operatorID: string;
+  registeredVehicle?: RegisteredVehicle;
+  registeredVehicleID : string;
+};
+
+export type RegisteredVehicle = {
+  id: string;
+  plate?: string | null; // Deve coincidir com a definição no Prisma
   bodywork?: Bodywork | null; // Deve coincidir com a definição no Prisma
   bodyworkID: string;
   powertrain?: Powertrain | null; // Deve coincidir com a definição no Prisma
   powertrainID: string;
-  operator?: Operator; // Deve coincidir com a definição no Prisma
-  operatorID: string;
+  operationalVehicles?: OperationalVehicle[];
+
 };
 
 export type BookOrder = {
@@ -200,7 +225,7 @@ export type Bodywork = {
   description?: string | null;
   serialNumber?: string | null;
   year: number;
-  vehicles?: Vehicle[];
+  registeredVehicles?: RegisteredVehicle[];
   manufacturer?: Manufacturer | null;
   manufacturerID?: string | null;
 };
@@ -214,7 +239,7 @@ export type Powertrain = {
   serialNumber?: string | null;
   year: number;
   fuel: number;
-  vehicles?: Vehicle[];
+  registeredVehicles?: RegisteredVehicle[];
   manufacturer?: Manufacturer | null;
   manufacturerID?: string | null;
 };
@@ -234,7 +259,7 @@ export type Operator = {
   name: string;
   cnpj?: string | null;
   nationality?: string;
-  vehicles?: Vehicle[];
+  operationalVehicles?: OperationalVehicle[]
 };
 
 

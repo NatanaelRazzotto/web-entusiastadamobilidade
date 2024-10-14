@@ -55,12 +55,12 @@ export async function fetchPostName(namePost : string){
         namePost: namePost,
       },
       include: {
-        images : true,
-        // images: {
-        //   include: {
-        //     vehicle: true,
-        //   },
-        // },
+       
+        images: {
+          include: {
+            author: {   select: { name: true }}
+          },
+        },
         videos : true
       },
     });
@@ -154,19 +154,15 @@ export async function deleteIdPath(idurl : string){
 
 export async function fetchIdImage(idImage : string){
   try {
-    const image: Image | null = await prisma.image.findFirst({
+    const image: Image | null = await prisma.image.findFirst({    
       where: {
         id: idImage,
       },
       include: {       
-        // vehicle: {
-        //   include: {
-        //     bodywork: {include: {manufacturer: true}},
-        //     powertrain: {include: {manufacturer: true}},
-        //     operator : true
-        //   },
-        // },
-      },
+        author: {
+          select: { name: true },
+        },
+      },      
     });
 
     return image;
@@ -370,11 +366,11 @@ export async function updateImage(orderImages : Image){
       const Post =  await prisma.image.update({
         where: { pathURL: orderImages.pathURL },
         data: {
-          // posts: {
-          //   connect: orderImages.posts.map(post => ({
-          //     id: post.id, // ou qualquer outro campo único usado para identificar um Post
-          //   })),
-          // },
+          posts: {
+            connect: orderImages.posts.map(post => ({
+              id: post.id, // ou qualquer outro campo único usado para identificar um Post
+            })),
+          },
         },
       });
     
@@ -389,8 +385,10 @@ export async function createImages(orderImages: Image[]) {
   try {
     const data = orderImages.map(image => ({
       title: image.title,
+      nameFile : image.nameFile,
       pathURL: image.pathURL,
       authorId: image.authorId,
+      vehicleIDs : image.vehicleIDs
     }));
 
     const createdImages = await prisma.image.createMany({

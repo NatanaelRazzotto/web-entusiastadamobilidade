@@ -1,9 +1,16 @@
 // app/api/searchPosts/route.js
 import { NextRequest, NextResponse } from 'next/server';
 import { Image, Post } from "@/app/lib/definitions";
-import { createImages, createPost, fetchIdPath, fetchPostID, fetchPostTitle, getUser, updateImage } from '@/app/lib/data';
+import { createImages, createPost, deleteIdPath, fetchIdPath, fetchPostID, fetchPostTitle, getUser, updateImage } from '@/app/lib/data';
 import { getToken } from 'next-auth/jwt';
 
+function generatedMetaTitle (vehicle : any , existingUser: any){
+  return vehicle.serialNumber +' | '+ vehicle.operator.name + " | "+ " - Autoria de " + existingUser.name + " | Entusiasta da Mobilidade"
+}
+
+function generatedMetaTitleBasic (file : any , existingUser: any){
+  return ' Fotografia | ' + file.name + " | "+ " - Autoria de " + existingUser.name + " | Entusiasta da Mobilidade"
+}
 
 async function ImageGenerate(body : any,existingUser: any){
 console.log("🚀 ~ ImageGenerate ~ body:", body)
@@ -14,6 +21,14 @@ console.log("🚀 ~ ImageGenerate ~ body:", body)
   const imagesToCreate: Image[] = [];
  // const aToCreate: Image[] = [];
 
+ let data = null
+ if (body.Vehicle)
+ {
+    const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL +`/operational-vehicle/${body.Vehicle}`);
+    data = await response.json();
+ }
+ console.log("🚀 ~ ImageGenerate ~ data:", data)
+
   for (const file of body.images) {
     console.log(`${file.name} (${file.id})`);
 
@@ -21,13 +36,15 @@ console.log("🚀 ~ ImageGenerate ~ body:", body)
 
     let image: Image = {
       id: file.id,
-      title: file.name,
+      title: data ? generatedMetaTitle(data,existingUser) : generatedMetaTitleBasic(file,existingUser),
+      nameFile : file.name,
       published: false,
       pathURL: file.id.toString(), // Certifique-se de que pathURL é uma string
-      authorId: '7279d284-f63b-4abc-ab6f-765e2284f9f3',
-      // posts: [
-      //   post
-      // ],
+      authorId: existingUser.id,
+      vehicleIDs : data ? [data.id.toString()] : [],
+      posts: [
+        post
+      ],
     };
 
     if (!imagePath) {      
@@ -35,11 +52,11 @@ console.log("🚀 ~ ImageGenerate ~ body:", body)
       imagesToCreate.push(image);
        // Atualize cada imagem com os posts    
     } else {
-    //  await deleteIdPath(imagePath.id);
-    //  console.log("🚀 ja existe");
+   //  await deleteIdPath(imagePath.id);
+     console.log("🚀 ja existe");
       //aToCreate.push(image);
-      console.log("🚀 ~ ImageGenerate ~ updateImage:")
-      await updateImage(image);
+      // // console.log("🚀 ~ ImageGenerate ~ updateImage:")
+       await updateImage(image);
     }
       
   }

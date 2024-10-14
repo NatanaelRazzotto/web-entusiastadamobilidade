@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
 import { fetchPostName } from '@/app/lib/data';
-import { Post, Vehicle, Image } from '../../../lib/definitions';
+import { Post, OperationalVehicle, Image } from '../../../lib/definitions';
 import { getWatermarkedImageUrl, getCategoyrUrl} from '../../../lib/utils'
 import Link from 'next/link';
 import React from 'react';
 import SliderCover from '@/app/ui/portal/slider';
-import { getCategoryUrlNumber } from '@/app/lib/enums/categoryPost';
+import { getCategoryUrlNumber, getUrlPicture } from '@/app/lib/enums/categoryPost';
 
 
 export async function generateMetadata({ params }: { params: { category: string; namePost: string } }): Promise<Metadata> {
@@ -68,7 +68,7 @@ export default async function Page({ params }: {params: { category: string; name
   const { category, namePost } = params;
 
   let dataPost: Post | null = null;
-  let dataVehicle: Vehicle[] = [];
+  let dataVehicle: OperationalVehicle[] = [];
   let error = null;
 
   try {
@@ -213,7 +213,7 @@ export default async function Page({ params }: {params: { category: string; name
               dataPost.images.length === 0 ? <p>Sem Imagens</p> :
             
                 dataPost.images.map((image) => (
-                  <Link href={'../pictures/' + image.id} key={image.id}>
+                  <Link href={`../album/${getUrlPicture(image.author)}/${image.id}`} key={image.id}>
                     <div className="col-span-1">
                       <img
                         src={`https://drive.google.com/thumbnail?id=${image.pathURL}&sz=w1000`}

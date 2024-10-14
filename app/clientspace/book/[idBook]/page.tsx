@@ -1,6 +1,6 @@
 "use server"
 import { useEffect, useState } from 'react';
-import { BookOrder, Image, Post, Vehicle } from '../../../lib/definitions';
+import { BookOrder, Image, Post} from '../../../lib/definitions';
 
 import { fetchBookId, fetchPostName } from '@/app/lib/data';
 import { GetServerSideProps, Metadata } from 'next';
