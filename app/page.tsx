@@ -40,10 +40,10 @@ export async function generateMetadata( {params: {lang}} ):Promise<Metadata> {
       title : 'Entusiasta da Mobilidade',
       type: 'website',
       locale: 'pt_BR',
-      url: process.env.SITE_URL,     
+      url: process.env.NEXT_PUBLIC_SITE_URL,     
       images: [
         {
-          url: process.env.SITE_URL +'/CARTAO.png',
+          url: process.env.NEXT_PUBLIC_SITE_URL +'/CARTAO.png',
           width: 800,
           height: 600,
           alt: 'Imagem de capa',
