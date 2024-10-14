@@ -20,10 +20,10 @@ export async function generateMetadata({ params }: { params: { category: string;
       openGraph : {
         type: 'website',
         locale: 'pt_BR',
-        url: process.env.SITE_URL,     
+        url: process.env.NEXT_PUBLIC_SITE_URL,     
         images: [
           {
-            url: process.env.SITE_URL +'/CARTAO.png',
+            url: process.env.NEXT_PUBLIC_SITE_URL +'/CARTAO.png',
             width: 800,
             height: 600,
             alt: 'Imagem de capa',
@@ -40,10 +40,10 @@ export async function generateMetadata({ params }: { params: { category: string;
     openGraph: {
       type: 'article',
       locale: 'pt_BR',
-      url: process.env.SITE_URL+ `/${category}`,
+      url: process.env.NEXT_PUBLIC_SITE_URL+ `/${category}`,
       images: [
         {
-          url: process.env.SITE_URL+'/CARTAO.png',
+          url: process.env.NEXT_PUBLIC_SITE_URL+'/CARTAO.png',
           width: 800,
           height: 600,
           alt: category,

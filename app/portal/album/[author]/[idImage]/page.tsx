@@ -25,10 +25,10 @@ export async function generateMetadata({ params }: {params: { idImage: string}})
       openGraph: {
         type: "website",
         locale: "pt_BR",
-        url: process.env.SITE_URL,
+        url: process.env.NEXT_PUBLIC_SITE_URL,
         images: [
           {
-            url: process.env.SITE_URL + "CARTAO.png",
+            url: process.env.NEXT_PUBLIC_SITE_URL + "CARTAO.png",
             width: 800,
             height: 600,
             alt: "Imagem de capa",
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: {params: { idImage: string}})
       title: dataImage.title,
       type: "website",
       locale: "pt_BR",
-      url: `${process.env.SITE_URL}/portal/album/${getUrlPicture(dataImage.author)}/${dataImage.id}`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/portal/album/${getUrlPicture(dataImage.author)}/${dataImage.id}`,
       images: [
         {
           url: getWatermarkedImageUrl(dataImage.pathURL),
