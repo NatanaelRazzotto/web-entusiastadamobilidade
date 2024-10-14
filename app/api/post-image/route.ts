@@ -8,6 +8,10 @@ function generatedMetaTitle (vehicle : any , existingUser: any){
   return vehicle.serialNumber +' | '+ vehicle.operator.name + " | "+ " - Autoria de " + existingUser.name + " | Entusiasta da Mobilidade"
 }
 
+function generatedMetaTitleBasic (file : any , existingUser: any){
+  return ' Fotografia | ' + file.name + " | "+ " - Autoria de " + existingUser.name + " | Entusiasta da Mobilidade"
+}
+
 async function ImageGenerate(body : any,existingUser: any){
 console.log("🚀 ~ ImageGenerate ~ body:", body)
 
@@ -17,8 +21,12 @@ console.log("🚀 ~ ImageGenerate ~ body:", body)
   const imagesToCreate: Image[] = [];
  // const aToCreate: Image[] = [];
 
- const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL +`/operational-vehicle/${body.Vehicle}`);
- const data = await response.json();
+ let data = null
+ if (body.Vehicle)
+ {
+    const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL +`/operational-vehicle/${body.Vehicle}`);
+    data = await response.json();
+ }
  console.log("🚀 ~ ImageGenerate ~ data:", data)
 
   for (const file of body.images) {
@@ -28,12 +36,12 @@ console.log("🚀 ~ ImageGenerate ~ body:", body)
 
     let image: Image = {
       id: file.id,
-      title: generatedMetaTitle(data,existingUser),
+      title: data ? generatedMetaTitle(data,existingUser) : generatedMetaTitleBasic(file,existingUser),
       nameFile : file.name,
       published: false,
       pathURL: file.id.toString(), // Certifique-se de que pathURL é uma string
       authorId: existingUser.id,
-      vehicleIDs : [data.id.toString()],
+      vehicleIDs : data ? [data.id.toString()] : [],
       posts: [
         post
       ],
