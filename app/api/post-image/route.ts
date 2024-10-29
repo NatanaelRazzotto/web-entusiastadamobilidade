@@ -33,6 +33,7 @@ console.log("🚀 ~ ImageGenerate ~ body:", body)
     console.log(`${file.name} (${file.id})`);
 
     let imagePath = await fetchIdPath(file.id);
+    console.log("🚀 ~ ImageGenerate ~ imagePath:", imagePath)
 
     let image: Image = {
       id: file.id,
@@ -53,9 +54,13 @@ console.log("🚀 ~ ImageGenerate ~ body:", body)
        // Atualize cada imagem com os posts    
     } else {
    //  await deleteIdPath(imagePath.id);
-     console.log("🚀 ja existe");
-      //aToCreate.push(image);
-      // // console.log("🚀 ~ ImageGenerate ~ updateImage:")
+      console.log("🚀 ja existe");
+      if ( imagePath.posts.length > 0 ){
+        imagePath.posts.forEach((element)=>{
+          image.posts.push(element)
+        })      
+      }
+     
        await updateImage(image);
     }
       

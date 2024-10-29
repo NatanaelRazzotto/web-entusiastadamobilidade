@@ -127,7 +127,10 @@ export async function fetchIdPath(idurl : string){
     const image: Image | null = await prisma.image.findFirst({
       where: {
         pathURL: idurl,
-      },      
+      },     
+      include : {
+        posts : true
+      } 
     });
 
     return image;
