@@ -22,7 +22,7 @@ export default function NavLinksManager({session}) {
     { name: 'Aquisiçao de Fotos', href: '/clientspace/order/'+session.user.id, icon: ShoppingBagIcon },
     {
       name: 'Espaco do Gestor',
-      href: '/managerspace/drafts',
+      href: '/managerspace',
       icon: BriefcaseIcon,
     },
   ];

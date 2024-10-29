@@ -51,7 +51,7 @@ function VehicleInfo({ dataVehicle }: { dataVehicle: OperationalVehicle | null }
   return (
     <>
       <InfoCard title="Prefixo do Veículo" value={dataVehicle?.serialNumber || "Sem Prefixo"} />
-      <InfoCard title="Placa do Veículo" value={dataVehicle?.plate || "SEM PLACA"} />
+      <InfoCard title="Registro do Veículo" value={dataVehicle?.registeredVehicle?.plate || "SEM PLACA"} />
       <InfoCard title="Fabricante da Carroceria" value={dataVehicle?.registeredVehicle?.bodywork?.manufacturer?.name || "Sem Info"} />
       <InfoCard title="Modelo de Carroceria" value={dataVehicle?.registeredVehicle?.bodywork?.nameModel || "Sem Info"} />
       <InfoCard title="Fabricante do Chassi" value={dataVehicle?.registeredVehicle?.powertrain?.manufacturer?.name || "Sem Info"} />
