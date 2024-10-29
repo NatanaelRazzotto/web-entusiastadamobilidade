@@ -26,14 +26,15 @@ import ListNotices from './ui/portal/listNotices';
 import { CategoryPost } from './lib/enums/categoryPost';
 import ListVideos from './ui/portal/listVideos';
 
-
-
 export async function generateMetadata( {params: {lang}} ):Promise<Metadata> {
 
   return {
     
     title: 'Entusiasta da Mobilidade',
     description: 'O Portal de Noticias e Fotografias que é Entusiasta dos Modais de Transporte',
+    verification : {
+      google : 'gMxVZxkZmbc65mL4VwyUyvt5Be3AtNfRWYzcUt2LZrU'
+    },
     keywords: 'notícias, fotografias, transporte, modais, mobilidade',
     openGraph : {
       siteName : 'Entusiasta da Mobilidade',

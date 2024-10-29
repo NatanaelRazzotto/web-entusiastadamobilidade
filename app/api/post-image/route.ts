@@ -9,7 +9,7 @@ function generatedMetaTitle (vehicle : any , existingUser: any){
 }
 
 function generatedMetaTitleBasic (file : any , existingUser: any){
-  return ' Fotografia | ' + file.name + " | "+ " - Autoria de " + existingUser.name + " | Entusiasta da Mobilidade"
+  return ' Fotografia | ' + file.name + " | "+ " Autoria de " + existingUser.name + " | Entusiasta da Mobilidade"
 }
 
 async function ImageGenerate(body : any,existingUser: any){
