@@ -11,6 +11,7 @@ import { usePathname } from 'next/navigation';
 import { serverSignOut } from '../imageViewer/serverActions';
 import NavLinksManager from './nav-links-portal-manager';
 import ThemeSwitcher from '../themeSwitcher ';
+import SiteLogo from '../site-logo';
 
 
 export default function SideNav() {
@@ -18,6 +19,8 @@ export default function SideNav() {
   const pathname = usePathname();
   const router = useRouter();
   const [forceUpdate, setForceUpdate] = useState(0);
+
+  const [rotate, setRotate] = useState(true);
 
   // useEffect(() => {
   //   console.log("🚀************** ~ useEffect ~ status:", status)
@@ -49,20 +52,33 @@ export default function SideNav() {
     signOut({ callbackUrl: "/" }); // Redireciona para a página inicial após o logout
 
    // router.push('/login'); // Redireciona para a página de login
+  }; 
+
+  const handleRotate = () => {
+    setRotate((prev) => !prev); // Alterna entre rotacionar e não rotacionar
   };
 
   return (
+    <div className={`flex-none ${
+      rotate ? 'w-20 h-[100%]' : 'w-64 h-[100%]'
+    } `}>
     <div key={forceUpdate} className="flex h-full flex-col px-3 py-4 md:px-2 bg-secondarybg-dark text-text-dark">
-      <Link
-        className="mb-2 flex h-20 items-end justify-start rounded-md bg-black md:h-40"
-        href="/"
+      <div
+        className="mb-2 flex h-20 md:h-40 items-center justify-center rounded-md bg-black"
       >
-        <div style={{ height: "100%", width: "5%", backgroundColor: "brown", left: "0px" }}></div>
-        <div style={{ height: "100%", width: "5%", backgroundColor: "chocolate", right: "0px", left: "auto" }}></div>
-        <div className="w-4/5 pb-4 pl-4 ">
-          <AcmeLogo />
+        <div style={{ height: "100%", width: "5%", backgroundColor: "brown" }} />
+        <div style={{ height: "100%", width: "5%", backgroundColor: "chocolate" }} />
+        <div style={{ height: "100%", width:"90%" }} className="flex  flex-col justify-end">
+          <div
+            className={`relative h-20 w-20 md:h-40 md:w-40 transition-transform duration-500 ${
+              rotate ? '-rotate-90' : ''
+            } items-center justify-center`}
+          >
+            <SiteLogo definition={rotate}/>
+          </div>
         </div>
-      </Link>
+      </div>
+
       <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />
@@ -76,6 +92,12 @@ export default function SideNav() {
         <div className="hidden h-auto w-full grow rounded-md md:block"></div>
         <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
         <ThemeSwitcher/>
+        <button
+          onClick={handleRotate}
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+        >
+          R
+        </button>
         <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
         {!session && (
           <Link
@@ -94,7 +116,11 @@ export default function SideNav() {
             <div className="hidden md:block">Sign Out</div>
           </button>
         )}
-      </div>
+      </div> 
+        
+       
+   
+    </div>
     </div>
   );
 }
