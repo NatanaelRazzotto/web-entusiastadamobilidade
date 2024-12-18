@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import NavLinks from '@/app/ui/dashboard/nav-links-portal';
 import AcmeLogo from '@/app/ui/acme-logo';
-import { ArrowRightIcon, PowerIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon, PowerIcon, UserIcon , Bars3Icon} from '@heroicons/react/24/outline';
 import { useSession, signOut as nextAuthSignOut, getSession, signOut } from 'next-auth/react'; // Use signOut do next-auth
 import { useRouter } from 'next/navigation';
 import { clsx } from 'clsx';
@@ -81,11 +81,11 @@ export default function SideNav() {
 
       <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-        <NavLinks />
+        <NavLinks definition={rotate}/>
         <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
         {session && session.user.role == 4 ?
       
-            <NavLinksManager session={session}/>
+            <NavLinksManager session={session} definition={rotate}/>
         
           : ""
         }
@@ -93,10 +93,10 @@ export default function SideNav() {
         <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
         <ThemeSwitcher/>
         <button
-          onClick={handleRotate}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+          onClick={handleRotate}     
+          className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md text-orange-700 sp-3 text-sm font-medium hover:bg-primarybg-dark hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"     
         >
-          R
+            <Bars3Icon className="w-5 md:w-6 " />
         </button>
         <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
         {!session && (
@@ -104,7 +104,9 @@ export default function SideNav() {
             href="/login"
             className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md text-orange-700 p-3 text-sm font-medium hover:bg-primarybg-dark hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
           >
-            <ArrowRightIcon className="w-5 md:w-6 " />  <span>Log in Manager</span>
+            <UserIcon className="w-5 md:w-6 " />
+            {!rotate ? <span>Log in Manager</span> : ""}
+            
           </Link>
         )}
         {session && (
@@ -113,7 +115,8 @@ export default function SideNav() {
             className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md text-orange-700 sp-3 text-sm font-medium hover:bg-primarybg-dark hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
           >
             <PowerIcon className="w-6" />
-            <div className="hidden md:block">Sign Out</div>
+            {!rotate ?   <p className="hidden md:block">Sign Out</p> : ""}
+          
           </button>
         )}
       </div> 
