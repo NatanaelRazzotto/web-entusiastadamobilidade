@@ -25,6 +25,8 @@ import { getCategoyrUrl } from './lib/utils';
 import ListNotices from './ui/portal/listNotices';
 import { CategoryPost } from './lib/enums/categoryPost';
 import ListVideos from './ui/portal/listVideos';
+import clsx from 'clsx';
+import SideNavMobile from './ui/dashboard/sidenavMobile';
 
 export async function generateMetadata( {params: {lang}} ):Promise<Metadata> {
 
@@ -83,6 +85,37 @@ export default async function Page() {
   const secondPostTop : Post = posts.find((post) => post.topNews == 2)
   const thirdPostTop : Post = posts.find((post) => post.topNews == 3)
 
+  const SocialCard = ({ platform, link, imageSrc, title, description }: any) => {
+    const gradientBackground = clsx({
+      "bg-gradient-to-r from-blue-500 to-blue-700": platform === "facebook",
+      "bg-gradient-to-r from-red-400 from-red-700": platform === "youtube",
+      "bg-gradient-to-r from-purple-600 to-orange-500": platform === "instagram",
+      // Adicione mais gradientes conforme necessário
+    });
+  
+    return (
+      <div
+        className={`${gradientBackground} text-text-light dark:bg-secondarybg-dark dark:text-text-dark rounded-md shadow-md p-4`}
+      >
+        <Link href={link} legacyBehavior>
+          <a target="_blank" rel="noopener noreferrer">
+            <div className="flex items-center">
+              <img
+                src={imageSrc}
+                alt="Author Image"
+                className="rounded-full w-12 h-12 mr-4"
+              />
+              <div>
+                <h3 className="text-lg font-bold">{title}</h3>
+                <p className="text-text-dark text-sm">{description}</p>
+              </div>
+            </div>
+          </a>
+        </Link>
+      </div>
+    );
+  };
+
   
 
   // // Exemplo de uso:
@@ -94,8 +127,13 @@ export default async function Page() {
 
     <main>
        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-          <SideNav />
-        
+
+       <div className="block md:hidden">
+        <SideNavMobile />
+      </div>
+      <div className="hidden md:block">
+        <SideNav />
+      </div>
   
       <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
       <div className="container mx-auto px-4"> 
@@ -104,33 +142,23 @@ export default async function Page() {
 
 
       <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white bg-orange-700 ">
-        <p className="text-sm">
-          INFORMAÇÕES SOBRE O TRANSPORTE COLETIVO ---SITE EM CONSTRUÇÃO---
+        <p className="text-sm justify-center">
+          ✨🎄Ho Ho Ho! Um Feliz Natal e Um Próspero Ano Novo!🎄✨
         </p>
      
-      </div>  
+      </div>     
 
-   
-{/* 
-      <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white bg-orange-700 ">
-        <p className="text-sm">
-          Assistente Entusiasta (CURITIBA - PR) |  Confira em tempo real onde está o carro de testes XY049
-        </p>
-     
-      </div>   */}
-
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-black text-text-dark" >
         <div className="col-span-2">
         {/* News card 1 */}
 
         {posts.length === 0 && !postTop? ( <CardPost postCard={postDefault} cardTop={true}/>) : postTop != undefined? (<CardPost postCard={postTop} cardTop={true}/>) : (   <CardPost postCard={postDefault} cardTop={true}/>)
-    }
+      }
         
     
        
-      </div>
-        <div className="col-span-2 md:col-span-1 ">
+        </div>
+        <div className="col-span-2 md:col-span-1 pr-2 pt-2 ">
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
             {/* News card 2 */}
             <div>
@@ -150,86 +178,46 @@ export default async function Page() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Blog 1 */}
-        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark  rounded-md shadow-md p-4">
-          <Link href={"https://www.facebook.com/webtvbusologa"} legacyBehavior>
-          <a target="_blank" rel="noopener noreferrer">
-          <div className="flex items-center">
-            <img
-              src="/icon/facebook.png"
-              alt="Author Image"
-              className="rounded-full w-12 h-12 mr-4"
-            />
-            <div>
-              <h3 className="text-lg font-bold">WTBus- Entusiasta Da Mobilidade (Facebook)</h3>
-              <p className="text-gray-600 text-sm">
-                  Notícias e fotografia sobre o mundo dos transportes. Encontre tudo sobre mobilidade e inovações.
-              </p>
-            </div>
-          </div>
-          </a>
-          </Link>
-        </div>
+        <SocialCard
+        platform="facebook"
+        link="https://www.facebook.com/webtvbusologa"
+        imageSrc="/icon/facebook.png"
+        title="WTBus- Entusiasta Da Mobilidade (Facebook)"
+        description="Notícias e fotografia sobre o mundo dos transportes. Encontre tudo sobre mobilidade e inovações."
+      />
+
         {/* Blog 2 */}
-        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark rounded-md shadow-md p-4">
-        <Link target='_blank' href={"https://www.instagram.com/entusiastadamobilidade/"} legacyBehavior>
-          <a target="_blank" rel="noopener noreferrer">
-          <div className="flex items-center">
-            <img
-              src="/icon/instagram.png"
-              alt="Author Image"
-              className="rounded-full w-12 h-12 mr-4"
-            />
-            <div>
-              <h3 className="text-lg font-bold">Entusiasta Da Mobilidade (Instagram)</h3>
-              <p className="text-gray-600 text-sm">
-              Fotografia e Notícias voltadas ao mundo dos modais. De forma rápida e objetiva.
-              </p>
-            </div>
-          </div>
-          </a>
-          </Link>
-        </div>
+
+        <SocialCard
+        platform="instagram"
+        link="https://www.instagram.com/entusiastadamobilidade/"
+        imageSrc="/icon/instagram.png"
+        title="Entusiasta Da Mobilidade (Instagram)"
+        description="Fotografia e Notícias voltadas ao mundo dos modais. De forma rápida e objetiva."
+      />
+       
         {/* Blog 3 */}
-        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark  rounded-md shadow-md p-4">
-          <Link href={"https://www.youtube.com/channel/UCAzsEfkJ4e6G-wFQv8srFXA"} legacyBehavior>
-          <a target="_blank" rel="noopener noreferrer">
-          <div className="flex items-center">
-            <img
-                src="/icon/youtube.png"
-              alt="Author Image"
-              className="rounded-full w-12 h-12 mr-4"
-            />
-            <div>
-              <h3 className="text-lg font-bold">NRFv - Entusiasta Da Mobilidade</h3>
-              <p className="text-gray-600 text-sm">
-              Vídeografia de Eventos, Automoveis e Paisagens. Tudo sobre a Mobilidade e Modais.
-              </p>
-            </div>
-          </div>
-          </a>
-          </Link>
-        </div>
+
+        <SocialCard
+        platform="youtube"
+        link="https://www.youtube.com/@entusiastadamobilidade"
+        imageSrc="/icon/youtube.png"
+        title="NRFv - Entusiasta Da Mobilidade"
+        description="Vídeografia de Eventos, Automoveis e Paisagens. Tudo sobre a Mobilidade e Modais."
+      />
+       
         {/* Blog 4 */}
         {/* <p className="text-gray-600 text-sm hidden md:block" > */}
-        <div className="bg-secondarybg-light text-text-light dark:bg-secondarybg-dark dark:text-text-dark  rounded-md shadow-md p-4">
-          <Link href={"https://www.youtube.com/channel/UC2m3YJu7rARj1wQhFMHmNrg"}legacyBehavior>
-          <a target="_blank" rel="noopener noreferrer">
-          <div className="flex items-center">
-            <img
-               src="/icon/youtube.png"
-              alt="Author Image"
-              className="rounded-full w-12 h-12 mr-4"
-            />
-            <div>
-              <h3 className="text-lg font-bold">WTBUS - Web Tv Busóloga</h3>
-              <p className="text-gray-600 text-sm">
-              Vídeografia de Eventos e Veículos voltados ao Transporte Público (Ônibus). Tudo sobre a Mobilidade Urbana.
-              </p>
-            </div>
-          </div>
-          </a>
-          </Link>
-        </div>
+
+        <SocialCard
+        platform="youtube"
+        link="https://www.youtube.com/channel/UC2m3YJu7rARj1wQhFMHmNrg"
+        imageSrc="/icon/youtube.png"
+        title="WTBUS - Web Tv Busóloga"
+        description="Vídeografia de Eventos e Veículos voltados ao Transporte Público (Ônibus). Tudo sobre a Mobilidade Urbana."
+      />
+
+       
       </div>
    
 
