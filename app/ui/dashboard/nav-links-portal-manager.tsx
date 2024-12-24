@@ -15,7 +15,7 @@ import clsx from 'clsx';
 // Depending on the size of the application, this would be stored in a database.
 
 
-export default function NavLinksManager({session}) {
+export default function NavLinksManager({session, definition}) {
   const pathname = usePathname();
 
   const links = [
@@ -43,7 +43,8 @@ export default function NavLinksManager({session}) {
           )}
         >
           <LinkIcon className="w-6" />
-          <p className="hidden md:block">{link.name}</p>
+          {!definition ? <p className="hidden md:block">{link.name}</p> : ""}
+         
         </Link>
         );
       })}
