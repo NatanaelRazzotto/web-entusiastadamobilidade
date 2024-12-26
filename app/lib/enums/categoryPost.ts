@@ -6,7 +6,10 @@ export enum CategoryPost {
     Aviacao = 2,
     Ferrovia = 3,   
     Automoveis = 4,
-    Post = 5 // Adicionei um valor padrão para post
+    Post = 5, // Adicionei um valor padrão para post
+    Festividades = 6,
+    Natal = 7,
+    Religiao = 8
   }
 
 // Função para obter a URL da categoria usando o enum

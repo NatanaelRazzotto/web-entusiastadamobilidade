@@ -27,9 +27,7 @@ export default function ListNotices({newspaperColumnID = "",categoryPost, posts 
   return (
     <div >
     <div className="py-4">
-      <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-        <h2 className="font-bold mt-2 mb-1">{CategoryPost[categoryPost]}</h2>
-      </div>
+     
     </div>
     {/* News card 1 */}
     {

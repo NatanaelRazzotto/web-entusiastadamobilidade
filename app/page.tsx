@@ -27,6 +27,7 @@ import { CategoryPost } from './lib/enums/categoryPost';
 import ListVideos from './ui/portal/listVideos';
 import clsx from 'clsx';
 import SideNavMobile from './ui/dashboard/sidenavMobile';
+import GridNotices from './ui/portal/gridNotices';
 
 export async function generateMetadata( {params: {lang}} ):Promise<Metadata> {
 
@@ -173,7 +174,7 @@ export default async function Page() {
       </div>
       <div className="py-4">
         <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-          <h2 className="text-2xl font-bold mt-2 mb-1">Páginas</h2>
+          <h4 className="font-bold mt-2 mb-1">Páginas</h4>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -219,33 +220,46 @@ export default async function Page() {
 
        
       </div>
+
+      <div className="py-4">
+        <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+          <h4 className="font-bold mt-2 mb-1">Notícias</h4>
+        </div>
+      </div>
    
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-              <ListNotices newspaperColumnID={"030e0d2f-5aad-4018-934a-420b23448fd9"} categoryPost={CategoryPost.TransportePublico} posts={posts}/>
-              </div>   
-        {/* 1 */}
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-          <ListNotices categoryPost={CategoryPost.Automoveis} posts={posts}/>
-          </div>  
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-          <ListNotices categoryPost={CategoryPost.Aviacao} posts={posts}/> 
-          <ListNotices categoryPost={CategoryPost.Ferrovia} posts={posts}/>   
-          </div>   
-        {/* 1 */}
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-       
-        <ListVideos categoryPost={CategoryPost.Automoveis} videos={videos}/>
-        </div>   
-        {/* 1 */}
-        
-        
-        {/* 1 */}
+      <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-4 "> 
+        {/* GridNotices - Responsivo 3xN */}
+        <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {posts
+              .filter((post) => post.published) // Filtrar apenas os posts publicados
+              .map((post) => (
+                <CardNotice key={post.id} postCard={post} />
+              ))}
+          </div>
+          <div className="py-4">
+            <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
+              <h4 className="font-bold mt-2 mb-1">Midia</h4>
+            </div>
+          </div>
+          
+        </div>
+
+        {/* ListVideos - Responsivo 1 Coluna */}
+        <div className="grid grid-cols-1 gap-4">
+          <ListVideos categoryPost={CategoryPost.Automoveis} videos={videos} />
+        </div>
       </div>
+
+
+   
+
+
       
      
     </div>
+    
     </div>
     </div>
      
