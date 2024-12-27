@@ -20,9 +20,9 @@ export default function CardPost({postCard, cardTop}) {
     <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-75 rounded-t-md"></div>
   </div>
   <div className="absolute bottom-0 left-0 p-4 text-white">
-    <h2 className="text-xl font-bold">
+    <h4 className=" font-bold">
       {postCard.title}
-    </h2>
+    </h4>
     {
       cardTop ?  
       <p className="text-sm">

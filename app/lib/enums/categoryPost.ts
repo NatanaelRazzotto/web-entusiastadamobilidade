@@ -29,6 +29,18 @@ export const getCategoryUrlNumber = (category: CategoryPost): string => {
     case CategoryPost.Automoveis:
       return "automoveis";
 
+      case CategoryPost.Post:
+        return "post";
+
+        case CategoryPost.Festividades:
+          return "festividades";
+
+          case CategoryPost.Natal:
+            return "natal";
+
+            case CategoryPost.Religiao:
+            return "religiao";
+
     default:
         return "post";
     }
@@ -57,6 +69,16 @@ export const getCategoryUrlNumber = (category: CategoryPost): string => {
        return CategoryPost.Ferrovia;
       case "automoveis":
        return CategoryPost.Automoveis;
+      case "post":
+        return CategoryPost.Post;
+      case "festividades":
+          return CategoryPost.Festividades;
+
+          case "natal":
+            return CategoryPost.Natal;
+
+            case"religiao" :
+            return  CategoryPost.Religiao;
       default:
         return CategoryPost.Post;
     }

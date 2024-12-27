@@ -28,6 +28,7 @@ import ListVideos from './ui/portal/listVideos';
 import clsx from 'clsx';
 import SideNavMobile from './ui/dashboard/sidenavMobile';
 import GridNotices from './ui/portal/gridNotices';
+import CardNoticeVideo from './ui/portal/cardNoticeVideo';
 
 export async function generateMetadata( {params: {lang}} ):Promise<Metadata> {
 
@@ -240,15 +241,37 @@ export default async function Page() {
           </div>
           <div className="py-4">
             <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
-              <h4 className="font-bold mt-2 mb-1">Midia</h4>
+              <h4 className="font-bold mt-2 mb-1">Vídeos</h4>
             </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {videos
+              .filter((post) => post.published) // Filtrar apenas os posts publicados
+              .map((post) => (
+                <CardNoticeVideo key={post.id} postCard={post} />
+              ))}
           </div>
           
         </div>
 
         {/* ListVideos - Responsivo 1 Coluna */}
         <div className="grid grid-cols-1 gap-4">
-          <ListVideos categoryPost={CategoryPost.Automoveis} videos={videos} />
+              
+         <div className={`h-40 bg-gradient-to-r from-orange-500 to-orange-700 text-text-light dark:bg-secondarybg-dark dark:text-text-dark rounded-md shadow-md p-4`}>         
+
+              <div>
+                <h1 className="text-lg font-bold flex items-center justify-center ">1000 </h1>
+                <p className="text-text-dark text-sm flex items-center justify-center  ">INSCRITOS</p>
+              </div>    
+              <div>
+                <h3 className="text-lg font-bold  flex items-center justify-center">EM NOSSO YOUTUBE </h3>
+                <p className="text-text-dark text-sm flex items-center justify-center  ">Muito Obrigado!</p>
+                <p className="text-text-dark text-sm flex items-center justify-center  ">Alcançamos este MARCO em 2024!</p>
+              </div>        
+      
+         </div>
+
+         
         </div>
       </div>
 

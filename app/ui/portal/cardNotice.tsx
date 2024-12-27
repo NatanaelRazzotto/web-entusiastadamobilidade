@@ -1,6 +1,7 @@
 'use client'
 
 import { Post } from "@/app/lib/definitions"
+import { CategoryPost, getCategoryUrlNumber } from "@/app/lib/enums/categoryPost";
 import { getCategoyrUrl } from "@/app/lib/utils"
 import Link from "next/link"
 
@@ -20,7 +21,7 @@ export default function CardNotice({ postCard, pathDefault = "portal/" }) {
         />
         <div className="p-4">
         <div className="inline-block rounded-md text-white bg-orange-700 px-2">
-               <p className="">Transporte Público</p>
+               <p className="">{getCategoryUrlNumber(postCard.category)}</p>
           </div>
           <h6 className="font-bold">
           
