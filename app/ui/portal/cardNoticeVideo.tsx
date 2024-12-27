@@ -25,7 +25,7 @@ export default function CardNoticeVideo({postCard }) {
     
         <div className="p-4">
         <div className="inline-block rounded-md text-white bg-orange-700 px-2">
-               <p className="">Transporte Público</p>
+               <p className="">YouTube</p>
           </div>
           <h6 className="font-bold">
           
