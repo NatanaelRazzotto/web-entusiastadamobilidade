@@ -257,7 +257,7 @@ export default async function Page() {
         {/* ListVideos - Responsivo 1 Coluna */}
         <div className="grid grid-cols-1 gap-4">
               
-         <div className={`h-40 bg-gradient-to-r from-orange-500 to-orange-700 text-text-light dark:bg-secondarybg-dark dark:text-text-dark rounded-md shadow-md p-4`}>         
+          <div className={`h-40 bg-gradient-to-r from-orange-500 to-orange-700 text-text-light dark:bg-secondarybg-dark dark:text-text-dark rounded-md shadow-md p-4`}>         
 
               <div>
                 <h1 className="text-lg font-bold flex items-center justify-center ">1000 </h1>
@@ -267,9 +267,22 @@ export default async function Page() {
                 <h3 className="text-lg font-bold  flex items-center justify-center">EM NOSSO YOUTUBE </h3>
                 <p className="text-text-dark text-sm flex items-center justify-center  ">Muito Obrigado!</p>
                 <p className="text-text-dark text-sm flex items-center justify-center  ">Alcançamos este MARCO em 2024!</p>
-              </div>        
+              </div>       
       
          </div>
+
+       
+         <div className="aspect-w-9 aspect-h-16">
+            <iframe
+              src={`https://www.youtube.com/embed/SwpGoyjZFRI?autoplay=1`}
+              className="w-full h-96"
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
+          </div>
+        
+
+         
 
          
         </div>
