@@ -5,13 +5,13 @@ export const getWatermarkedImageUrl = (imageUrl : string) => {
 };
 
 export const getCategoyrUrl = (category : number) => {
-  let cat = category == 1 ? "transporte-publico" : category == 2 ? "aviacao" : category == 3 ? "ferrovia" : category == 4 ? "automoveis" : "post"
+  let cat = category == 1 ? "transporte-publico" : category == 2 ? "aviacao" : category == 3 ? "ferrovia" : category == 4 ? "automoveis" : category == 5 ? "post" : category == 6 ? "festividades" : category == 7 ? "natal" : category == 8 ? "religiao" : "post"
 
   return cat
 };
 
 export const getConvertUrl = (url : string) => {
-  let cat = url == "transporte-publico" ? 1 : url == "aviacao" ? 2 : url == "ferrovia" ? 3  : url == "automoveis" ? 4 : 0
+  let cat = url == "transporte-publico" ? 1 : url == "aviacao" ? 2 : url == "ferrovia" ? 3  : url == "automoveis" ? 4 : url == "post" ? 5 : url == "festividades" ? 6 : url == "natal" ? 7 : url == "religiao" ? 8 : 0
   return cat
 };
 

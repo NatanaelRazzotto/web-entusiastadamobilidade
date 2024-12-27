@@ -79,9 +79,16 @@ export default async function Page() {
 
   }
 
-  const posts : Post[] = await prisma.post.findMany();
-
-  const videos : Video[] = await prisma.video.findMany();
+  const posts: Post[] = await prisma.post.findMany({
+    orderBy: {
+      dateCreate: 'desc', 
+    },
+  });
+  const videos : Video[] = await prisma.video.findMany({
+    orderBy: {
+      dateCreate: 'desc', 
+    },
+  });
   
   const postTop : Post = posts.find((post) => post.topNews == 1)
   const secondPostTop : Post = posts.find((post) => post.topNews == 2)
