@@ -6,7 +6,10 @@ export enum CategoryPost {
     Aviacao = 2,
     Ferrovia = 3,   
     Automoveis = 4,
-    Post = 5 // Adicionei um valor padrão para post
+    Post = 5, // Adicionei um valor padrão para post
+    Festividades = 6,
+    Natal = 7,
+    Religiao = 8
   }
 
 // Função para obter a URL da categoria usando o enum
@@ -25,6 +28,18 @@ export const getCategoryUrlNumber = (category: CategoryPost): string => {
 
     case CategoryPost.Automoveis:
       return "automoveis";
+
+      case CategoryPost.Post:
+        return "post";
+
+        case CategoryPost.Festividades:
+          return "festividades";
+
+          case CategoryPost.Natal:
+            return "natal";
+
+            case CategoryPost.Religiao:
+            return "religiao";
 
     default:
         return "post";
@@ -54,6 +69,16 @@ export const getCategoryUrlNumber = (category: CategoryPost): string => {
        return CategoryPost.Ferrovia;
       case "automoveis":
        return CategoryPost.Automoveis;
+      case "post":
+        return CategoryPost.Post;
+      case "festividades":
+          return CategoryPost.Festividades;
+
+          case "natal":
+            return CategoryPost.Natal;
+
+            case"religiao" :
+            return  CategoryPost.Religiao;
       default:
         return CategoryPost.Post;
     }
