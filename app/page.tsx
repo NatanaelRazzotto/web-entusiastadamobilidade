@@ -48,7 +48,7 @@ export async function generateMetadata( {params: {lang}} ):Promise<Metadata> {
       url: process.env.NEXT_PUBLIC_SITE_URL,     
       images: [
         {
-          url: process.env.NEXT_PUBLIC_SITE_URL +'/CARTAO.png',
+          url: process.env.NEXT_PUBLIC_SITE_URL +'/comemorativo25.png',
           width: 800,
           height: 600,
           alt: 'Imagem de capa',
