@@ -1,0 +1,5 @@
+ALTER TABLE "_PostImages" DROP CONSTRAINT "_PostImages_A_fkey";
+
+ALTER TABLE "Image" DROP CONSTRAINT "Image_idImage_unique" CASCADE;
+
+ALTER TABLE "_PostImages" ADD CONSTRAINT "_PostImages_A_fkey" FOREIGN KEY ("A") REFERENCES "Image"("idImage") ON DELETE CASCADE ON UPDATE CASCADE;

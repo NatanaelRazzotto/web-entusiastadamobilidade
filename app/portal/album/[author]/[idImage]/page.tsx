@@ -15,7 +15,11 @@ interface PageProps {
 export async function generateMetadata({ params }: {params: { idImage: string}}): Promise<Metadata> {
   const { idImage } = params;
 
-  const dataImage: Image | null = await fetchIdImage(idImage)  
+  
+  const idImageNumber = parseInt(idImage, 10);
+
+ 
+  const dataImage: Image | null = await fetchIdImage(idImageNumber)  
 
   if (!dataImage) {
     return {
@@ -64,8 +68,11 @@ export default async function Page({ params }: {params: { idImage: string}}) {
   const { idImage } = params;
   let dataPost : Image | null = null
 
-  if (idImage) {
-    dataPost = await fetchIdImage(idImage)  
+  const idImageNumber = parseInt(idImage, 10);
+
+  if (!isNaN(idImageNumber)) {
+
+    dataPost = await fetchIdImage(idImageNumber)  
   }
  
 
