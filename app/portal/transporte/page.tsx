@@ -1,93 +1,116 @@
-"use client"
-import React, { useEffect, useRef } from 'react';
-import 'ol/ol.css';
-import { Map, View } from 'ol';
-import TileLayer from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
-import { fromLonLat } from 'ol/proj';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
-import VectorLayer from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
-import { Style, Icon } from 'ol/style';
+'use client';
 
-const MapComponent = () => {
-  const mapRef = useRef(null);
+import { useEffect, useState } from "react";
+import { FiSearch, FiLoader } from 'react-icons/fi';
 
-  // Dados para plotar no mapa
-  const data = {
-    "GI859": {
-      "COD": "GI859",
-      "REFRESH": "21:57",
-      "LAT": "-25.491073",
-      "LON": "-49.28203",
-      "CODIGOLINHA": "666",
-      "ADAPT": "1",
-      "TIPO_VEIC": "7",
-      "TABELA": "1",
-      "SITUACAO": "ADIANTADO",
-      "SITUACAO2": "FORA DA ROTA",
-      "SENT": "VOLTA",
-      "TCOUNT": 1,
-      "SENTIDO": "198-BAIRRO NOVO MUNDO (22:02)"
+export default function Page() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchResultsLine, setSearchResultsLine] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSearch = async () => {
+    if (searchTerm.trim() === '') {
+      setOpen(true);
+      return;
+    } else {
+      setOpen(false);
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await fetch(`http://localhost:4000/urbs-vehicle-schedule/${searchTerm}`);
+      const data = await response.json();
+      if (data.length > 0){
+        const responseLine = await fetch(`http://localhost:4000/urbs-line-point/${data[0].codLinha}`);
+        const dataLine = await responseLine.json();
+        setSearchResultsLine(dataLine)
+      }
+       
+      setSearchResults(data);
+      setOpen(data.length > 0);
+    } catch (error) {
+      console.error('Error searching:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    // Configuração básica do mapa
-    const map = new Map({
-      target: mapRef.current,
-      layers: [
-        new TileLayer({
-          source: new OSM(),
-        }),
-      ],
-      view: new View({
-        center: fromLonLat([-49.28203, -25.491073]), // Centralizar no ponto inicial
-        zoom: 12,
-      }),
-    });
-
-    // Extraindo latitude e longitude dos dados
-    const { LAT, LON } = data["GI859"];
-    const latitude = parseFloat(LAT);
-    const longitude = parseFloat(LON);
-
-    // Criar um ponto para o dado de localização
-    const vehiclePoint = new Feature({
-      geometry: new Point(fromLonLat([longitude, latitude])),
-      name: data["GI859"].CODIGOLINHA,
-    });
-
-    // Estilo do ponto
-    vehiclePoint.setStyle(
-      new Style({
-        image: new Icon({
-          anchor: [0.5, 1],
-          src: 'https://maps.google.com/mapfiles/kml/paddle/red-circle.png', // URL de um ícone para o ponto
-        }),
+  function validateNamePoint(idPoint :string):string {
+    console.log("🚀 ~ validateNamePoint ~ idPoint:", idPoint)
+    if (searchResultsLine.length > 0){
+      console.log("🚀 ~ validateNamePoint ~ searchResultsLine:", searchResultsLine)
+      let point = searchResultsLine.find(point => {
+       
+        return point.NUM == idPoint
       })
-    );
+      console.log("🚀 ~ validateNamePoint ~ point:", point)
+      return point.NOME
+    }
+    return "Sem info"
+  }
 
-    // Criar uma camada de vetor e adicionar o ponto
-    const vectorLayer = new VectorLayer({
-      source: new VectorSource({
-        features: [vehiclePoint],
-      }),
-    });
 
-    // Adicionar a camada de vetor ao mapa
-    map.addLayer(vectorLayer);
-
-    return () => map.setTarget(null); // Limpeza na desmontagem do componente
-  }, []);
 
   return (
-    <div
-      ref={mapRef}
-      style={{ width: '100%', height: '400px' }}
-    />
-  );
-};
+    <main className="flex flex-col p-6">
+      <div className="container mx-auto">
+        <div className="relative flex flex-col items-center p-4 text-white bg-black">
+          <div className="flex items-center w-full">
+            <input
+              className="w-10/12 bg-gray-900 rounded-md p-2 text-white focus:outline-none focus:ring focus:ring-blue-500"
+              placeholder="Procurar por um VEÍCULO."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleSearch();
+              }}
+            />
+            <button
+              className="w-2/12 ml-2 rounded-md border border-white p-2 hover:bg-gray-800 flex items-center justify-center"
+              onClick={handleSearch}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <FiLoader className="animate-spin text-white" size={24} />
+              ) : (
+                <FiSearch size={24} />
+              )}
+            </button>
+          </div>
+          <div
+            className={`absolute top-full left-0 mt-2 p-2 bg-red-500 text-white rounded-md z-10 ${
+              searchTerm.trim() === '' && open ? 'block' : 'hidden'
+            }`}
+          >
+            Por favor, insira um termo de busca válido.
+          </div>
+        </div>
 
-export default MapComponent;
+        {/* Resultados da Pesquisa */}
+        {searchResults.length > 0 && (
+              <div className="p-4 bg-gray-800 text-white rounded-md shadow-md">
+                 <h3 className="text-lg font-bold">TABELA DE OPERACAO</h3>
+                <h3 className="text-lg "> Veículo: {searchResults[0].veiculo || 'Nome não disponível'}</h3>
+              
+                
+              </div>
+        )}
+
+        {searchResults.length > 0 && (
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
+            {searchResults.map((result, index) => (
+              <div key={index} className="p-4 bg-gray-800 text-white rounded-md shadow-md">
+                <h3 className="text-lg font-bold"> {result.codLinha || '000'} - {result.nomeLinha || 'Nome não disponível'}</h3>
+                <p className="text-sm">Ponto: {validateNamePoint(result.codPonto) || 'Sem ponto'}</p>
+                <p className="text-sm">Horário: {result.horario || 'N/A'}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}
