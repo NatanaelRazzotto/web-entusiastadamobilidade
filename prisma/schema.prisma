@@ -1,112 +1,98 @@
-// schema.prisma
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model Post {
-  id        String     @id @default(uuid())
-  namePost  String
-  title     String
-  category  Float
-  content   String?
-  resume    String?
-  tagPost   String?
-  coverURL  String?
-  topNews   Float     @default(0) 
-  published Boolean   @default(false)
-  author    User?     @relation(fields: [authorId], references: [id])
-  authorId  String?
-  newspaperColumn    NewspaperColumn?     @relation(fields: [newspaperColumnID], references: [id])
-  newspaperColumnID  String?
-  dateCreate DateTime @default(now())
-  dateEvent DateTime @default(now())
-
-  // Relação muitos para muitos com Image
-  images    Image[]   @relation("PostImages")
-  videos    Video[]   @relation("PostVideos")
+  id                String           @id @default(uuid())
+  namePost          String
+  title             String
+  category          Float
+  content           String?
+  resume            String?
+  tagPost           String?
+  coverURL          String?
+  published         Boolean          @default(false)
+  authorId          String?
+  newspaperColumnID String?
+  dateCreate        DateTime         @default(now())
+  topNews           Float            @default(0)
+  dateEvent         DateTime         @default(now())
+  author            User?            @relation(fields: [authorId], references: [id])
+  newspaperColumn   NewspaperColumn? @relation(fields: [newspaperColumnID], references: [id])
+  images            Image[]          @relation("PostImages")
+  videos            Video[]          @relation("PostVideos")
 }
 
 model Image {
-  id        String     @id @default(uuid())
-  title     String
-  nameFile    String   @default("")
+  id    Int      @id @default(autoincrement())
+ 
+  title       String
   description String?
-  pathURL   String @unique 
-  published Boolean @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  String?
-  dateCreate  DateTime   @default(now()) 
-
-  // Relação muitos para muitos com Post
-posts     Post[]   @relation("PostImages") 
-  vehicleIDs          String[]
-  orderImages    OrderImage[]  
+  pathURL     String   @unique
+  published   Boolean  @default(false)
+  authorId    String?
+  dateCreate  DateTime @default(now())
+  nameFile    String   @default("")
+  vehicleIDs  String[]
+ 
+  author      User?    @relation(fields: [authorId], references: [id])
+  posts       Post[]   @relation("PostImages")
 }
 
 model Video {
-  id        String     @id @default(uuid())
-  title     String
+  id          String   @id @default(uuid())
+  title       String
   nameFile    String   @default("")
   description String?
-  pathURL   String @unique 
-  published Boolean @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  String?
-  dateCreate  DateTime   @default(now()) 
-
-  // Relação muitos para muitos com Post
-  posts     Post[]   @relation("PostVideos") 
-  vehicleIDs          String[]
-  
+  pathURL     String   @unique
+  published   Boolean  @default(false)
+  authorId    String?
+  dateCreate  DateTime @default(now())
+  vehicleIDs  String[]
+  author      User?    @relation(fields: [authorId], references: [id])
+  posts       Post[]   @relation("PostVideos")
 }
 
 model BookOrder {
-  id        String     @id @default(uuid())
-  title     String?
-  description   String?   
-  request Boolean   @default(false)
-  processing Boolean   @default(false)
-  costValue Float
-  unit Float
-  concluded Boolean   @default(false)
-  paymentAccept Boolean   @default(false)
-  bookURL   String?
-  requestingUser    User?     @relation(fields: [requestingUserId], references: [id])
-  requestingUserId  String?
-  dateCreate DateTime @default(now())
-  dateUpdate DateTime @default(now())
-  // Relação muitos para muitos com Image
-  orderImages    OrderImage[]   
+  id               String       @id @default(uuid())
+  title            String?
+  description      String?
+  request          Boolean      @default(false)
+  processing       Boolean      @default(false)
+  costValue        Float
+  concluded        Boolean      @default(false)
+  bookURL          String?
+  requestingUserId String?
+  dateCreate       DateTime     @default(now())
+  dateUpdate       DateTime     @default(now())
+  paymentAccept    Boolean      @default(false)
+  unit             Float
+  requestingUser   User?        @relation(fields: [requestingUserId], references: [id])
+  orderImages      OrderImage[]
 }
 
 model OrderImage {
-  id          String     @id @default(uuid())
-  bookOrderId String
-  imageId     String
+  id           String    @id @default(uuid())
+  bookOrderId  String
+  imageId      String
   requestImage Boolean   @default(false)
-
-  // Campos adicionais para a tabela de junção
-  addedAt     DateTime   @default(now())
-  requestDate     DateTime   @default(now())
-  description String?
-  comment String?
-
-  bookOrder   BookOrder  @relation(fields: [bookOrderId], references: [id])
-  image       Image      @relation(fields: [imageId], references: [id])
+  addedAt      DateTime  @default(now())
+  requestDate  DateTime  @default(now())
+  description  String?
+  comment      String?
+  bookOrder    BookOrder @relation(fields: [bookOrderId], references: [id])
 
   @@unique([bookOrderId, imageId])
 }
 
-
 model Account {
-   id        String     @id @default(uuid())
+  id                 String  @id @default(uuid())
   userId             String  @map("user_id")
   type               String
   provider           String
@@ -120,47 +106,46 @@ model Account {
   session_state      String?
   oauth_token_secret String?
   oauth_token        String?
-
-  user User @relation(fields:[userId], references:[id], onDelete: Cascade)
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id        String     @id @default(uuid())
-  sessionToken String   @unique@map("session_token")
+  id           String   @id @default(uuid())
+  sessionToken String   @unique @map("session_token")
   userId       String   @map("user_id")
   expires      DateTime
-  user         User     @relation(fields:[userId], references:[id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id        String     @id @default(uuid())
-  name          String?
+  id               String      @id @default(uuid())
+  name             String?
+  password         String?
+  email            String?     @unique
+  emailVerified    DateTime?
+  image            String?
+  phone            String?     @unique
   verificationCode String?
-  password      String?
-  phone         String?@unique
-  email         String?@unique
-  emailVerified DateTime?
-  image         String?
-  posts         Post[]
-  accounts      Account[]
-  sessions      Session[]
-  imagens Image[]
-  videos Video[]
-  bookOrders BookOrder[]
-  UserRole   Float     @default(4) 
+  UserRole         Float       @default(4)
+  accounts         Account[]
+  bookOrders       BookOrder[]
+  imagens          Image[]
+  posts            Post[]
+  sessions         Session[]
+  videos           Video[]
 }
 
 model NewspaperColumn {
-  id            String     @id @default(uuid())
-  identifier    String
-  urlPerfil     String     @default("WETBUS.png")
-  posts         Post[]
+  id         String @id @default(uuid())
+  identifier String
+  urlPerfil  String @default("WETBUS.png")
+  posts      Post[]
 }
 
 model VerificationToken {
-  id        String     @id @default(uuid())
+  id         String   @id @default(uuid())
   identifier String
   token      String   @unique
   expires    DateTime

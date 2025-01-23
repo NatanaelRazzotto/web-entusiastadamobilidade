@@ -129,7 +129,7 @@ export type Post = {
 
 
 export type Image = {
-  id: string;
+  id: number;
   title: string;
   nameFile : string; 
   description?: string | null; // Deve coincidir com a definição no Prisma

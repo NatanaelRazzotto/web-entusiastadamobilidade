@@ -140,7 +140,7 @@ export async function fetchIdPath(idurl : string){
   }
 }
 
-export async function deleteIdPath(idurl : string){
+export async function deleteIdPath(idurl : number){
   try {
     const image: Image | null = await prisma.image.delete({
       where: {
@@ -155,7 +155,7 @@ export async function deleteIdPath(idurl : string){
   }
 }
 
-export async function fetchIdImage(idImage : string){
+export async function fetchIdImage(idImage : number){
   try {
     const image: Image | null = await prisma.image.findFirst({    
       where: {
