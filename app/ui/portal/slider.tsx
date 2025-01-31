@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../../ui/SliderCover.css'; // Supondo que você crie este arquivo CSS
+import YouTubePlayer from "./YouTubePlayer";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -58,14 +59,7 @@ export default function SliderCover({dataPost }) {
       {
         dataPost && dataPost.videos.length > 0 ? <Slider {...settings} className="slider-container">
         <div className="slide-content pt-4 pl-4 pr-4 h-auto">
-          <iframe
-                  className="h-96 xs:h-44 sm:h-96 md:h-96 lg:h-96 xl:h-[450px] "
-          style={{ width:"100%", border: 'none' }} // Remover bordas se necessário
-          src={`https://www.youtube.com/embed/${dataPost.videos[0].pathURL}?controls=&modestbranding=1`}
-          title="YouTube Video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+          <YouTubePlayer></YouTubePlayer>
        </div>  
        <div  className=" pt-4 pl-4 pr-4" >
         <img
