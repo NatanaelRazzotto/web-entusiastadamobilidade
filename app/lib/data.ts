@@ -9,6 +9,21 @@ import {
 } from './definitions';
 import { formatCurrency } from './utils';
 
+export async function fetchScheduled() {
+  try {
+    const feed = await prisma.scheduleLiveTv.findMany({
+   
+      include: {
+       video : true
+      },
+    });
+    return feed;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
 export async function fetchPost() {
   try {
     const feed = await prisma.post.findMany({
