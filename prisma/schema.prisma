@@ -50,6 +50,7 @@ model Video {
   title       String
   nameFile    String   @default("")
   description String?
+  duration    Float            @default(0)
   pathURL     String   @unique
   published   Boolean  @default(false)
   authorId    String?
@@ -57,7 +58,19 @@ model Video {
   vehicleIDs  String[]
   author      User?    @relation(fields: [authorId], references: [id])
   posts       Post[]   @relation("PostVideos")
+  schedule ScheduleLiveTv[] // Relacionamento com Programação
 }
+
+model ScheduleLiveTv {
+  id            String  @id @default(uuid())
+  videoId       String
+  video         Video   @relation(fields: [videoId], references: [id])
+  startTime String  // Exemplo: "14:50"
+  endTime   String 
+  dayWeek     Int     // 0 = Domingo, 6 = Sábado, 7 = todos
+  createdAt     DateTime @default(now())
+}
+
 
 model BookOrder {
   id               String       @id @default(uuid())
