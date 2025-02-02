@@ -11,11 +11,11 @@ import { formatCurrency } from './utils';
 
 export async function fetchScheduled() {
   try {
-    const feed = await prisma.scheduleLiveTv.findMany({
-   
+    const feed = await prisma.scheduleLiveTv.findMany({   
       include: {
        video : true
       },
+      orderBy: { startTime: "asc" }, // Ordena pelos horários de início
     });
     return feed;
   } catch (error) {
