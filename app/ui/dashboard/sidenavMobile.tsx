@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import NavLinks from '@/app/ui/dashboard/nav-links-portal';
 import AcmeLogo from '@/app/ui/acme-logo';
-import { ArrowRightIcon, PowerIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon, PowerIcon, UserIcon } from '@heroicons/react/24/outline';
 import { useSession, signOut as nextAuthSignOut, getSession, signOut } from 'next-auth/react'; // Use signOut do next-auth
 import { useRouter } from 'next/navigation';
 import { clsx } from 'clsx';
@@ -62,7 +62,7 @@ export default function SideNavMobile() {
         <div className="w-4/5 pb-4 pl-4 ">
           <AcmeLogo />
         </div>
-      </Link>
+      </Link>      
       <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks definition={true}/>
@@ -82,7 +82,7 @@ export default function SideNavMobile() {
             href="/login"
             className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md text-orange-700 p-3 text-sm font-medium hover:bg-primarybg-dark hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
           >
-            <ArrowRightIcon className="w-5 md:w-6 " />  <span>Log in Manager</span>
+            <UserIcon className="w-5 md:w-6 " /> 
           </Link>
         )}
         {session && (

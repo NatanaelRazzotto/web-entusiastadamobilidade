@@ -17,9 +17,9 @@ export async function generateMetadata({ params }: {params: { idImage: string}})
   const { idImage } = params;
 
     return {
-      title: "Entusiasta da Mobilidade",
-      description: "O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte",
-      keywords: "notícias, fotografias, transporte, modais, mobilidade",
+      title: "Web Tv Busologa - Entusiasta da Mobilidade",
+      description: "Assista a WEBTV, com conteudo em video pré-programado, trazendo como focado em vários segmentos dos modais de transporte",
+      keywords: "webtv, tv, webtvaovivo ,notícias, fotografias, transporte, modais, mobilidade",
       openGraph: {
         type: "website",
         locale: "pt_BR",
@@ -64,7 +64,7 @@ function HeaderSection() {
         <div style={{ height: "100%", width: "50%", backgroundColor: "chocolate" }}></div>
       </div>
       <div style={{ width: "80%", padding: "10px" }}>
-        <h2 className="text-xl font-bold">{"WEBTV - Programação ao vivo"}</h2>
+        <h2 className="text-xl font-bold">{"WebTvBusóloga - Programação em tempo real!"}</h2>
       </div>
       <div style={{ width: "10%", padding: "10px" }}>
         <div className="w-[80%] md:w-[100%]">

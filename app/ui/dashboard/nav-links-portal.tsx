@@ -3,7 +3,7 @@
 import {
   UserGroupIcon,
   HomeIcon,
-  DocumentDuplicateIcon,
+  TvIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -15,6 +15,7 @@ import clsx from 'clsx';
 // Depending on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Home', href: '/', icon: HomeIcon },
+  { name: 'WebTV - AO VIVO', href: '/webtvbusologa', icon: TvIcon },
   // {
   //   name: 'Busca por Intinerários',
   //   href: '/',
