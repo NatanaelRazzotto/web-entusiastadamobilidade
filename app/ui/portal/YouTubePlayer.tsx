@@ -1,5 +1,6 @@
 "use client";
 
+import { set } from "ol/transform";
 import { useEffect, useRef, useState } from "react";
 
 declare global {
@@ -17,9 +18,9 @@ const YouTubePlayer = () => {
   const [playerReady, setPlayerReady] = useState(false);
   const [scheduleList, setScheduleList] = useState<any[]>([]); // Lista de programação
   const [showFallback, setShowFallback] = useState(false);
-
-
-
+  
+  const [currentVideo, setCurrentVideo] = useState<any>(null);
+ 
   // Função para buscar a programação
   useEffect(() => {
     const scheduleManager = async (listData: any[]) => {
@@ -35,33 +36,56 @@ const YouTubePlayer = () => {
       });
 
       if (currentVideo) {
-        const [hours, minutes] = currentVideo.startTime.split(":").map(Number);
-        const dateConvertido = new Date();
-        dateConvertido.setHours(hours);
-        dateConvertido.setMinutes(minutes);
-        dateConvertido.setSeconds(0);
-        dateConvertido.setMilliseconds(0);
 
-        const nowD = Math.floor(Date.now() / 1000);
-        const elapsed = nowD - Math.floor(dateConvertido.getTime() / 1000);
+        setCurrentVideo(currentVideo)    
+        setVideoId(currentVideo.video.pathURL) 
 
-        setVideoId(currentVideo.video.pathURL);
-        setStartTime(elapsed > 0 ? elapsed : 0);
+        console.log("no adjust")
+       
+        // setVideoId((prev) => {
+        //   console.log(currentVideo.video.pathURL)
+        //   console.log(videoId)
+      
+        //   if (prev === currentVideo.video.pathURL) {
+        //     const time = playerRef.current?.getCurrentTime() || 0;
+        //     const adjusteTime = Math.abs(time - elapsed);
+            
+        //     console.log("🚀 ~ scheduleManager ~ adjusteTime:", adjusteTime);
+        
+        //     if (adjusteTime >= 20) {
+        //       console.log("adjust");
+        //       setStartTime(elapsed > 0 ? elapsed : 0);            
+        //     }
+           
+        //     return prev; // N
+            
+        //   }
+        
+        //   console.log("Alterando para novo vídeo:", currentVideo.video.pathURL);
+        //   setStartTime(elapsed > 0 ? elapsed : 0);   
+        //   return currentVideo.video.pathURL;
+        // });        
+ 
         setShowFallback(false); 
+        return;
       
       } else {
         
         fallbackVideoId()
+        return;
       }
     };
 
     const fallbackVideoId = async () => {
+      
+      const time = playerRef.current.getCurrentTime();
+      console.log(`Tempo atual do vídeo: ${Math.floor(time)}s`);
       console.log("Vídeo sem grade!");
       setShowFallback(true); // Exibe um conteúdo alternativo
     
       const fallbackVideoId = "EsUZY44e3t8";
       setVideoId(fallbackVideoId);
-      setStartTime(0);
+      //setStartTime(0);
     
       if (playerRef.current) {
         playerRef.current.loadVideoById({
@@ -97,7 +121,7 @@ const YouTubePlayer = () => {
         videoId,
         playerVars: {
           autoplay: 1,
-          start: Math.floor(startTime),
+          // start: Math.floor(startTime),
           mute: 0,
           controls: 1,
           disablekb: 1,
@@ -150,15 +174,71 @@ const YouTubePlayer = () => {
     }
   }, []);
 
+  // useEffect(() => {
+  //   if (playerReady && playerRef.current) {
+  //     playerRef.current.loadVideoById({
+  //       videoId,
+  //       startSeconds: Math.floor(startTime),
+  //     });
+  //     playerRef.current.setVolume(volume);
+  //   }
+  // }, [videoId, startTime, volume, playerReady]);
+
   useEffect(() => {
-    if (playerReady && playerRef.current) {
-      playerRef.current.loadVideoById({
+    if (!playerReady || !playerRef.current || !currentVideo) return;
+    console.log("testando effect")
+    console.log(currentVideo)
+    const player = playerRef.current;
+
+
+    const [hours, minutes] = currentVideo.startTime.split(":").map(Number);
+    console.log("🚀 ~ useEffect ~ minutes:", minutes)
+    console.log("🚀 ~ useEffect ~ hours:", hours)
+    const dateConvertido = new Date();
+    dateConvertido.setHours(hours);
+    dateConvertido.setMinutes(minutes);
+    dateConvertido.setSeconds(0);
+    dateConvertido.setMilliseconds(0);
+
+    const startTimeInSeconds = Math.floor(dateConvertido.getTime() / 1000);  // Segundos desde 1970
+
+  // Pegando o tempo atual (em segundos desde 1970)
+  const nowD = Math.floor(Date.now() / 1000);
+
+  // Calculando a diferença entre o tempo atual e o startTime
+  const elapsed = nowD - startTimeInSeconds;
+  console.log("🚀 ~ useEffect ~ elapsed:", elapsed);
+
+     // Troca de vídeo apenas se necessário
+    const videoData = player.getVideoData();
+    if (videoData && videoData.video_id !== videoId) {
+      console.log("🎥 Trocando vídeo para:", videoId);
+      player.loadVideoById({
         videoId,
-        startSeconds: Math.floor(startTime),
+        startSeconds: 0,//Math.floor(elapsed),
       });
-      playerRef.current.setVolume(volume);
     }
-  }, [videoId, startTime, volume, playerReady]);
+    else{
+      console.log("🎥 Trocando nao:", videoId);
+   
+    }
+
+     // Calcular a diferença de tempo entre o vídeo atual e o tempo passado
+  const currentTime = playerRef.current.getCurrentTime() || 0;
+  console.log("🚀 ~ useEffect ~ currentTime:", currentTime)
+  const elapsedTime = Math.abs(currentTime - elapsed);
+    console.log("🚀 ~ useEffect ~ elapsedTime:", elapsedTime)
+    // Se a diferença de tempo for grande, ajusta o tempo
+    if (elapsedTime >= 20) {
+      console.log("⏩ Ajustando tempo para:", elapsed);
+      player.seekTo(elapsed);
+    }
+
+    // Ajusta o volume
+    player.setVolume(volume);
+
+  }, [videoId, volume, playerReady,currentVideo]);
+  
 
   return (
     <div>
