@@ -16,6 +16,8 @@ const YouTubePlayer = () => {
   const [volume, setVolume] = useState(100);
   const [playerReady, setPlayerReady] = useState(false);
   const [scheduleList, setScheduleList] = useState<any[]>([]); // Lista de programação
+  const [showFallback, setShowFallback] = useState(false);
+
 
 
   // Função para buscar a programação
@@ -45,11 +47,29 @@ const YouTubePlayer = () => {
 
         setVideoId(currentVideo.video.pathURL);
         setStartTime(elapsed > 0 ? elapsed : 0);
+        setShowFallback(false); 
       
       } else {
-        setVideoId("fallbackVideoId");
+        
+        fallbackVideoId()
       }
     };
+
+    const fallbackVideoId = async () => {
+      console.log("Vídeo sem grade!");
+      setShowFallback(true); // Exibe um conteúdo alternativo
+    
+      const fallbackVideoId = "EsUZY44e3t8";
+      setVideoId(fallbackVideoId);
+      setStartTime(0);
+    
+      if (playerRef.current) {
+        playerRef.current.loadVideoById({
+          videoId: fallbackVideoId,
+          startSeconds: 0,
+        });
+      }
+    }
 
     const fetchCurrentVideo = async () => {
       try {
@@ -93,6 +113,22 @@ const YouTubePlayer = () => {
             if (event.data === window.YT.PlayerState.UNSTARTED) {
               event.target.playVideo();
             }
+            if (event.data === window.YT.PlayerState.ENDED) {
+              console.log("Vídeo terminou!");
+              setShowFallback(true); // Exibe um conteúdo alternativo
+            
+              const fallbackVideoId = "EsUZY44e3t8";
+              setVideoId(fallbackVideoId);
+              setStartTime(0);
+            
+              if (playerRef.current) {
+                playerRef.current.loadVideoById({
+                  videoId: fallbackVideoId,
+                  startSeconds: 0,
+                });
+              }
+                        }
+            
           },
         },
       });
@@ -124,19 +160,17 @@ const YouTubePlayer = () => {
     }
   }, [videoId, startTime, volume, playerReady]);
 
-  const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = parseInt(event.target.value, 10);
-    setVolume(newVolume);
-    if (playerRef.current) {
-      playerRef.current.setVolume(newVolume);
-    }
-  };
-
   return (
     <div>
     <div className="bg-secondarybg-dark text-text-dark flex justify-center items-center min-h-[400px]">
-  <div id="yt-player" className="bg-black w-full max-w-[560px] aspect-video"></div>
-</div>
+      {showFallback ? (
+        <div className="text-white text-center">
+          <p>O vídeo terminou! Aguarde a próxima programação.</p>
+        </div>
+      ) : (
+        <div id="yt-player" className="bg-black w-full max-w-[560px] aspect-video"></div>
+      )}
+    </div>
 
       {/* Lista de Programação */}
       <h2 className="text-lg font-bold mt-4 text-center">Programação</h2>
