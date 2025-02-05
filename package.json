@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "build": "prisma generate && next build",
+    "postbuild": "next-sitemap",
     "dev": "next dev",
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
@@ -24,6 +25,7 @@
     "googleapis": "^105.0.0",
     "next": "^14.2.7",
     "next-auth": "^4.24.7",
+    "next-sitemap": "^4.2.3",
     "ol": "^10.2.1",
     "plyr": "^3.7.8",
     "postcss": "8.4.31",
