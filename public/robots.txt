@@ -1,0 +1,21 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /dashboard
+Disallow: /dashboard/*
+Disallow: /managerspace
+Disallow: /managerspace/*
+Disallow: /clientspace
+Disallow: /clientspace/*
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/*
+Disallow: /portal/transporte
+Disallow: /portal/transporte/*
+
+# Host
+Host: https://www.entusiastadamobilidade.com.br
+
+# Sitemaps
+Sitemap: https://www.entusiastadamobilidade.com.br/sitemap.xml

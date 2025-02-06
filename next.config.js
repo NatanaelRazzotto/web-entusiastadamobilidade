@@ -4,5 +4,6 @@ const nextConfig = {
     reactStrictMode: false,
   };
   
+  
 
   
