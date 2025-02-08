@@ -10,7 +10,10 @@ Disallow: /clientspace
 Disallow: /clientspace/*
 Disallow: /admin
 Disallow: /admin/*
-Disallow: /api/*
+
+# Permitir Facebook
+User-agent: facebookexternalhit
+Allow: /
 
 # Host
 Host: https://www.entusiastadamobilidade.com.br
