@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: { params: { category: string;
       } ,
       type: 'article',
       locale: 'pt_BR',      
-      url: process.env.SITE_URL +`/portal/${getCategoryUrlNumber(dataPost.category)}/${namePost}`,
+      url: process.env.NEXT_PUBLIC_SITE_URL +`/portal/${getCategoryUrlNumber(dataPost.category)}/${namePost}`,
       images: [
         {
           url: getWatermarkedImageUrl(dataPost.coverURL),

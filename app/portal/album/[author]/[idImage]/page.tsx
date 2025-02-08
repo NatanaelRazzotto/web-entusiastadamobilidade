@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: {params: { idImage: string}})
 
   return {
     title: dataImage.title,
-    description: dataImage.title || "O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte",
+    description: dataImage.title + " | ID:" +  dataImage.id || "O Portal de Notícias e Fotografias que é Entusiasta dos Modais de Transporte",
     keywords: "notícias, fotografias, transporte, modais, mobilidade",
     openGraph: {
       siteName: "Entusiasta da Mobilidade",
