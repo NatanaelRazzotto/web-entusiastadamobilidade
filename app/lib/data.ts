@@ -400,6 +400,7 @@ export async function updateImage(orderImages : Image){
 }
 
 export async function createImages(orderImages: Image[]) {
+  console.log("🚀 ~ createImages ~ orderImages:", orderImages)
   try {
     const data = orderImages.map(image => ({
       title: image.title,

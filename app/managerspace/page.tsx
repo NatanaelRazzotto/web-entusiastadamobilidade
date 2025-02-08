@@ -4,7 +4,7 @@ export default function Page() {
     return (
         <div>
             <div className="flex justify-end mt-8">
-            <Link href={"/managerspace/drafts"}>
+            <Link href={"/managerspace/managedPost/1"}>
                 <button className="bg-orange-700 hover:bg-orange-900 text-white font-bold py-2 px-4 rounded">
                     Criar Postagem
                 </button>
