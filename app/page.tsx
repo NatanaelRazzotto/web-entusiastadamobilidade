@@ -151,9 +151,11 @@ export default async function Page() {
 
 
       <div className="relative rounded-b-lg bottom-0 left-0 p-4 text-white bg-orange-700 ">
+        <Link href={"/webtvbusologa"}>
         <p className="text-sm justify-center">
-          ✨🎄Ho Ho Ho! Um Feliz Natal e Um Próspero Ano Novo!🎄✨
+          Programação de WEBTV AO VIVO! Focada para o Entusiasta! CONFIRA a prévia!  
         </p>
+        </Link>
      
       </div>     
 

@@ -11,8 +11,6 @@ Disallow: /clientspace/*
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /api/*
-Disallow: /portal/transporte
-Disallow: /portal/transporte/*
 
 # Host
 Host: https://www.entusiastadamobilidade.com.br

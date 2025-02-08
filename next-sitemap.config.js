@@ -14,8 +14,6 @@ module.exports = {
       '/admin',
       '/admin/*',
       '/api/*',
-      '/portal/transporte',
-      '/portal/transporte/*'
     ],
     additionalPaths: async (config) => {
         return [        
