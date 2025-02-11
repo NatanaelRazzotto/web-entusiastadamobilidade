@@ -20,6 +20,14 @@ export default function Page() {
             </div>
 
             <div className="flex justify-end mt-8">
+            <Link href={"/managerspace/post-gallery"}>
+                <button className="bg-orange-700 hover:bg-orange-900 text-white font-bold py-2 px-4 rounded">
+                    Gerenciar posts
+                </button>
+            </Link>
+            </div>
+
+            <div className="flex justify-end mt-8">
             <Link href={"/"}>
                 <button className="bg-orange-700 hover:bg-orange-900 text-white font-bold py-2 px-4 rounded">
                     Atualizar Info Transporte

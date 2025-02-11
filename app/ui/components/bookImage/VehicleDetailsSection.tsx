@@ -30,15 +30,15 @@ export default function VehicleDetailsSection({ dataPost }: {dataPost: Image | n
     
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2 bg-secondarybg-dark text-text-dark">
-        <div className="col-span-2 bg-black h-auto">
-          <iframe
-            src={`https://drive.google.com/file/d/${dataPost?.pathURL}/preview`}
-            title={dataPost?.title || "Veículo"}
-            className="rounded-md w-full object-cover"
-            height="100%"
-            style={{ border: "none" }}
-          ></iframe>
-        </div>
+      <div className="col-span-2 bg-black h-auto flex items-center justify-center">
+        <img
+          src={`https://res.cloudinary.com/dcixncjzw/image/upload/${dataPost?.nameFile}`}
+          title={dataPost?.title || "Veículo"}
+          className="rounded-md object-cover"
+          style={{ border: "none" }}
+        />
+      </div>
+
         <div className="col-span-1 justify-self-end p-4 mt-4 mr-4">
           <VehicleInfo dataVehicle={dataVehicle} />
         </div>

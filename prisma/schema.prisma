@@ -36,6 +36,7 @@ model Image {
   description String?
   pathURL     String   @unique
   published   Boolean  @default(false)
+  storage     Boolean  @default(false)
   authorId    String?
   dateCreate  DateTime @default(now())
   nameFile    String   @default("")

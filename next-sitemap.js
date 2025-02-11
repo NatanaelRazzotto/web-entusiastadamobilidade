@@ -1,21 +1,37 @@
-/** @type {import('next-sitemap').IConfig} */
-const fetchAlbums = async () => {
-  try {
-    const response = await fetch('https://seusite.com.br/api/albums'); // Substitua pela URL real da API
-    if (!response.ok) throw new Error('Erro ao buscar os álbuns');
-    
-    const albums = await response.json(); // Supondo que a API retorna um array de álbuns
-    return albums.map((album) => ({
-      loc: `/portal/album/${album.autor}/${album.id}`,
-      changefreq: 'weekly',
-      priority: 0.7,
-    }));
-  } catch (error) {
-    console.error('Erro ao buscar os álbuns:', error);
-    return []; // Retorna um array vazio se houver erro
-  }
-};
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
+const fetchAlbums = async () => {
+    try {
+      const albums = await prisma.album.findMany({
+        select: {
+          autor: true,
+          id: true,
+          imagens: { select: { id: true, url: true, legenda: true } }, // Busca as imagens e seus detalhes
+        },
+      });
+  
+      return albums.flatMap((album) => {
+        // Mapeia as imagens para a URL correta dentro do álbum
+        return album.imagens.map((img) => ({
+          loc: `/portal/album/${album.autor}/${img.id}`, // URL única para cada imagem
+          changefreq: 'weekly',
+          priority: 0.7,
+          images: [
+            {
+              loc: img.url, // URL da imagem
+              caption: img.legenda || '', // Legenda da imagem, se disponível
+            },
+          ],
+        }));
+      });
+    } catch (error) {
+      console.error('Erro ao buscar os álbuns:', error);
+      return [];
+    }
+};
+  
+  
 
 module.exports = {
   siteUrl: 'https://www.entusiastadamobilidade.com.br',
