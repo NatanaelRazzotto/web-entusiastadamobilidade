@@ -11,7 +11,11 @@ import { ChevronDownIcon } from "@radix-ui/themes";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
 
 export default function Page({ params }: { params: { idPost: string } }) {
+  const topNewsOptions = ["No", "Top", "SubPrimeiro", "SubSegundo"];
+const [selectedTopNews, setSelectedTopNews] = useState<string>("");
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,12 +29,12 @@ export default function Page({ params }: { params: { idPost: string } }) {
           // Popula os campos com os valores do banco
           setValue("namePost", data.namePost);
           setValue("title", data.title);
-          setValue("category", data.category.toString());
+          setSelectedCategory(data.category.toString()); 
           setValue("content", data.content);
           setValue("resume", data.resume);
           setValue("tagPost", data.tagPost || "");
           setValue("coverURL", data.coverURL);
-          setValue("topNews", data.topNews.toString());
+          setSelectedTopNews(data.topNews.toString());
           setValue("published", data.published);
 
         }
@@ -45,6 +49,24 @@ export default function Page({ params }: { params: { idPost: string } }) {
 
     fetchPost();
   }, [params.idPost, setValue]);
+
+  const handleSelectChangeTopNews = (value: string) => {
+    setValue("topNews", Number(value));
+    setSelectedTopNews(value);
+  };
+  
+  // Função para obter o nome da opção de Top News
+  const getTopNewsLabel = (value: string) => {
+    return topNewsOptions[Number(value)] || "Selecione um nível";
+  };
+  
+  // Função para pegar o nome da categoria pelo valor
+  const getCategoryName = (value: string) => {
+    const categoryKey = Object.keys(CategoryPost).find(
+      (key) => CategoryPost[key as keyof typeof CategoryPost] === Number(value)
+    );
+    return categoryKey || "Selecione uma categoria";
+  };
 
   async function handleUpdatePost(data) {
     try {
@@ -72,7 +94,11 @@ export default function Page({ params }: { params: { idPost: string } }) {
   }
 
   const handleSelectChange = (value) => setValue("topNews", Number(value));
-  const handleSelectChangeCategory = (value) => setValue("category", Number(value));
+
+  const handleSelectChangeCategory = (value: string) => {
+    setValue("category", Number(value));
+    setSelectedCategory(value); // Atualiza o estado local para refletir no Select
+  };
 
   if (loading) return <p>Carregando...</p>;
 
@@ -94,41 +120,37 @@ export default function Page({ params }: { params: { idPost: string } }) {
 
       <div className="flex flex-col">
         <label className="text-sm font-medium text-gray-700">Category:</label>
-        <Select.Root onValueChange={handleSelectChangeCategory}>
-        <Select.Trigger className="mt-1 flex items-center justify-between p-2 border border-gray-300 rounded-md bg-white">
-          <Select.Value placeholder="Select option" />
-          <Select.Icon>
-            <ChevronDownIcon />
-          </Select.Icon>
-        </Select.Trigger>
+        <Select.Root 
+  value={selectedCategory} 
+  onValueChange={handleSelectChangeCategory}
+>
+  <Select.Trigger className="mt-1 flex items-center justify-between p-2 border border-gray-300 rounded-md bg-white">
+    <Select.Value>{getCategoryName(selectedCategory)}</Select.Value>
+    <Select.Icon>
+      <ChevronDownIcon />
+    </Select.Icon>
+  </Select.Trigger>
 
-        <Select.Content className="bg-white border border-gray-300 rounded-md shadow-lg">
-          <Select.ScrollUpButton className="flex justify-center py-2">
-            <ChevronUpIcon />
-          </Select.ScrollUpButton>
+  <Select.Content className="bg-white border border-gray-300 rounded-md shadow-lg">
+    <Select.Viewport className="p-2">
+      {Object.entries(CategoryPost)
+        .filter(([key, value]) => typeof value === "number") 
+        .map(([key, value]) => (
+          <Select.Item
+            key={value}
+            value={value.toString()} // O value precisa ser exatamente igual ao selectedCategory
+            className="flex items-center justify-between p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+          >
+            <Select.ItemText>{key}</Select.ItemText>
+            <Select.ItemIndicator>
+              <CheckIcon className="w-5 h-5 text-green-500" />
+            </Select.ItemIndicator>
+          </Select.Item>
+        ))}
+    </Select.Viewport>
+  </Select.Content>
+</Select.Root>
 
-          <Select.Viewport className="p-2">
-            {Object.entries(CategoryPost)
-              .filter(([key, value]) => typeof value === "number") // filtra apenas as chaves do enum
-              .map(([key, value]) => (
-                <Select.Item
- 
-                  value={value.toString()} // converte o valor para string, necessário para o Select.Item
-                  className="flex items-center justify-between p-2 hover:bg-gray-100 rounded-md cursor-pointer"
-                >
-                  <Select.ItemText>{key}</Select.ItemText>
-                  <Select.ItemIndicator>
-                    <CheckIcon className="w-5 h-5 text-green-500" />
-                  </Select.ItemIndicator>
-                </Select.Item>
-              ))}
-          </Select.Viewport>
-
-          <Select.ScrollDownButton className="flex justify-center py-2">
-            <ChevronDownIcon />
-          </Select.ScrollDownButton>
-        </Select.Content>
-      </Select.Root>
         {errors.category && <span className="text-sm text-red-600 mt-1">This field is required</span>}
       </div>
 
@@ -150,30 +172,36 @@ export default function Page({ params }: { params: { idPost: string } }) {
         <input {...register("coverURL")} className="mt-1 p-2 border border-gray-300 rounded-md" />
       </div>
 
-      {/* Top News */}
-      <div className="flex flex-col">
-        <label className="text-sm font-medium text-gray-700">Top News:</label>
-        <Select.Root onValueChange={handleSelectChange}>
-          <Select.Trigger className="mt-1 flex items-center justify-between p-2 border border-gray-300 rounded-md bg-white">
-            <Select.Value placeholder="Selecione um nível" />
-            <Select.Icon>
-              <ChevronDownIcon />
-            </Select.Icon>
-          </Select.Trigger>
-          <Select.Content className="bg-white border border-gray-300 rounded-md shadow-lg">
-            <Select.Viewport className="p-2">
-              {["No", "Top", "SubPrimeiro", "SubSegundo"].map((option, index) => (
-                <Select.Item key={index} value={String(index)} className="flex items-center justify-between p-2 hover:bg-gray-100 rounded-md cursor-pointer">
-                  <Select.ItemText>{option}</Select.ItemText>
-                  <Select.ItemIndicator>
-                    <CheckIcon className="w-5 h-5 text-green-500" />
-                  </Select.ItemIndicator>
-                </Select.Item>
-              ))}
-            </Select.Viewport>
-          </Select.Content>
-        </Select.Root>
-      </div>
+     {/* Top News */}
+<div className="flex flex-col">
+  <label className="text-sm font-medium text-gray-700">Top News:</label>
+  <Select.Root value={selectedTopNews} onValueChange={handleSelectChangeTopNews}>
+    <Select.Trigger className="mt-1 flex items-center justify-between p-2 border border-gray-300 rounded-md bg-white">
+      <Select.Value>{getTopNewsLabel(selectedTopNews)}</Select.Value>
+      <Select.Icon>
+        <ChevronDownIcon />
+      </Select.Icon>
+    </Select.Trigger>
+
+    <Select.Content className="bg-white border border-gray-300 rounded-md shadow-lg">
+      <Select.Viewport className="p-2">
+        {topNewsOptions.map((option, index) => (
+          <Select.Item
+            key={index}
+            value={String(index)} // Garante que o valor seja o mesmo do banco
+            className="flex items-center justify-between p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+          >
+            <Select.ItemText>{option}</Select.ItemText>
+            <Select.ItemIndicator>
+              <CheckIcon className="w-5 h-5 text-green-500" />
+            </Select.ItemIndicator>
+          </Select.Item>
+        ))}
+      </Select.Viewport>
+    </Select.Content>
+  </Select.Root>
+</div>
+
 
       {/* Publicado */}
       <div className="flex items-center">
