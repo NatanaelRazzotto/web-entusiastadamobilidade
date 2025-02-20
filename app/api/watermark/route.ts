@@ -13,7 +13,7 @@ export async function GET(request) {
 
   try {
     // Fetch the original image
-    const response = await fetch(`https://drive.google.com/thumbnail?id=${imageUrl}&sz=w1000`);
+    const response = await fetch(`https://drive.google.com/uc?export=download&id=${imageUrl}`);
     const arrayBuffer = await response.arrayBuffer();
     const imageBuffer = Buffer.from(arrayBuffer);
 

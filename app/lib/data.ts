@@ -48,6 +48,7 @@ export async function fetchPostID(idPost : string){
         id: idPost,
       },
       include: {
+        images : true
         // images: {
         //   include: {
         //     vehicle: true,
@@ -181,6 +182,24 @@ export async function fetchIdImage(idImage : number){
           select: { name: true },
         },
       },      
+    });
+
+    return image;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function fetchIdsImages(idImage : number[]){
+  try {
+    const image: Image[] = await prisma.image.findMany({    
+      where: {
+        id: {
+          in: idImage, 
+        },
+      },
+      // select: { pathURL: true }, // Retorna apenas o campo `fileId`   
     });
 
     return image;

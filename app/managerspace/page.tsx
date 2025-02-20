@@ -28,9 +28,9 @@ export default function Page() {
             </div>
 
             <div className="flex justify-end mt-8">
-            <Link href={"/"}>
+            <Link href={"/managerspace/image-migration"}>
                 <button className="bg-orange-700 hover:bg-orange-900 text-white font-bold py-2 px-4 rounded">
-                    Atualizar Info Transporte
+                    Migração de Imagens
                 </button>
             </Link>
             </div>
