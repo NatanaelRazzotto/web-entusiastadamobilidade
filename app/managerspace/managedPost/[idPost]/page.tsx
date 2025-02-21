@@ -7,6 +7,7 @@ import { Post } from "@/app/lib/definitions";
 import FormularyPost from "@/app/ui/components/FormularyPost";
 import HeaderSection from "@/app/ui/components/HeaderSection";
 import ImageUploader from "@/app/ui/components/ImageUploader";
+import MultiImageUploader from "@/app/ui/components/MultiImageUploader";
 
 
 export default function Page({ params }: { params: { idPost: string } }) {
@@ -41,7 +42,7 @@ export default function Page({ params }: { params: { idPost: string } }) {
   return (
     <main>
     <HeaderSection title={"Editor de Postagens"}></HeaderSection>
-    <ImageUploader></ImageUploader>
+    <MultiImageUploader></MultiImageUploader>
     <FormularyPost dataPost={dataPost} /> 
     </main>
   );
