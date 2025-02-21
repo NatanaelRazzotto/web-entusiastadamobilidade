@@ -30,11 +30,14 @@ model Post {
 }
 
 model Image {
-  id    Int      @id @default(autoincrement())
- 
+  id    Int      @id @default(autoincrement()) 
   title       String
   description String?
+ 
   pathURL     String   @unique
+   storagePathURL   String  @default("")
+  oldPathURL     String  @default("")
+  publicStorage   Boolean  @default(false)
   published   Boolean  @default(false)
   storage     Boolean  @default(false)
   authorId    String?

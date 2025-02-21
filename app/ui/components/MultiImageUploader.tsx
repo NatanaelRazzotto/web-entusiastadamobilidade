@@ -1,6 +1,14 @@
 import { useState } from "react";
 
-export default function MultiImageUploader() {
+export interface UploadDTO{
+  idPost : string
+  idvehicle : string
+  nameFile?: string | null
+  newPathURL?: string | null
+  oldPathURL?: string | null
+}
+
+export default function MultiImageUploader({ uploadDTO }: { uploadDTO: UploadDTO})  {
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -19,20 +27,33 @@ export default function MultiImageUploader() {
   };
 
   const handleUpload = async () => {
+
+    if (!uploadDTO) {
+      console.error("DTO NAO definidos!");
+      return;
+    }
+
     if (images.length === 0) return;
     setUploading(true);
 
     try {
       const formData = new FormData();
+
+      // Adiciona imagens ao FormData
       images.forEach((image) => formData.append("files", image));
+
+
+      // Converte o JSON para Blob e adiciona ao FormData
+      formData.append("json", new Blob([JSON.stringify(uploadDTO)], { type: "application/json" }));
 
       const response = await fetch("/api/image-uploader", {
         method: "POST",
         body: formData,
       });
 
+
       const data = await response.json();
-      setImageUrls(data.urls);
+      setImageUrls(data.images);
     } catch (error) {
       console.error("Erro no upload das imagens", error);
     } finally {

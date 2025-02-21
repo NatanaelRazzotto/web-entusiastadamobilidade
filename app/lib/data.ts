@@ -426,7 +426,9 @@ export async function createImages(orderImages: Image[]) {
       nameFile : image.nameFile,
       pathURL: image.pathURL,
       authorId: image.authorId,
-      vehicleIDs : image.vehicleIDs
+      vehicleIDs : image.vehicleIDs,
+      publicStorage: image.publicStorage,
+      storagePathURL: image.storagePathURL,
     }));
 
     const createdImages = await prisma.image.createMany({
