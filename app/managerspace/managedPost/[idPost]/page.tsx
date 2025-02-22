@@ -19,6 +19,7 @@ export default function Page({ params }: { params: { idPost: string } }) {
   useEffect(() => {
     async function fetchPost() {
       try {
+        
         const response = await fetch(`/api/postById?id=${params.idPost}`);
         const data: Post = await response.json();
         console.log("🚀 ~ fetchPost ~ data:", data);

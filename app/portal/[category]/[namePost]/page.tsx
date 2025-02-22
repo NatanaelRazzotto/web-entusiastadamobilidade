@@ -215,11 +215,21 @@ export default async function Page({ params }: {params: { category: string; name
                 dataPost.images.map((image) => (
                   <Link href={`../album/${getUrlPicture(image.author)}/${image.id}`} key={image.id}>
                     <div className="col-span-1">
+                    {
+                      image.publicStorage ? 
+                        <img
+                          src={`https://${image?.storagePathURL}image/upload/${image?.pathURL}`}
+                          title={image?.title || "Veículo"}
+                          className="rounded-md object-cover"
+                          style={{ border: "none" }}
+                        />
+                      : 
                       <img
-                        src={`https://drive.google.com/thumbnail?id=${image.pathURL}&sz=w1000`}
-                        alt={image.title}
-                        className="rounded-md w-full object-cover"
-                      />
+                      src={`https://drive.google.com/thumbnail?id=${image.pathURL}&sz=w1000`}
+                      alt={image.title}
+                      className="rounded-md w-full object-cover"
+                    />
+                    }
                     </div>
                   </Link>
                 ))
