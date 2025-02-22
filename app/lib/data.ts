@@ -7,6 +7,7 @@ import {
   BookOrder,
   OrderImage
 } from './definitions';
+import { extrairCaminhoImagem } from './utilits/utils';
 import { formatCurrency } from './utils';
 
 export async function fetchScheduled() {
@@ -388,6 +389,26 @@ export async function createImage(orderImages : Image){
           //   })),
           // },
         }
+      });
+    
+    return Post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function updateImageURL(orderImages : Image, newURL : string){
+ 
+  try {  
+      const Post =  await prisma.image.update({
+        where: { id: orderImages.id },
+        data: {
+          pathURL : orderImages.pathURL,
+          oldPathURL : orderImages.pathURL,
+          storagePathURL : extrairCaminhoImagem( newURL),
+          publicStorage : true
+        },
       });
     
     return Post;

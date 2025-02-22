@@ -82,7 +82,7 @@ const jsonData : UploadDTO | null = jsonBlob ? JSON.parse(await jsonBlob.text())
     // Envia para Cloudinary
     const cloudinaryFormData = new FormData();
     if (operationalVehicle){
-      cloudinaryFormData.append("file", webpBlob, operationalVehicle.serialNumber.toString());
+      cloudinaryFormData.append("file", webpBlob, operationalVehicle.serialNumber.toString()+'.webp');
     }
     else{
       cloudinaryFormData.append("file", webpBlob, newFileName);

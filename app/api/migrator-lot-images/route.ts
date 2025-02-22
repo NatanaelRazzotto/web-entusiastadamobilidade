@@ -1,5 +1,6 @@
 // app/api/watermark/route.js
-import { fetchIdsImages, getUser } from '@/app/lib/data';
+import { fetchIdsImages, getUser, updateImageURL } from '@/app/lib/data';
+import { Image, OperationalVehicle } from '@/app/lib/definitions';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 import path from 'path';
@@ -19,7 +20,14 @@ export async function POST(req: NextRequest) { // Use NextRequest aqui
     return NextResponse.json({ error: 'User not found' }, { status: 404 });
   }
 
-  const handleUploadFromGoogleDrive = async (file) => {
+  const handleUploadFromGoogleDrive = async (file : Image) => {
+
+    let operationalVehicle : OperationalVehicle = null
+      if (file.vehicleIDs.length > 0)
+      {
+        const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL +`/operational-vehicle/${file.vehicleIDs[0]}`);
+        operationalVehicle = await response.json();
+      }
 
     try {
       // 1. Baixar a imagem do Google Drive
@@ -39,11 +47,21 @@ export async function POST(req: NextRequest) { // Use NextRequest aqui
 
       // 3. Criar FormData e enviar para o Cloudinary
       const formData = new FormData();
-      formData.append(
-        "file",
-        new Blob([webpBuffer], { type: "image/webp" }),
-        "Teste.webp"
-      );
+
+      if (operationalVehicle){
+        formData.append(
+          "file",
+          new Blob([webpBuffer], { type: "image/webp" }),
+          operationalVehicle.serialNumber.toString()+'.webp'
+        );
+      }
+      else{
+        formData.append(
+          "file",
+          new Blob([webpBuffer], { type: "image/webp" }),
+          file.title.toString()+'.webp'
+        );
+      }
       formData.append("upload_preset", "ml_default");
 
       const cloudinaryResponse = await fetch(
@@ -61,11 +79,7 @@ export async function POST(req: NextRequest) { // Use NextRequest aqui
       const cloudinaryData = await cloudinaryResponse.json();
       const imageUrl = cloudinaryData.secure_url;
 
-      // 4. Atualizar o banco de dados usando Prisma
-      // await prisma.post.update({
-      //   where: { fileId }, // Certifique-se de que `fileId` existe no seu modelo
-      //   data: { imageUrl },
-      // });
+      await updateImageURL(file,imageUrl)
 
       return { fileId: file, url: imageUrl };
     } catch (error) {
