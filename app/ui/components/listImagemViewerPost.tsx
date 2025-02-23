@@ -57,7 +57,8 @@ export function ListImagemViewerPost({ dataPost, handleSave }: { dataPost: Post;
         {!dataPost ? (
           <p>Sem Imagens</p>
         ) : (
-          (dataPost.images as Image[]).map((imagesPost: Image) => (
+          (dataPost.images as Image[]).filter(imagesPost => !imagesPost.publicStorage).map((imagesPost: Image) => (
+           
             <div
               key={imagesPost.id}
               className={`col-span-1 ${isImageSelected(imagesPost.id) ? "border-4 border-blue-500" : ""}`} // Estilo para imagem selecionada

@@ -20,73 +20,59 @@ export async function POST(req: NextRequest) { // Use NextRequest aqui
     return NextResponse.json({ error: 'User not found' }, { status: 404 });
   }
 
-  const handleUploadFromGoogleDrive = async (file : Image) => {
-
-    let operationalVehicle : OperationalVehicle = null
-      if (file.vehicleIDs.length > 0)
-      {
-        const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL +`/operational-vehicle/${file.vehicleIDs[0]}`);
-        operationalVehicle = await response.json();
-      }
-
+  const handleUploadFromGoogleDrive = async (file: Image) => {
+    let operationalVehicle: OperationalVehicle | null = null;
+  
+    if (file.vehicleIDs.length > 0) {
+      const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `/operational-vehicle/${file.vehicleIDs[0]}`);
+      operationalVehicle = await response.json();
+    }
+  
     try {
-      // 1. Baixar a imagem do Google Drive
-      const response = await fetch(
-        `https://drive.google.com/uc?export=download&id=${file.pathURL}`
-      );
+      // Baixar a imagem do Google Drive
+      const response = await fetch(`https://drive.google.com/uc?export=download&id=${file.pathURL}`);
       if (!response.ok) {
         throw new Error(`Erro ao obter imagem: ${file.id}`);
       }
       const arrayBuffer = await response.arrayBuffer();
       const imageBuffer = Buffer.from(arrayBuffer);
-
-      // 2. Converter para WebP
-      const webpBuffer = await sharp(imageBuffer)
-        .webp({ quality: 90 })
-        .toBuffer();
-
-      // 3. Criar FormData e enviar para o Cloudinary
+  
+      // Converter para WebP
+      const webpBuffer = await sharp(imageBuffer).webp({ quality: 90 }).toBuffer();
+  
+      // Criar FormData e enviar para o Cloudinary
       const formData = new FormData();
-
-      if (operationalVehicle){
-        formData.append(
-          "file",
-          new Blob([webpBuffer], { type: "image/webp" }),
-          operationalVehicle.serialNumber.toString()+'.webp'
-        );
-      }
-      else{
-        formData.append(
-          "file",
-          new Blob([webpBuffer], { type: "image/webp" }),
-          file.title.toString()+'.webp'
-        );
-      }
-      formData.append("upload_preset", "ml_default");
-
-      const cloudinaryResponse = await fetch(
-        "https://api.cloudinary.com/v1_1/dcixncjzw/image/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
+  
+      const fileName = operationalVehicle?.serialNumber
+        ? operationalVehicle.serialNumber.toString() + '.webp'
+        : file.title
+        ? file.title.toString() + '.webp'
+        : `image-${file.id}.webp`; // Valor padrão se file.title for undefined
+  
+      formData.append("file", new Blob([webpBuffer], { type: "image/webp" }), fileName);
+      formData.append("upload_preset", process.env.STORAGE_PRESETS);
+  
+      const cloudinaryResponse = await fetch("https://api.cloudinary.com/v1_1/"+process.env.PUBLIC_STORAGE_NAME+"/image/upload", {
+        method: "POST",
+        body: formData,
+      });
+  
       if (!cloudinaryResponse.ok) {
         throw new Error(`Erro ao enviar imagem ${file.id} para o Cloudinary`);
       }
-
+  
       const cloudinaryData = await cloudinaryResponse.json();
       const imageUrl = cloudinaryData.secure_url;
-
-      await updateImageURL(file,imageUrl)
-
-      return { fileId: file, url: imageUrl };
+  
+      await updateImageURL(file, imageUrl);
+  
+      return { fileId: file.id, url: imageUrl };
     } catch (error) {
-      console.error(`Erro ao processar imagem ${file}:`, error);
-      return { fileId: file, error: error.message };
+      console.error(`Erro ao processar imagem ${file.id}:`, error);
+      return { fileId: file.id, error: error.message };
     }
   };
+  
 
   const body = await req.json(); // Parse o corpo da requisição (os dados do novo post)
 

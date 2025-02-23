@@ -89,10 +89,10 @@ const jsonData : UploadDTO | null = jsonBlob ? JSON.parse(await jsonBlob.text())
     }
    
    
-    cloudinaryFormData.append("upload_preset", "ml_default"); // Substitua pelo seu upload_preset
+    cloudinaryFormData.append("upload_preset", process.env.STORAGE_PRESETS); // Substitua pelo seu upload_preset
 
     try {
-      const response = await fetch("https://api.cloudinary.com/v1_1/dcixncjzw/image/upload", {
+      const response = await fetch("https://api.cloudinary.com/v1_1/"+process.env.PUBLIC_STORAGE_NAME+"/image/upload", {
         method: "POST",
         body: cloudinaryFormData,
       });
