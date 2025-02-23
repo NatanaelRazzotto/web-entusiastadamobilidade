@@ -37,7 +37,7 @@ export async function ImageGenerate(body : UploadDTO, operationalVehicle : Opera
     nameFile : body.nameFile,
     published: false,
     publicStorage: true,
-    storagePathURL: "res.cloudinary.com/dcixncjzw/",
+    storagePathURL: process.env.PUBLIC_STORAGE,
     pathURL: body.newPathURL.toString(), // Certifique-se de que pathURL é uma string
     authorId: existingUser.id,
     vehicleIDs : operationalVehicle ? [operationalVehicle.id.toString()] : [],

@@ -404,9 +404,9 @@ export async function updateImageURL(orderImages : Image, newURL : string){
       const Post =  await prisma.image.update({
         where: { id: orderImages.id },
         data: {
-          pathURL : orderImages.pathURL,
+          storagePathURL: process.env.PUBLIC_STORAGE,
           oldPathURL : orderImages.pathURL,
-          storagePathURL : extrairCaminhoImagem( newURL),
+          pathURL : extrairCaminhoImagem( newURL),
           publicStorage : true
         },
       });

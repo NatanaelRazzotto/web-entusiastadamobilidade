@@ -65,7 +65,7 @@ export function ListImagemViewerPost({ dataPost, handleSave }: { dataPost: Post;
               style={{ position: 'relative' }} // Torna o contêiner da imagem um contexto de posicionamento
             >
               <img
-                src={getWatermarkedImageUrl(imagesPost.pathURL)}
+                   src={`https://drive.google.com/thumbnail?id=${imagesPost.pathURL}&sz=w1000`}
                 alt={imagesPost.title}
                 className="rounded-md w-full object-cover cursor-pointer"
               />

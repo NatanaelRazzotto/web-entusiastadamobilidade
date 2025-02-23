@@ -3,6 +3,7 @@ import { useState } from "react";
 export interface UploadDTO{
   idPost : string
   idvehicle : string
+  watermark? : boolean
   nameFile?: string | null
   newPathURL?: string | null
   oldPathURL?: string | null
