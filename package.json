@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "prisma generate && next build",   
+    "build": "prisma generate && next build",
     "postbuild": "next-sitemap",
     "dev": "next dev",
     "prettier": "prettier --write --ignore-unknown .",
@@ -58,5 +58,5 @@
   "engines": {
     "node": ">=18.17.0"
   },
-  "version": "2.0.3"
+  "version": "2.1.0"
 }
