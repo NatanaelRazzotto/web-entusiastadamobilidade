@@ -1,4 +1,12 @@
-import { Post, Revenue } from './definitions';
+import { Image, Post, Revenue } from './definitions';
+
+
+
+
+export const getImageUrlFromHeader = (dataPost : Image) => {    
+  return dataPost.publicStorage ? `https://${dataPost?.storagePathURL}image/upload/${dataPost?.pathURL}`: 
+      `https://drive.google.com/file/d/${dataPost?.pathURL}/preview`  
+};
 
 export const getWatermarkedImageUrl = (imageUrl : string) => {
   return `/api/watermark?imageUrl=${encodeURIComponent(imageUrl)}`;

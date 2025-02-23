@@ -7,6 +7,7 @@ import {
   BookOrder,
   OrderImage
 } from './definitions';
+import { extrairCaminhoImagem } from './utilits/utils';
 import { formatCurrency } from './utils';
 
 export async function fetchScheduled() {
@@ -48,6 +49,7 @@ export async function fetchPostID(idPost : string){
         id: idPost,
       },
       include: {
+        images : true
         // images: {
         //   include: {
         //     vehicle: true,
@@ -181,6 +183,24 @@ export async function fetchIdImage(idImage : number){
           select: { name: true },
         },
       },      
+    });
+
+    return image;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function fetchIdsImages(idImage : number[]){
+  try {
+    const image: Image[] = await prisma.image.findMany({    
+      where: {
+        id: {
+          in: idImage, 
+        },
+      },
+      // select: { pathURL: true }, // Retorna apenas o campo `fileId`   
     });
 
     return image;
@@ -378,6 +398,26 @@ export async function createImage(orderImages : Image){
   }
 }
 
+export async function updateImageURL(orderImages : Image, newURL : string){
+ 
+  try {  
+      const Post =  await prisma.image.update({
+        where: { id: orderImages.id },
+        data: {
+          storagePathURL: process.env.PUBLIC_STORAGE,
+          oldPathURL : orderImages.pathURL,
+          pathURL : extrairCaminhoImagem( newURL),
+          publicStorage : true
+        },
+      });
+    
+    return Post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
 export async function updateImage(orderImages : Image){
  
   try {  
@@ -400,13 +440,16 @@ export async function updateImage(orderImages : Image){
 }
 
 export async function createImages(orderImages: Image[]) {
+  console.log("🚀 ~ createImages ~ orderImages:", orderImages)
   try {
     const data = orderImages.map(image => ({
       title: image.title,
       nameFile : image.nameFile,
       pathURL: image.pathURL,
       authorId: image.authorId,
-      vehicleIDs : image.vehicleIDs
+      vehicleIDs : image.vehicleIDs,
+      publicStorage: image.publicStorage,
+      storagePathURL: image.storagePathURL,
     }));
 
     const createdImages = await prisma.image.createMany({

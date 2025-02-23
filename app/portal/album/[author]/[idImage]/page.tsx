@@ -4,7 +4,7 @@ import { Image } from "../../../../lib/definitions";
 import { fetchIdImage, fetchPostName } from "@/app/lib/data";
 import { Metadata } from "next";
 import Link from "next/link";
-import { getWatermarkedImageUrl } from "@/app/lib/utils";
+import { getImageUrlFromHeader, getWatermarkedImageUrl } from "@/app/lib/utils";
 import { getCategoryUrlNumber, getUrlPicture } from "@/app/lib/enums/categoryPost";
 import VehicleDetailsSection from "@/app/ui/components/bookImage/VehicleDetailsSection";
 
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: {params: { idImage: string}})
       url: `${process.env.NEXT_PUBLIC_SITE_URL}/portal/album/${getUrlPicture(dataImage.author)}/${dataImage.id}`,
       images: [
         {
-          url: getWatermarkedImageUrl(dataImage.pathURL),
+          url: getImageUrlFromHeader(dataImage),
           width: 800,
           height: 600,
           alt: dataImage.title,

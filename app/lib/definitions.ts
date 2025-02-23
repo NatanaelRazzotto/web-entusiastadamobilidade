@@ -134,6 +134,9 @@ export type Image = {
   nameFile : string; 
   description?: string | null; // Deve coincidir com a definição no Prisma
   pathURL?: string | null; // Deve coincidir com a definição no Prisma
+  storagePathURL ?:    string | null;
+  oldPathURL    ? :string | null;
+  publicStorage   ?: boolean;
   published: boolean;
   author   ?: User;
   authorId: string;

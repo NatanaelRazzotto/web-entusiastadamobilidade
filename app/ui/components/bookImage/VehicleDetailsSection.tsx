@@ -30,7 +30,16 @@ export default function VehicleDetailsSection({ dataPost }: {dataPost: Image | n
     
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2 bg-secondarybg-dark text-text-dark">
-        <div className="col-span-2 bg-black h-auto">
+      <div className="col-span-2 bg-black h-auto flex items-center justify-center">
+        {
+          dataPost.publicStorage ? 
+            <img
+              src={`https://${dataPost?.storagePathURL}image/upload/${dataPost?.pathURL}`}
+              title={dataPost?.title || "Veículo"}
+              className="rounded-md object-cover"
+              style={{ border: "none" }}
+            />
+          : 
           <iframe
             src={`https://drive.google.com/file/d/${dataPost?.pathURL}/preview`}
             title={dataPost?.title || "Veículo"}
@@ -38,7 +47,10 @@ export default function VehicleDetailsSection({ dataPost }: {dataPost: Image | n
             height="100%"
             style={{ border: "none" }}
           ></iframe>
-        </div>
+        }
+        
+      </div>
+
         <div className="col-span-1 justify-self-end p-4 mt-4 mr-4">
           <VehicleInfo dataVehicle={dataVehicle} />
         </div>
