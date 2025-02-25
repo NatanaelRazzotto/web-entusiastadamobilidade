@@ -16,6 +16,8 @@ model Post {
   content           String?
   resume            String?
   tagPost           String?
+  coverImageId    Int?  
+  coverImage        Image?    @relation(fields: [coverImageId], references: [id])
   coverURL          String?
   published         Boolean          @default(false)
   authorId          String?
@@ -47,6 +49,7 @@ model Image {
  
   author      User?    @relation(fields: [authorId], references: [id])
   posts       Post[]   @relation("PostImages")
+  coverImages Post[] 
 }
 
 model Video {

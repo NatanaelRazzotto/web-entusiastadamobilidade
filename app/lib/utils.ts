@@ -4,7 +4,7 @@ import { Image, Post, Revenue } from './definitions';
 
 
 export const getImageUrlFromHeader = (dataPost : Image) => {    
-  return dataPost.publicStorage ? `https://${dataPost?.storagePathURL}image/upload/${dataPost?.pathURL}`: 
+  return dataPost.publicStorage ? `https://${dataPost?.storagePathURL}image/upload/f_auto,q_auto,w1200/${dataPost?.pathURL}`: 
       `https://drive.google.com/file/d/${dataPost?.pathURL}/preview`  
 };
 

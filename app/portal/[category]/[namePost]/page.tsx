@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { fetchPostName } from '@/app/lib/data';
-import { Post, OperationalVehicle, Image } from '../../../lib/definitions';
+import { Post, OperationalVehicle } from '../../../lib/definitions';
 import { getWatermarkedImageUrl, getCategoyrUrl} from '../../../lib/utils'
 import Link from 'next/link';
 import React from 'react';
@@ -8,6 +8,8 @@ import SliderCover from '@/app/ui/portal/slider';
 import { getCategoryUrlNumber, getUrlPicture } from '@/app/lib/enums/categoryPost';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+
+import Image from 'next/image';
 
 
 
@@ -214,11 +216,14 @@ export default async function Page({ params }: {params: { category: string; name
                     <div className="col-span-1">
                     {
                       image.publicStorage ? 
-                        <img
-                          src={`https://${image?.storagePathURL}image/upload/${image?.pathURL}`}
-                          title={image?.title || "Veículo"}
+                      
+                        <Image
+                          src={`https://${image?.storagePathURL}image/upload/f_auto,q_auto,w_800/${image?.pathURL}`}
+                          alt={dataPost.title || "Veículo"}
+                          width={800} // Ajuste conforme necessário
+                          height={600}
                           className="rounded-md object-cover"
-                          style={{ border: "none" }}
+                          priority
                         />
                       : 
                       <img

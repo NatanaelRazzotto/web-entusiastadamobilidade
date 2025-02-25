@@ -1,45 +1,41 @@
-'use client'
-import { Image, OperationalVehicle } from "@/app/lib/definitions";
-
+"use client";
+import { Image as ImageType, OperationalVehicle } from "@/app/lib/definitions";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function VehicleDetailsSection({ dataPost }: {dataPost: Image | null }) {
-  
-    const [dataVehicle, setDataVehicle] = useState<OperationalVehicle | null>(null);
-  
-    useEffect(() => {
-      if (dataPost && dataPost.vehicleIDs.length > 0) {
-        console.log("🚀 ~ useEffect ~ dataPost:", dataPost)
-        const fetchFolders = async () => {
-          // setIsLoading(true);
-          console.log("🚀 ~ fetchFolders ~ process.env.SERVER_URL:", process.env.NEXT_PUBLIC_SERVER_URL)
-          try {
-            const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+`/operational-vehicle/${dataPost.vehicleIDs[0]}`); // Adiciona o parâmetro na rota
-            const data = await response.json();          
-            console.log("🚀 ~ fetchFolders ~ data:", data)
-            setDataVehicle(data); // Atualiza as pastas baseadas na categoria
-          } catch (error) {
-            console.error('Erro ao buscar pastas:', error);
-          } finally {
-            // setIsLoading(false);
-          }
-        };
-        fetchFolders();
-      }
-    }, [dataPost]); // Dispara o useEffect quando a categoria selecionada m
-    
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2 bg-secondarybg-dark text-text-dark">
+export default function VehicleDetailsSection({ dataPost }: { dataPost: ImageType | null }) {
+  const [dataVehicle, setDataVehicle] = useState<OperationalVehicle | null>(null);
+
+  useEffect(() => {
+    if (dataPost && dataPost.vehicleIDs.length > 0) {
+      console.log("🚀 ~ useEffect ~ dataPost:", dataPost);
+      const fetchVehicleData = async () => {
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/operational-vehicle/${dataPost.vehicleIDs[0]}`);
+          const data = await response.json();
+          console.log("🚀 ~ fetchVehicleData ~ data:", data);
+          setDataVehicle(data);
+        } catch (error) {
+          console.error("Erro ao buscar dados do veículo:", error);
+        }
+      };
+      fetchVehicleData();
+    }
+  }, [dataPost]);
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2 bg-secondarybg-dark text-text-dark">
       <div className="col-span-2 bg-black h-auto flex items-center justify-center">
-        {
-          dataPost.publicStorage ? 
-            <img
-              src={`https://${dataPost?.storagePathURL}image/upload/${dataPost?.pathURL}`}
-              title={dataPost?.title || "Veículo"}
-              className="rounded-md object-cover"
-              style={{ border: "none" }}
-            />
-          : 
+        {dataPost?.publicStorage ? (
+          <Image
+            src={`https://${dataPost.storagePathURL}image/upload/f_auto,q_auto,w_800/${dataPost.pathURL}`}
+            alt={dataPost.title || "Veículo"}
+            width={800} // Ajuste conforme necessário
+            height={600}
+            className="rounded-md object-cover"
+            priority
+          />
+        ) : (
           <iframe
             src={`https://drive.google.com/file/d/${dataPost?.pathURL}/preview`}
             title={dataPost?.title || "Veículo"}
@@ -47,18 +43,16 @@ export default function VehicleDetailsSection({ dataPost }: {dataPost: Image | n
             height="100%"
             style={{ border: "none" }}
           ></iframe>
-        }
-        
+        )}
       </div>
 
-        <div className="col-span-1 justify-self-end p-4 mt-4 mr-4">
-          <VehicleInfo dataVehicle={dataVehicle} />
-        </div>
+      <div className="col-span-1 justify-self-end p-4 mt-4 mr-4">
+        <VehicleInfo dataVehicle={dataVehicle} />
       </div>
-    );
-  }
+    </div>
+  );
+}
 
-  
 function VehicleInfo({ dataVehicle }: { dataVehicle: OperationalVehicle | null }) {
   return (
     <>
