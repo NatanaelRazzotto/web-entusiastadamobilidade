@@ -6,13 +6,27 @@ import { Post } from "@/app/lib/definitions";
 import { CategoryPost } from "@/app/lib/enums/categoryPost";
 import { useState, useEffect } from "react";
 import { getSession } from "next-auth/react";
+import { PopupOrder } from "../imageViewer/popupOrder";
 
-export default function FormularyPost({ dataPost }: { dataPost: Post;}) {
+import ReactMarkdown from 'react-markdown';
+
+export default function FormularyPost({ dataPost, isEditing }: { dataPost?: Post; isEditing: boolean }) {
+
   const topNewsOptions = ["No", "Top", "SubPrimeiro", "SubSegundo"];
   const [selectedTopNews, setSelectedTopNews] = useState<string>(dataPost.topNews.toString());
   
   const [selectedCategory, setSelectedCategory] = useState<string>(dataPost.category.toString());
-  const { register, handleSubmit, setValue ,formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, watch ,formState: { errors } } = useForm();
+
+  const content = watch("content");
+
+  const [serverResponse, setServerResponse] = useState(null); // Estado para armazenar a resposta do servidor
+      
+    // Função para fechar o popup
+  const closePopup = () => {
+  setServerResponse(null);
+  //router.push('/'); // redirecionar para a página desejada
+  };
 
   useEffect(() => {
     if (dataPost) {
@@ -49,23 +63,30 @@ export default function FormularyPost({ dataPost }: { dataPost: Post;}) {
     async function handleUpdatePost(data) {
       try {
         const session = await getSession();
-  
-        const response = await fetch(`/api/post/${"params.idPost"}`, {
-          method: "PUT",
+
+        const method = isEditing ? "PUT" : "POST";      
+
+        const endpoint = isEditing ? `/api/post/${dataPost?.id}` : "/api/post";
+
+        const response = await fetch(endpoint, {
+          method,
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.accessToken}`,
-          },
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${session?.accessToken}`,
+              },
           body: JSON.stringify(data),
         });
   
-        if (!response.ok) {
+         if (!response.ok) {
           const result = await response.json();
           console.error(result.message);
+          setServerResponse("NAO REALIZADO");
         } else {
           const result = await response.json();
           console.log("Post atualizado com sucesso:", result.message);
-        }
+          setServerResponse(result.message);
+        }  
+      
       } catch (error) {
         console.error("Erro ao atualizar post:", error);
       }
@@ -77,9 +98,64 @@ export default function FormularyPost({ dataPost }: { dataPost: Post;}) {
       setValue("category", Number(value));
       setSelectedCategory(value); // Atualiza o estado local para refletir no Select
     };
-  
+    
+      // Função para inserir caracteres no cursor atual do textarea
+      function insertAtCursor(
+        fieldName: string, 
+        text: string, 
+        setValue: (name: string, value: any) => void, 
+        watch: (name: string) => any
+      ) {
+        const currentValue = watch(fieldName) || "";
+        setValue(fieldName, currentValue + text);
+      }
 
+      const handleFormat = (format: "bold" | "italic" | "newline") => {
+        const fieldName = "content";
+        const textarea = document.getElementById("contentTextarea") as HTMLTextAreaElement;
+    
+        if (!textarea) return;
+    
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const content = watch(fieldName) || "";
+    
+        let formattedText = content.substring(start, end);
+    
+        // Aplica a formatação Markdown correta
+        if (format === "bold") {
+          formattedText = `**${formattedText}**`; // Markdown para negrito
+        } else if (format === "italic") {
+          formattedText = `*${formattedText}*`; // Markdown para itálico
+        } else if (format === "newline") {
+          formattedText = "\n"; // Markdown para nova linha
+        }
+    
+        const newContent = content.substring(0, start) + formattedText + content.substring(end);
+        setValue(fieldName, newContent);
+    
+        setTimeout(() => {
+          textarea.selectionStart = textarea.selectionEnd = start + formattedText.length;
+          textarea.focus();
+        }, 0);
+      };
+      
+      
+      
    return (
+      
+      <>
+        {serverResponse && (
+            <PopupOrder
+              titulo="Agradecemos pela Escolha!"
+              message={serverResponse}
+              message2="Você pode acompanhar o Andamento:"
+              message3="Pelo SITE ou nosso WHATSAPP."
+              onClose={closePopup} // Função para fechar o popup
+            />
+      )}
+
+
       <form onSubmit={handleSubmit(handleUpdatePost)} className="space-y-6 max-w-lg mx-auto p-4 bg-white shadow-md rounded-md">
         {/* Nome do Post */}
         <div className="flex flex-col">
@@ -130,12 +206,31 @@ export default function FormularyPost({ dataPost }: { dataPost: Post;}) {
   
           {errors.category && <span className="text-sm text-red-600 mt-1">This field is required</span>}
         </div>
-  
-        {/* Conteúdo */}
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">Content:</label>
-          <textarea {...register("content")} className="mt-1 p-2 border border-gray-300 rounded-md" />
+
+
+      {/* Botões para inserir caracteres */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-700">Content:</label>
+
+        <div className="flex gap-2 mb-2">
+          <button type="button" onClick={() => handleFormat("bold")} className="p-2 border rounded">
+            𝗕
+          </button>
+          <button type="button" onClick={() => handleFormat("italic")} className="p-2 border rounded">
+            𝘐
+          </button>
+          <button type="button" onClick={() => handleFormat("newline")} className="p-2 border rounded">
+            ↵
+          </button>
         </div>
+
+        <textarea
+          id="contentTextarea"
+          {...register("content", { required: true })}
+          className="mt-1 p-2 border border-gray-300 rounded-md"
+        />
+
+     </div>
   
         {/* Resumo */}
         <div className="flex flex-col">
@@ -189,5 +284,6 @@ export default function FormularyPost({ dataPost }: { dataPost: Post;}) {
         {/* Botão de salvar */}
         <button type="submit" className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Salvar Post</button>
       </form>
+      </>
     );
 }

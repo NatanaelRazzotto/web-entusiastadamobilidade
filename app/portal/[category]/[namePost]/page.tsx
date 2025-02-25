@@ -6,6 +6,10 @@ import Link from 'next/link';
 import React from 'react';
 import SliderCover from '@/app/ui/portal/slider';
 import { getCategoryUrlNumber, getUrlPicture } from '@/app/lib/enums/categoryPost';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
+
 
 
 export async function generateMetadata({ params }: { params: { category: string; namePost: string } }): Promise<Metadata> {
@@ -113,13 +117,15 @@ export default async function Page({ params }: {params: { category: string; name
   // Função para renderizar texto com quebras de linha
   function renderContentWithLineBreaks(content: string) {
    // let a = content.split('\n')
-    return content.split('\\n').map((line, index) => (
+    return content.replace(/\\n/g, '\n').split('\n').map((line, index) => (
       <React.Fragment key={index}>
         {line}
         <br />
       </React.Fragment>
     ));
+    
   }
+  
 
   return (
     <main>
@@ -197,9 +203,11 @@ export default async function Page({ params }: {params: { category: string; name
           <div className="inline-block rounded-lg text-white bg-orange-700 px-4">
             <h2 className="font-bold mt-2 mb-1">MÁTERIA INTEGRA</h2>
           </div>
-          <p className="py-4 ">
-            {renderContentWithLineBreaks(dataPost.content)}
-          </p>
+          <div style={{ whiteSpace: 'pre-wrap' }}>
+            <ReactMarkdown>           
+             {dataPost.content}
+          </ReactMarkdown>
+          </div>
         </div>
 
         <div className="bg-primarybg-light text-text-light dark:bg-primarybg-dark dark:text-text-dark shadow-md p-4 mt-8">
