@@ -20,6 +20,18 @@ export default function FormularyPost({ dataPost, isEditing }: { dataPost?: Post
 
   const content = watch("content");
 
+  const title = watch("title"); // Observe o campo "title"
+
+  useEffect(() => {
+    if (title) { // Se o campo "title" tiver um valor
+      const namePost = title
+        .toLowerCase() // Converte para minúsculas
+        .replace(/[^a-z0-9]+/g, "-"); // Substitui caracteres não alfanuméricos por "-"
+      setValue("namePost", namePost); // Define o valor do campo "namePost"
+    }
+  }, [title, setValue]); // O useEffect depende do valor de "title" e da função "setValue"
+
+
   const [serverResponse, setServerResponse] = useState(null); // Estado para armazenar a resposta do servidor
       
     // Função para fechar o popup
@@ -159,17 +171,16 @@ export default function FormularyPost({ dataPost, isEditing }: { dataPost?: Post
       <form onSubmit={handleSubmit(handleUpdatePost)} className="space-y-6 max-w-lg mx-auto p-4 bg-white shadow-md rounded-md">
         {/* Nome do Post */}
         <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">Name Post:</label>
-          <input {...register("namePost", { required: true })} className="mt-1 p-2 border border-gray-300 rounded-md" />
-          {errors.namePost && <span className="text-sm text-red-600 mt-1">Este campo é obrigatório</span>}
-        </div>
-  
-        {/* Título */}
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">Title:</label>
-          <input {...register("title", { required: true })} className="mt-1 p-2 border border-gray-300 rounded-md" />
-          {errors.title && <span className="text-sm text-red-600 mt-1">Este campo é obrigatório</span>}
-        </div>
+      <label className="text-sm font-medium text-gray-700">Title:</label>
+      <input {...register("title", { required: true })} className="mt-1 p-2 border border-gray-300 rounded-md" />
+      {errors.title && <span className="text-sm text-red-600 mt-1">Este campo é obrigatório</span>}
+    </div>
+
+    <div className="flex flex-col">
+      <label className="text-sm font-medium text-gray-700">Name Post:</label>
+      <input {...register("namePost", { required: true })} className="mt-1 p-2 border border-gray-300 rounded-md" />
+      {errors.namePost && <span className="text-sm text-red-600 mt-1">Este campo é obrigatório</span>}
+    </div>
   
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Category:</label>

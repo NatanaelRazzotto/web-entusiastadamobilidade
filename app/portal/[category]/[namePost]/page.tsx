@@ -83,6 +83,8 @@ export default async function Page({ params }: {params: { category: string; name
     }
 
     dataPost = response;
+    dataPost.content = dataPost.content.replace(/\\n/g, '\n');
+
     // if (dataPost && dataPost.images[0]) {
     //   dataPost.images.forEach((element) => {
     //     if (element.vehicle[0]) {
@@ -112,20 +114,7 @@ export default async function Page({ params }: {params: { category: string; name
     const seconds = (`0${date.getSeconds()}`).slice(-2);
 
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-  }
-
-  // Função para renderizar texto com quebras de linha
-  function renderContentWithLineBreaks(content: string) {
-   // let a = content.split('\n')
-    return content.replace(/\\n/g, '\n').split('\n').map((line, index) => (
-      <React.Fragment key={index}>
-        {line}
-        <br />
-      </React.Fragment>
-    ));
-    
-  }
-  
+  }  
 
   return (
     <main>
