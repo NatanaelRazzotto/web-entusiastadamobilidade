@@ -16,7 +16,7 @@ export default function CardPost({postCard, cardTop}) {
    
     {postCard?.coverImageId !=null && postCard?.coverImage.publicStorage ? (
                             <Image
-                            src={`https://${postCard.coverImage.storagePathURL}image/upload/f_auto,q_auto,w_800/${postCard.coverImage.pathURL}`}
+                            src={`https://${postCard.coverImage.storagePathURL}image/upload/${postCard.coverImage.pathURL}`}
                             alt={postCard.title || "Veículo"}
                             width={800} // Ajuste conforme necessário
                             height={600}
