@@ -9,6 +9,11 @@ export interface UploadDTO{
   oldPathURL?: string | null
 }
 
+export interface UploadCoverDTO{
+  idPost : string
+  idImage : number
+}
+
 export default function MultiImageUploader({ uploadDTO }: { uploadDTO: UploadDTO})  {
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);

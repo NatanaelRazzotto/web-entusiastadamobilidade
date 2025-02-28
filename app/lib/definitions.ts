@@ -114,6 +114,8 @@ export type Post = {
   title: string;
   content?: string | null; // Deve coincidir com a definição no Prisma
   coverURL?: string | null; // Deve coincidir com a definição no Prisma
+  coverImageId ?: number;  
+  coverImage  ?: Image;
   published: boolean;
   newspaperColumnID?: string | null;
   authorId: string;

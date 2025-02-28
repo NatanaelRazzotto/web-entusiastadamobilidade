@@ -9,6 +9,7 @@ import { getSession } from "next-auth/react";
 import { PopupOrder } from "../imageViewer/popupOrder";
 
 import ReactMarkdown from 'react-markdown';
+import ManagerCoverPost from "./ManagerCoverPost";
 
 export default function FormularyPost({ dataPost, isEditing }: { dataPost?: Post; isEditing: boolean }) {
 
@@ -23,7 +24,7 @@ export default function FormularyPost({ dataPost, isEditing }: { dataPost?: Post
   const title = watch("title"); // Observe o campo "title"
 
   useEffect(() => {
-    if (title) { // Se o campo "title" tiver um valor
+    if (title && !isEditing) { // Se o campo "title" tiver um valor
       const namePost = title
         .toLowerCase() // Converte para minúsculas
         .replace(/[^a-z0-9]+/g, "-"); // Substitui caracteres não alfanuméricos por "-"
@@ -166,6 +167,13 @@ export default function FormularyPost({ dataPost, isEditing }: { dataPost?: Post
               onClose={closePopup} // Função para fechar o popup
             />
       )}
+
+      {isEditing ? 
+      <ManagerCoverPost dataPost={dataPost}></ManagerCoverPost>
+      
+      :""
+
+      }
 
 
       <form onSubmit={handleSubmit(handleUpdatePost)} className="space-y-6 max-w-lg mx-auto p-4 bg-white shadow-md rounded-md">

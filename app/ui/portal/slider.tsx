@@ -5,6 +5,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../../ui/SliderCover.css'; // Supondo que você crie este arquivo CSS
+import Image from "next/image";
+import { Post } from "@/app/lib/definitions";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -40,7 +42,7 @@ function SamplePrevArrow(props) {
   );
 }
 
-export default function SliderCover({dataPost }) {
+export default function SliderCover({dataPost} : { dataPost: Post}) {
 
   var settings = {
     dots: true,
@@ -67,24 +69,46 @@ export default function SliderCover({dataPost }) {
           allowFullScreen
         ></iframe>
        </div>  
-       <div  className=" pt-4 pl-4 pr-4" >
-        <img
-            src={`https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`}
-            alt="Imagem da Matéria"
-            className="rounded-t-md w-full object-cover"
-          />
-        </div>    
-       
+       <div  className=" pt-4 pl-4 pr-4" >      
+        
+        {dataPost?.coverImageId !=null && dataPost?.coverImage.publicStorage ? (
+                  <Image
+                    src={`https://${dataPost.coverImage.storagePathURL}image/upload/f_auto,q_auto,w_1200/${dataPost.coverImage.pathURL}`}
+                    alt={dataPost.title || "Veículo"}
+                    width={1200} // Ajuste conforme necessário
+                    height={900}
+                    className="rounded-md object-cover"
+                    priority
+                  />
+                ) : (
+                  <img
+                  src={`https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`}
+                  alt="Imagem da Matéria"
+                  className="rounded-t-md w-full object-cover"
+                />
+                )} 
+         </div> 
      
            
       </Slider> 
         :
           <div  className=" mt-4 ml-4  pr-4">
-            <img
-            src={`https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`}
-            alt="Imagem da Matéria"
-            className="rounded-t-md w-full object-cover"
-          /> 
+         {dataPost?.coverImageId !=null && dataPost?.coverImage.publicStorage ? (
+                        <Image
+                        src={`https://${dataPost.coverImage.storagePathURL}image/upload/f_auto,q_auto,w_1200/${dataPost.coverImage.pathURL}`}
+                        alt={dataPost.title || "Veículo"}
+                        width={1200} // Ajuste conforme necessário
+                        height={900}
+                        className="rounded-md object-cover"
+                        priority
+                  />
+                ) : (
+                  <img
+                  src={`https://drive.google.com/thumbnail?id=${dataPost.coverURL}&sz=w1000`}
+                  alt="Imagem da Matéria"
+                  className="rounded-t-md w-full object-cover"
+                />
+                )} 
               </div>
       }
 

@@ -1,5 +1,6 @@
 "use server"
 import prisma from '../lib/prisma';
+import { UploadCoverDTO } from '../ui/components/MultiImageUploader';
 import { 
   Post,
   User,
@@ -72,10 +73,10 @@ export async function fetchPostName(namePost : string){
         namePost: namePost,
       },
       include: {
-       
+        coverImage : true,
         images: {
           include: {
-            author: {   select: { name: true }}
+            author: {   select: { name: true }},          
           },
         },
         videos : true
@@ -375,6 +376,27 @@ export async function createPost(newPost : Post,existingUser : User){
     throw new Error('Failed to fetch revenue data.');
   }
 }
+
+export async function alterCoverPost(uploadCoverDTO : UploadCoverDTO,existingUser : User){
+
+   try {  
+      const Post : Post =  await prisma.post.update({
+        where: { id: uploadCoverDTO.idPost },
+        data: {
+          coverImage : {
+            connect: {
+              id: uploadCoverDTO.idImage, // ou qualquer outro campo único usado para identificar um Post
+            }         
+          },
+        },
+      });
+     
+     return Post;
+   } catch (error) {
+     console.error('Database Error:', error);
+     throw new Error('Failed to fetch revenue data.');
+   }
+ }
 
 export async function createImage(orderImages : Image){
  

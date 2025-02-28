@@ -28,10 +28,10 @@ export default function VehicleDetailsSection({ dataPost }: { dataPost: ImageTyp
       <div className="col-span-2 bg-black h-auto flex items-center justify-center">
         {dataPost?.publicStorage ? (
           <Image
-            src={`https://${dataPost.storagePathURL}image/upload/f_auto,q_auto,w_800/${dataPost.pathURL}`}
+            src={`https://${dataPost.storagePathURL}image/upload/f_auto,q_auto,w_1200/${dataPost.pathURL}`}
             alt={dataPost.title || "Veículo"}
-            width={800} // Ajuste conforme necessário
-            height={600}
+            width={1200} // Ajuste conforme necessário
+            height={900}
             className="rounded-md object-cover"
             priority
           />

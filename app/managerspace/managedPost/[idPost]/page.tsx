@@ -18,6 +18,7 @@ export default function Page({ params }: { params: { idPost?: string } }) {
       try {
         const response = await fetch(`/api/postById?id=${params.idPost}`);
         const data: Post = await response.json();
+        console.log("🚀 ~ fetchPost ~ data:", data)
 
         if (data) {
           setDataPost(data);
@@ -38,8 +39,9 @@ export default function Page({ params }: { params: { idPost?: string } }) {
   return (
     <main>
       <HeaderSection title={params.idPost ? "Editor de Postagens" : "Criar Nova Postagem"} />
-      {params.idPost && dataPost && <ManagerUploads dataPost={dataPost} />}
+     
       <FormularyPost dataPost={dataPost} isEditing={!!params.idPost} />
+      {params.idPost && dataPost && <ManagerUploads dataPost={dataPost} />}
     </main>
   );
 }

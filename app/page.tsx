@@ -83,11 +83,14 @@ export default async function Page() {
     orderBy: {
       dateCreate: 'desc', 
     },
+    include: {
+      coverImage : true}
   });
   const videos : Video[] = await prisma.video.findMany({
     orderBy: {
       dateCreate: 'desc', 
     },
+  
   });
   
   const postTop : Post = posts.find((post) => post.topNews == 1)

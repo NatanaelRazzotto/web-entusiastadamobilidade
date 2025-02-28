@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { fetchPostName } from '@/app/lib/data';
 import { Post, OperationalVehicle } from '../../../lib/definitions';
-import { getWatermarkedImageUrl, getCategoyrUrl} from '../../../lib/utils'
+import { getWatermarkedImageUrl, getCategoyrUrl, getImageUrlFromHeader} from '../../../lib/utils'
 import Link from 'next/link';
 import React from 'react';
 import SliderCover from '@/app/ui/portal/slider';
@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: { params: { category: string;
       url: process.env.NEXT_PUBLIC_SITE_URL +`/portal/${getCategoryUrlNumber(dataPost.category)}/${namePost}`,
       images: [
         {
-          url: getWatermarkedImageUrl(dataPost.coverURL),
+          url:  dataPost?.coverImageId !=null && dataPost?.coverImage.publicStorage ? getImageUrlFromHeader(dataPost.coverImage) : getWatermarkedImageUrl(dataPost.coverURL),
           width: 800,
           height: 600,
           alt: dataPost.title,
@@ -218,10 +218,10 @@ export default async function Page({ params }: {params: { category: string; name
                       image.publicStorage ? 
                       
                         <Image
-                          src={`https://${image?.storagePathURL}image/upload/f_auto,q_auto,w_800/${image?.pathURL}`}
+                          src={`https://${image?.storagePathURL}image/upload/f_auto,q_auto,w_1200/${image?.pathURL}`}
                           alt={dataPost.title || "Veículo"}
-                          width={800} // Ajuste conforme necessário
-                          height={600}
+                          width={1200} // Ajuste conforme necessário
+                          height={900}
                           className="rounded-md object-cover"
                           priority
                         />

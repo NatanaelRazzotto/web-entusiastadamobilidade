@@ -3,6 +3,7 @@
 import { Post } from "@/app/lib/definitions"
 import { CategoryPost, getCategoryUrlNumber } from "@/app/lib/enums/categoryPost";
 import { getCategoyrUrl } from "@/app/lib/utils"
+import Image from "next/image";
 import Link from "next/link"
 
 export default function CardNotice({ postCard, pathDefault = "portal/" }) {
@@ -14,11 +15,23 @@ export default function CardNotice({ postCard, pathDefault = "portal/" }) {
         <div className="absolute top-2 left-2 rounded-sm text-white bg-black px-2 z-10">
           <p>New</p>
         </div>
-        <img
-          src={`https://drive.google.com/thumbnail?id=${postCard.coverURL}&sz=w1000`}
-          alt="Imagem da Matéria"
-          className="rounded-t-md w-full object-cover"
-        />
+        
+        {postCard?.coverImageId !=null && postCard?.coverImage.publicStorage ? (
+                                    <Image
+                                    src={`https://${postCard.coverImage.storagePathURL}image/upload/f_auto,q_auto,w_800/${postCard.coverImage.pathURL}`}
+                                    alt={postCard.title || "Veículo"}
+                                    width={800} // Ajuste conforme necessário
+                                    height={600}
+                                    className="rounded-md object-cover"
+                                    priority
+                              />
+                            ) : (
+                              <img
+                              src={`https://drive.google.com/thumbnail?id=${postCard.coverURL}&sz=w1000`}
+                              alt="Imagem da Matéria"
+                              className="rounded-t-md w-full object-cover"
+                            />
+                            )} 
         <div className="p-4">
         <div className="inline-block rounded-md text-white bg-orange-700 px-2">
                <p className="">{getCategoryUrlNumber(postCard.category)}</p>
