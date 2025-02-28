@@ -49,7 +49,7 @@ export default function FormularyPost({ dataPost, isEditing }: { dataPost?: Post
       setValue("content", dataPost.content);
       setValue("resume", dataPost.resume);
       setValue("tagPost", dataPost.tagPost || "");
-      setValue("coverURL", dataPost.coverURL);
+  
       setSelectedTopNews(dataPost.topNews.toString());
       setValue("published", dataPost.published);
     }
@@ -255,13 +255,7 @@ export default function FormularyPost({ dataPost, isEditing }: { dataPost?: Post
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Resume:</label>
           <input {...register("resume")} className="mt-1 p-2 border border-gray-300 rounded-md" />
-        </div>
-  
-        {/* URL da Capa */}
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">Cover URL:</label>
-          <input {...register("coverURL")} className="mt-1 p-2 border border-gray-300 rounded-md" />
-        </div>
+        </div>  
   
        {/* Top News */}
   <div className="flex flex-col">

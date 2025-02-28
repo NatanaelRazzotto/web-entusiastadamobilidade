@@ -356,8 +356,7 @@ export async function createPost(newPost : Post,existingUser : User){
         data: {
           namePost: newPost.namePost,
           title: newPost.title,
-          content: newPost.content,
-          coverURL: newPost.coverURL,
+          content: newPost.content,     
           published: newPost.published ? newPost.published : false,
           // newspaperColumnID?: string | null;
           authorId: existingUser.id,
