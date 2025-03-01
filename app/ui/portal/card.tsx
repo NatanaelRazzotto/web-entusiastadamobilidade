@@ -18,8 +18,8 @@ export default function CardPost({postCard, cardTop}) {
                             <Image
                             src={`https://${postCard.coverImage.storagePathURL}image/upload/${postCard.coverImage.pathURL}`}
                             alt={postCard.title || "Veículo"}
-                            width={800} // Ajuste conforme necessário
-                            height={600}
+                            width={1920} // Ajuste conforme necessário
+                            height={1080}
                             className="rounded-md object-cover"
                             priority
                       />
