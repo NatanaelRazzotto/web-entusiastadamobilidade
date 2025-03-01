@@ -83,7 +83,7 @@ export default function SideNav() {
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks definition={rotate}/>
         <div className="my-2 border-b border-primarybg-dark" /> {/* Linha de separação */}
-        {session && session.user.role == 4 ?
+        {session && session.user.role == 1 ?
       
             <NavLinksManager session={session} definition={rotate}/>
         

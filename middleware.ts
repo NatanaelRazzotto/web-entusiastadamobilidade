@@ -5,9 +5,14 @@ import { UserRole } from './app/lib/enums/UsersRoles';
 
 export async function middleware(req: NextRequest) {
   console.log("🚀 ~ Middleware executando...");
+  console.log("🚀 ~ Middleware executando na URL:", req.nextUrl.href);
 
   const { pathname } = req.nextUrl;
 
+  if (pathname.startsWith('/api')) {
+    return NextResponse.next(); // Permite que as APIs sejam chamadas normalmente
+  }
+  
   if (
     pathname.startsWith('/_next') || // Arquivos do Next.js (CSS, JS)
     pathname.startsWith('/static') || // Se estiver servindo assets em /static
@@ -40,7 +45,6 @@ export async function middleware(req: NextRequest) {
 
   // Verificando se o token tem um role válido
   const userRole = token.role as UserRole | undefined;
-  console.log("🚀 ~ Role do usuário:", userRole);
 
   if (!userRole) {
     console.log("🚀 ~ Token sem role. Redirecionando para erro...");
